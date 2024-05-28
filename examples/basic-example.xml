@@ -20,8 +20,17 @@
         <systemComponent id="cmpVa" symbol="Va" />
         <systemComponent id="cmpMo" symbol="Mo" refstate="BCC_A2" molar_mass="95.940" h298="4589.0" s298="28.560" />
         <systemComponent id="cmpRe" symbol="Re" refstate="HCP_A3" molar_mass="186.21" h298="5355.5" s298="36.526" />
+        <systemComponent id="cmpSi" symbol="Si" refstate="???"    molar_mass="28.0855" h298="0.0"   s298="1.234" />
+        <systemComponent id="cmpO"  symbol="O"  refstate="???"    molar_mass="15.9994" h298="0.0"   s298="2.345" />
     </systemComponents>
 
-    <phases/>
+    <phases>
+        <phase id="phaQuartz" name="SiO2(quartz)" state="solid" xsi:type="PurePhaseType">
+            <stoichiometry>
+                <stoich component="cmpSi" coeff="1"/>
+                <stoich component="cmpO"  coeff="2"/>
+            </stoichiometry>
+        </phase>
+    </phases>
 
 </database>

@@ -1,0 +1,84 @@
+<xs:schema
+        targetNamespace="http://calphad.org/thermml/0.0"
+        elementFormDefault="qualified"
+        version="0.0"
+        xmlns="http://calphad.org/thermml/0.0"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:include schemaLocation="../simple-types/main.xsd" />
+    <xs:include schemaLocation="../system-components/main.xsd" />
+
+    <xs:simpleType name="PhaseIdType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A unique identifier for phases.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:ID">
+            <xs:pattern value="pha[A-Z][A-Za-z]*" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="PhaseIdRefType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A unique identifier reference for phases.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:IDREF">
+            <xs:pattern value="pha[A-Z][A-Za-z]*" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="PhaseType" abstract="true">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A collection of matter in a single physical state, immiscible with other phases.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="id"     type="PhaseIdType"      use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The id used to uniquely identify a phase in an XML file.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="name"   type="xs:string"        use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    A name used for display purposes.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="state"  type="MatterStateType"  use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The phase's state of matter.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    
+    <xs:complexType name="StoichiometryRecordType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Used to specify the content of a system component in a phase constituent.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="component"    type="SystemComponentIdRefType"  use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    System component ID.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="coeff"  type="xs:float"                  use="optional"  default="1.0">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    Stoichiometry coefficient in mol per mole of phase constituent.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+</xs:schema>

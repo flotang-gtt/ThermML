@@ -14,4 +14,32 @@
         </xs:restriction>
     </xs:simpleType>
     
+    <xs:simpleType name="FractionType">
+
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A fraction between zero and one.
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:restriction base="xs:float">
+            <xs:minInclusive value = "0.0"/>
+            <xs:maxInclusive value = "1.0"/>
+        </xs:restriction>
+
+    </xs:simpleType>
+
+
+    <xs:simpleType name="FractionsType">
+
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A list of fractions.
+            </xs:documentation>
+        </xs:annotation>
+
+        <xs:list itemType="FractionType"/>
+
+    </xs:simpleType>
+
 </xs:schema>

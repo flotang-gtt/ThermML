@@ -1,0 +1,26 @@
+<xs:schema
+        targetNamespace="http://calphad.org/thermml/0.0"
+        elementFormDefault="qualified"
+        version="0.0"
+        xmlns="http://calphad.org/thermml/0.0"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:include schemaLocation="core.xsd" />
+
+    <xs:complexType name="PurePhaseType">
+        <xs:complexContent>
+            <xs:extension base="PhaseType">
+                <xs:sequence>
+                    <xs:element name="stoichiometry">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                                <xs:element name="stoich" type="StoichiometryRecordType" />
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+        
+</xs:schema>
