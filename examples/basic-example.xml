@@ -22,4 +22,6 @@
         <systemComponent id="cmpRe" symbol="Re" refstate="HCP_A3" molar_mass="186.21" h298="5355.5" s298="36.526" />
     </systemComponents>
 
+    <phases/>
+
 </database>

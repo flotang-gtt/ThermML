@@ -7,6 +7,7 @@
 
     <xs:include schemaLocation="../potentials/main.xsd" />
     <xs:include schemaLocation="../system-components/main.xsd" />
+    <xs:include schemaLocation="../phases/main.xsd" />
 
     <xs:complexType name="DatabaseType">
         <xs:annotation>
@@ -36,8 +37,8 @@
 
             <xs:element name="phases">
                 <xs:complexType>
-                    <xs:sequence minOccurs="1" maxOccurs="unbounded">
-                        <xs:element name="phase" type="PhaseType" />
+                    <xs:sequence>
+                        <xs:element name="phase" type="PhaseType" minOccurs="0" maxOccurs="unbounded"/>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
