@@ -1,0 +1,74 @@
+<xs:schema
+        targetNamespace="http://calphad.org/thermml/0.0"
+        elementFormDefault="qualified"
+        version="0.0"
+        xmlns="http://calphad.org/thermml/0.0"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:simpleType name="SystemComponentIdType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A unique identifier for system componet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:ID">
+            <xs:pattern value="cmp[A-Z]" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="SystemComponentIdRefType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A unique identifier reference for system componet.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:IDREF">
+            <xs:pattern value="cmp[A-Z]" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="SystemComponentType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                The most basic component from which phase constituents are constructed.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="id"          type="SystemComponentIdType"  use="required"/>
+        <xs:attribute name="symbol"      type="xs:string"              use="required">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    A symbol used for display purposes.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="molar_mass"  type="xs:float"               use="optional"  default="0.0">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    A name used for display purposes.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="refstate"    type="xs:string"              use="optional"  default="0.0">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The component reference state.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="h298"        type="xs:float"               use="optional"  default="0.0">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    Component enthalpy at 298.15 K in J/mol.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="s298"        type="xs:float"               use="optional"  default="0.0">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    Component entropy at 298.15 K in J/K/mol.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    
+</xs:schema>

@@ -1,0 +1,17 @@
+<xs:schema
+        targetNamespace="http://calphad.org/thermml/0.0"
+        elementFormDefault="qualified"
+        version="0.0"
+        xmlns="http://calphad.org/thermml/0.0"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:simpleType name="MatterStateType" final="restriction" >
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="solid" />
+            <xs:enumeration value="liquid" />
+            <xs:enumeration value="gas" />
+            <xs:enumeration value="plasma" />
+        </xs:restriction>
+    </xs:simpleType>
+    
+</xs:schema>

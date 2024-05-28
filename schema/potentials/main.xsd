@@ -1,0 +1,43 @@
+<xs:schema
+        targetNamespace="http://calphad.org/thermml/0.0"
+        elementFormDefault="qualified"
+        version="0.0"
+        xmlns="http://calphad.org/thermml/0.0"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:simpleType name="NonChemicalPotentialIdType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A unique identifier for non-chemical potentials.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:ID">
+            <xs:pattern value="pot[A-Z]" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="NonChemicalPotentialIdRefType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A unique identifier reference for non-chemical potentials.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:IDREF">
+            <xs:pattern value="pot[A-Z]" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="NonChemicalPotentialType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A non-chemical, or non-compositional, potential used in the calculation thermodynamic quantities.
+                Temperature is the potential most commonly used.
+                Others include pressure, magnetic field strength, stress, and surface energy.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="id"      type="NonChemicalPotentialIdType"  use="required"/>
+        <xs:attribute name="symbol"  type="xs:string"                   use="required"/>
+        <xs:attribute name="units"   type="xs:string"                   use="required"/>
+    </xs:complexType>
+    
+</xs:schema>

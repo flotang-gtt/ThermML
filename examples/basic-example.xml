@@ -1,0 +1,25 @@
+<database
+        xmlns="http://calphad.org/thermml/0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xi="http://www.w3.org/2001/XInclude"
+        xsi:schemaLocation="http://calphad.org/thermml/0.0 ../schema/thermml-schema.xsd"
+
+        name="Example Database">
+
+    <description>
+        This is an example thermodynamic database for demonstrating the ThermML schema.
+    </description>
+
+    <nonChemicalPotentials>
+        <nonChemicalPotential id="potT" symbol="T" units="K"/>
+        <nonChemicalPotential id="potP" symbol="P" units="bar"/>
+        <nonChemicalPotential id="potB" symbol="B" units="T"/>
+    </nonChemicalPotentials>
+
+    <systemComponents>
+        <systemComponent id="cmpVa" symbol="Va" />
+        <systemComponent id="cmpMo" symbol="Mo" refstate="BCC_A2" molar_mass="95.940" h298="4589.0" s298="28.560" />
+        <systemComponent id="cmpRe" symbol="Re" refstate="HCP_A3" molar_mass="186.21" h298="5355.5" s298="36.526" />
+    </systemComponents>
+
+</database>
