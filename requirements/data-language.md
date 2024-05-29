@@ -16,7 +16,7 @@ The data language must allow data files files to be readable and writable by com
 
 ### Rationale
 
-The content of ThermML files needs to be loaded by CALPHAD software tools.
+The content of ThermML files needs to be read and written by CALPHAD software tools.
 
 ### Performance
 
