@@ -16,12 +16,12 @@ major languages are mature and robust enough.
 
 ## Project structure
 
+The `analysis` directory contains `requirements` and `user-stories` used as basis
+for driving and directing development.
+
 The `examples` directory contains examples of files that validate or qualify to
 be validated against the schema. A proper testing pipeline needs to be
 implemented at a later point in time.
-
-The `requirements` directory contains the requirements used as basis for driving 
-and directing development.
 
 The `schema` directory contains the schema definition files.
 
@@ -30,7 +30,3 @@ The `schema` directory contains the schema definition files.
 As of the drafting stage of this project, every contribution is welcome. Pull
 requests may add examples or requirements. Most current implementations can be
 seen as discussable items. The issues section is good place to start discussions.
-
-
-
-
