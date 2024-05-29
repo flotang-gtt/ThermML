@@ -5,6 +5,7 @@ This directory hosts the set of requirements that focuses and directs developmen
 We use formal requirement analysis and specification to make sure that design and implementation are directed by a thorough understanding of what is important and needed.
 It also allows us to engage with the CALPHAD community regarding their needs, concerns, frustrations, and preferences.
 This should reduce the risk of making naive and unwise design and implementation decisions.
+It should also enhance the probability of the community adopting ThermML as a standard.
 
 ## Brandon's Initial List
 
