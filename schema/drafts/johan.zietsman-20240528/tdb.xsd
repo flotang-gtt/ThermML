@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+        targetNamespace="http://calphad.org/thermoml/0.0"
+        elementFormDefault="qualified"
+        version="0.0"
+        xmlns="http://calphad.org/thermoml/0.0"
+        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="database" type="DatabaseType"/>
+
+    <xs:complexType name="NonChemicalPotentialType">
+        <xs:attribute name="id"      type="xs:ID"      use="required"/>
+        <xs:attribute name="symbol"  type="xs:string"  use="required"/>
+        <xs:attribute name="units"   type="xs:string"   use="required"/>
+    </xs:complexType>
+    
+    <xs:complexType name="SystemComponentType">
+        <xs:attribute name="id"          type="xs:ID"      use="required"/>
+        <xs:attribute name="symbol"      type="xs:string"  use="required"/>
+        <xs:attribute name="molar_mass"  type="xs:float"   use="optional"  default="0.0"/>
+        <xs:attribute name="refstate"    type="xs:string"  use="optional"  default="0.0"/>
+        <xs:attribute name="h298"        type="xs:float"   use="optional"  default="0.0"/>
+        <xs:attribute name="s298"        type="xs:float"   use="optional"  default="0.0"/>
+    </xs:complexType>
+
+    <xs:complexType name="StoichiometryRecordType">
+        <xs:attribute name="sc_id"       type="xs:IDREF"   use="required"/>
+        <xs:attribute name="coeff"       type="xs:float"   use="optional"  default="1.0"/>
+    </xs:complexType>
+
+    <xs:complexType name="SpeciesType">
+        <xs:sequence>
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+            <xs:element name="stoichiometry" type="StoichiometryRecordType" />
+        </xs:sequence>
+        <xs:attribute name="id"          type="xs:ID"      use="required"/>
+        <xs:attribute name="formula"     type="xs:string"  use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="ExpressionTermType" abstract="true"/>
+
+    <xs:complexType name="TextTermType">
+        <xs:complexContent>
+            <xs:extension base="ExpressionTermType">
+                <xs:attribute name="coeff"     type="xs:float"   use="optional"  default="1.0"/>
+                <xs:attribute name="text"      type="xs:string"  use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PowerTermType">
+        <xs:complexContent>
+            <xs:extension base="ExpressionTermType">
+                <xs:attribute name="coeff"     type="xs:float"   use="optional"  default="1.0"/>
+                <xs:attribute name="var"       type="xs:string"  use="optional"  default="T"/>
+                <xs:attribute name="exponent"  type="xs:string"  use="optional"  default="0.0"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="LogXTermType">
+        <xs:complexContent>
+            <xs:extension base="ExpressionTermType">
+                <xs:attribute name="coeff"  type="xs:float"   use="optional"  default="1.0"/>
+                <xs:attribute name="base"   type="xs:string"  use="optional"  default="2.718281828459045"/>
+                <xs:attribute name="var"    type="xs:string"  use="optional"  default="T"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="XLogXTermType">
+        <xs:complexContent>
+            <xs:extension base="ExpressionTermType">
+                <xs:attribute name="coeff"     type="xs:float"   use="optional"  default="1.0"/>
+                <xs:attribute name="var"      type="xs:string"  use="optional"  default="T"/>
+                <xs:attribute name="base"   type="xs:string"  use="optional"  default="2.718281828459045"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="ExpressionLimitsType">
+        <xs:attribute name="variable"  type="xs:string"  use="required"/>
+        <xs:attribute name="min"       type="xs:float"  use="optional"/>
+        <xs:attribute name="max"       type="xs:float"  use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="ExpressionType" abstract="true">
+        <xs:sequence>
+            <xs:element name="limits"  type="ExpressionLimitsType"  minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="ConstantExpressionType">
+        <xs:complexContent>
+            <xs:extension base="ExpressionType">
+                <xs:attribute name="value" type="xs:float" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TextExpressionType">
+        <xs:complexContent>
+            <xs:extension base="ExpressionType">
+                <xs:attribute name="text"      type="xs:string"      use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MultitermExpressionType">
+        <xs:complexContent>
+            <xs:extension base="ExpressionType">
+                <xs:sequence>
+                    <xs:element name="term"         type="ExpressionTermType"  maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="FunctionType">
+        <xs:sequence>
+            <xs:element name="description"  type="xs:string"       minOccurs="0" />
+            <xs:element name="expression"   type="ExpressionType"  maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="id"      type="xs:ID"      use="required"/>
+        <xs:attribute name="symbol"  type="xs:string"  use="required"/>
+        <xs:attribute name="units"   type="xs:string"  use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="PhaseType" abstract="true">
+        <xs:sequence>
+            <xs:element name="description"    type="xs:string" minOccurs="0" />
+            <xs:element name="function"  type="FunctionType" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="id"    type="xs:ID"      use="required"/>
+        <xs:attribute name="name"  type="xs:string"  use="required"/>
+        <xs:attribute name="state" type="xs:string"  use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="FreeEnergyContributionType" abstract="true">
+    </xs:complexType>
+
+    <xs:complexType name="CEFFreeEnergyContributionType">
+        <xs:complexContent>
+            <xs:extension base="FreeEnergyContributionType">
+                <xs:sequence>
+                    <xs:element name="function"  type="FunctionType" minOccurs="1" maxOccurs="unbounded"/>
+                </xs:sequence>
+                <xs:attribute name="constituents" type="xs:IDREFS" use="required"/>
+                <xs:attribute name="order" type="xs:float" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="CEFSublatticeType">
+        <xs:sequence>
+            <xs:element name="gContribution" type="CEFFreeEnergyContributionType" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="multiplicity" type="xs:int" use="required"/>
+        <xs:attribute name="constituents" type="xs:IDREFS" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="CEFPhaseType">
+        <xs:complexContent>
+            <xs:extension base="PhaseType">
+                <xs:sequence>
+                    <xs:element name="sublattice" type="CEFSublatticeType" maxOccurs="unbounded" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="DatabaseType">
+        <xs:sequence>
+
+            <xs:element name="description" type="xs:string" minOccurs="0"/>
+
+            <xs:element name="nonChemicalPotential">
+                <xs:complexType>
+                    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                        <xs:element name="nonChemicalPotential" type="NonChemicalPotentialType" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="systemComponents">
+                <xs:complexType>
+                    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                        <xs:element name="systemComponent" type="SystemComponentType" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="species">
+                <xs:complexType>
+                    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                        <xs:element name="specie" type="SpeciesType" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="functions">
+                <xs:complexType>
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="function" type="FunctionType" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+            <xs:element name="phases">
+                <xs:complexType>
+                    <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                        <xs:element name="phase" type="PhaseType" />
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" />
+    </xs:complexType>
+
+</xs:schema>
