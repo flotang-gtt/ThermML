@@ -20,10 +20,10 @@ The `examples` directory contains examples of files that validate or qualify to
 be validated against the schema. A proper testing pipeline needs to be
 implemented at a later point in time.
 
-The `schema` directory contains the schema definition files.
-
 The `requirements` directory contains the requirements used as basis for driving 
 and directing development.
+
+The `schema` directory contains the schema definition files.
 
 ## How to contribute
 
