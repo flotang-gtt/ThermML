@@ -22,6 +22,9 @@ implemented at a later point in time.
 
 The `schema` directory contains the schema definition files.
 
+The `requirements` directory contains the requirements used as basis for driving 
+and directing development.
+
 ## How to contribute
 
 As of the drafting stage of this project, every contribution is welcome. Pull
