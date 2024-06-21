@@ -12,7 +12,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:ID">
-            <xs:pattern value="cmp[A-Z][a-z]?" />
+            <xs:pattern value="[A-Z][a-z]?" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -23,7 +23,7 @@
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:IDREF">
-            <xs:pattern value="cmp[A-Z][a-z]?" />
+            <xs:pattern value="[A-Z][a-z]?" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -33,8 +33,8 @@
                 The most basic component from which phase constituents are constructed.
             </xs:documentation>
         </xs:annotation>
-        <xs:attribute name="id"          type="SystemComponentIdType"  use="required"/>
-        <xs:attribute name="symbol"      type="xs:string"              use="required">
+        <!-- <xs:attribute name="id"          type="SystemComponentIdType"  use="required"/> -->
+        <xs:attribute name="symbol"      type="SystemComponentIdType"              use="required">
             <xs:annotation>
                 <xs:documentation xml:lang="en">
                     A symbol used for display purposes.
