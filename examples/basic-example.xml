@@ -17,20 +17,57 @@
     </nonChemicalPotentials>
 
     <systemComponents>
-        <systemComponent id="cmpVa" symbol="Va" />
-        <systemComponent id="cmpMo" symbol="Mo" refstate="BCC_A2" molar_mass="95.940" h298="4589.0" s298="28.560" />
-        <systemComponent id="cmpRe" symbol="Re" refstate="HCP_A3" molar_mass="186.21" h298="5355.5" s298="36.526" />
-        <systemComponent id="cmpSi" symbol="Si" refstate="???"    molar_mass="28.0855" h298="0.0"   s298="1.234" />
-        <systemComponent id="cmpO"  symbol="O"  refstate="???"    molar_mass="15.9994" h298="0.0"   s298="2.345" />
+        <systemComponent  symbol="Va" />
+        <systemComponent  symbol="Mo" refstate="BCC_A2" molar_mass="95.940"  h298="4589.0" s298="28.560" />
+        <systemComponent  symbol="Re" refstate="HCP_A3" molar_mass="186.21"  h298="5355.5" s298="36.526" />
+        <systemComponent  symbol="Cr" refstate="BCC_A2" molar_mass="51.996"  h298="4050.0" s298="23.5429" />
+        <systemComponent  symbol="Ni" refstate="FCC_A1" molar_mass="58.69"   h298="4787.0" s298="29.7955" />
+        <systemComponent  symbol="Si" refstate="???"    molar_mass="28.0855" h298="0.0"    s298="1.234" />
+        <systemComponent  symbol="O"  refstate="???"    molar_mass="15.9994" h298="0.0"    s298="2.345" />
     </systemComponents>
 
     <phases>
         <phase id="phaQuartz" name="SiO2(quartz)" state="solid" xsi:type="PurePhaseType">
             <stoichiometry>
-                <stoich component="cmpSi" coeff="1"/>
-                <stoich component="cmpO"  coeff="2"/>
+                <stoich component="Si" coeff="1"/>
+                <stoich component="O"  coeff="2"/>
             </stoichiometry>
+            <energy type="h-s-cp" factor="1" name="SiO2#quartz" />
+        </phase>
+        
+        <phase id="phaNi" name="Ni(BCC_A2)" state="solid" xsi:type="PurePhaseType">
+            <stoichiometry>
+                <stoich component="Ni" coeff="1"/>
+            </stoichiometry>
+            <energy type="tdb" factor="1" name="GHSERNI" />
         </phase>
     </phases>
+
+    <functions>
+        <hscp name="SiO2#quartz">
+            <h298 value="-910699.94184" />
+            <s298 value="41.4600015888" />
+            <Range low="298.15" high="373.0">
+                <term coeff="80.0119918" fun="T^0" />
+                <term coeff="-3546683.99888" fun="T^(-2)" />
+                <term coeff="-240.275998928" fun="T^(-0.5)" />
+                <term coeff="491568369.44" fun="T^(-3)" />
+            </Range>
+        </hscp>
+        <tdb name="GHSERNI">
+            298.15  -5179.159+117.854*T-22.096*T*LN(T)-0.0048407*T**2;
+            1728.00  Y  -27840.62+279.134977*T-43.1*T*LN(T)+1.12754E+31*T**(-9);
+            3000.00  N !
+        </tdb>
+        <chemsage name="Cr#FCC_A1">
+            4 2 
+            1478.0000     -1490500.2      1740.8682     -248.92708      0.0000000    
+            0.0000000      0.0000000    
+           2 -7695.4098       0.50  23184001.      -2.00
+            1550.0000     -1626055.5      1571.5021     -240.58000      0.0000000    
+            0.0000000      0.0000000    
+           1  0.0000000       0.00
+        </chemsage>
+    </functions>
 
 </database>

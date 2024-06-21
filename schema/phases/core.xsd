@@ -81,4 +81,35 @@
         </xs:attribute>
     </xs:complexType>
 
+    <xs:complexType name="EnergyFunctionType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Used to specify the energy of a phase. This should list all the
+                possible energy function types.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="coeff"  type="xs:float"                  use="optional"  default="1.0">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    Stoichiometry coefficient in mol per mole of phase constituent.
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:simpleType name="FunctionIDType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Name to identify a function. Certain restrictions may apply,
+                vendor specifically.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <!-- This pattern makes sure that if a '#' is used, it has to be "in
+                the middle" of the pattern. E.g. SiO2#quartz is ok, MgCl2# is not. TODO there
+                may be more characters to consider: -_/. ? -->
+            <xs:pattern value="[A-Z][A-Za-z0-9]*#?[A-Za-z0-9_]+" />
+        </xs:restriction>
+    </xs:simpleType>
+
 </xs:schema>
