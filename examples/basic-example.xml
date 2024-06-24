@@ -32,20 +32,22 @@
                 <stoich component="Si" coeff="1"/>
                 <stoich component="O"  coeff="2"/>
             </stoichiometry>
-            <energyRef type="h-s-cp" factor="1" name="SiO2#quartz" />
+            <property type="free-energy" function_of="T">
+                <reference type="h-s-cp" factor="1" name="SiO2#quartz" />
+            </property>
         </phase>
 
-        <phase id="phaNi" name="Ni(BCC_A2)" state="solid" xsi:type="PurePhaseType">
+        <phase id="phaNi" name="Ni(FCC_A1)" state="solid" xsi:type="PurePhaseType">
             <stoichiometry>
                 <stoich component="Ni" coeff="1"/>
             </stoichiometry>
-            <energy>
+            <property type="free-energy" function_of="T">
                 <tdb name="GHSERNI">
                     298.15  -5179.159+117.854*T-22.096*T*LN(T)-0.0048407*T**2;
                     1728.00  Y  -27840.62+279.134977*T-43.1*T*LN(T)+1.12754E+31*T**(-9);
                     3000.00  N !
                 </tdb>
-            </energy>
+            </property>
         </phase>
     </phases>
 
