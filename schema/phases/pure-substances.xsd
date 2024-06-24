@@ -19,30 +19,33 @@
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:choice>
-
-                        <xs:element name="energyRef">
-                            <xs:annotation>
-                                <xs:documentation xml:lang="en">
-                                    The energy function for the phase.
-                                </xs:documentation>
-                            </xs:annotation>
-                            <xs:complexType>
-                            <xs:attribute name="type" use="required" type="FunctionType" />
-                            <xs:attribute name="factor" use="optional" type="xs:float" default="1.0" />
-                            <xs:attribute name="name" use="required" type="FunctionIDType" />
-                            </xs:complexType>
-                        </xs:element>
-                        <xs:element name="energy" >
-                            <xs:complexType>
+                    <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
+                        <xs:complexType>
+                            
+                            <xs:choice>
+                                <xs:element name="reference">
+                                    <xs:annotation>
+                                        <xs:documentation xml:lang="en">
+                                            Reference to a function that resides elsewhere.
+                                        </xs:documentation>
+                                    </xs:annotation>
+                                    <xs:complexType>
+                                        <xs:attribute name="type" use="required" type="FunctionType" />
+                                        <xs:attribute name="factor" use="optional" type="xs:float" default="1.0" />
+                                        <xs:attribute name="name" use="required" type="FunctionIDType" />
+                                    </xs:complexType>
+                                </xs:element>
                                 <xs:choice minOccurs="1" maxOccurs="1">        
                                     <xs:element name="hscp" type="FunctionTypeHSCP"/>
                                     <xs:element name="tdb" type="FunctionTypeTDB"/>
                                     <xs:element name="chemsage" type="FunctionTypeCSdat"/>
                                 </xs:choice>
-                            </xs:complexType>                            
-                        </xs:element>
-                    </xs:choice>
+                            </xs:choice>
+                            <xs:attribute name="type" use="required" type="PhasePropertyType" />
+                            <xs:attribute name="function_of" use="required" type="FunctionVariableType" />
+
+                        </xs:complexType>
+                    </xs:element>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
