@@ -97,18 +97,53 @@
         </xs:attribute>
     </xs:complexType>
 
+    <xs:simpleType name="PhasePropertyType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A fixed list of available phase properties. 
+            </xs:documentation>
+        </xs:annotation>
+        <xs:list>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="free-energy" />
+                    <!--  this is where additional properties should go. -->
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:list>
+    </xs:simpleType>
+
+    <xs:simpleType name="FunctionVariableType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A fixed list of available function variables. 
+            </xs:documentation>
+        </xs:annotation>
+        <xs:list>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="T" />
+                    <xs:enumeration value="P" />
+                    <xs:enumeration value="T,P" />
+                    <!-- To be extended -->
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:list>
+
+    </xs:simpleType>
+
     <xs:simpleType name="FunctionIDType">
         <xs:annotation>
             <xs:documentation xml:lang="en">
-                Name to identify a function. Certain restrictions may apply,
-                vendor specifically.
+                Name to identify a function. Certain vendor specific
+                restrictions may apply.
             </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <!-- This pattern makes sure that if a '#' is used, it has to be "in
-                the middle" of the pattern. E.g. SiO2#quartz is ok, MgCl2# is not. TODO there
-                may be more characters to consider: -_/. ? -->
-            <xs:pattern value="[A-Z][A-Za-z0-9]*#?[A-Za-z0-9_]+" />
+the middle" of the pattern. E.g. SiO2#quartz is ok, MgCl2# is not. TODO there
+may be more characters to consider: -_/. ? -->
+            <xs:pattern value="[A-Z][A-Za-z0-9_]*#?[A-Za-z0-9_]+" />
         </xs:restriction>
     </xs:simpleType>
 
