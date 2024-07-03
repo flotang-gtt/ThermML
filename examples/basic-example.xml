@@ -42,22 +42,24 @@
                 <stoich component="Ni" coeff="1"/>
             </stoichiometry>
             <property type="G">
-                <tdb name="GHSERNI">
-                    298.15  -5179.159+117.854*T-22.096*T*LN(T)-0.0048407*T**2;
-                    1728.00  Y  -27840.62+279.134977*T-43.1*T*LN(T)+1.12754E+31*T**(-9);
-                    3000.00  N !
-                </tdb>
+                <function name="GHSERNI" xsi:type="FunctionTypeTDB">
+                    <tdb>
+                        298.15  -5179.159+117.854*T-22.096*T*LN(T)-0.0048407*T**2;
+                        1728.00  Y  -27840.62+279.134977*T-43.1*T*LN(T)+1.12754E+31*T**(-9);
+                        3000.00  N !
+                    </tdb>
+                </function>
             </property>
         </phase>
     </phases>
 
     <functions>
-        <expr name="SiO2#other_func">
-            <range low="298.15" high="373.0">
+        <function name="SiO2#other_func" xsi:type="FunctionTypeExpr">
+            <range low="298.15" high="373.0" >
                 80.0119918*T^0 + -3546683.99888*T^(-2) + -240.275998928*T^(-0.5) + 491568369.44*T^(-3)
             </range>
-        </expr>
-        <hscp name="SiO2#quartz">
+        </function>
+        <function name="SiO2#quartz" xsi:type="FunctionTypeHSCP">
             <h298 value="-910699.94184" />
             <s298 value="41.4600015888" />
             <range low="298.15" high="373.0">
@@ -66,21 +68,25 @@
                 <term coeff="-240.275998928" fun="T^(-0.5)" />
                 <term coeff="491568369.44" fun="T^(-3)" />
             </range>
-        </hscp>
-        <tdb name="GHSERNI">
-            298.15  -5179.159+117.854*T-22.096*T*LN(T)-0.0048407*T**2;
-            1728.00  Y  -27840.62+279.134977*T-43.1*T*LN(T)+1.12754E+31*T**(-9);
-            3000.00  N !
-        </tdb>
-        <chemsage name="Cr#FCC_A1">
-            4 2 
-            1478.0000     -1490500.2      1740.8682     -248.92708      0.0000000    
-            0.0000000      0.0000000    
-           2 -7695.4098       0.50  23184001.      -2.00
-            1550.0000     -1626055.5      1571.5021     -240.58000      0.0000000    
-            0.0000000      0.0000000    
-           1  0.0000000       0.00
-        </chemsage>
+        </function>
+        <function name="GHSERNI" xsi:type="FunctionTypeTDB">
+            <tdb>
+                298.15  -5179.159+117.854*T-22.096*T*LN(T)-0.0048407*T**2;
+                1728.00  Y  -27840.62+279.134977*T-43.1*T*LN(T)+1.12754E+31*T**(-9);
+                3000.00  N !
+            </tdb>
+        </function>
+        <function name="Cr#FCC_A1" xsi:type="FunctionTypeCSdat">
+            <chemsage>
+                4 2     
+                1478.0000     -1490500.2      1740.8682     -248.92708      0.0000000    
+                0.0000000      0.0000000    
+                2 -7695.4098       0.50  23184001.      -2.00
+                1550.0000     -1626055.5      1571.5021     -240.58000      0.0000000    
+                0.0000000      0.0000000    
+                1  0.0000000       0.00
+            </chemsage>
+        </function>
     </functions>
 
 </database>
