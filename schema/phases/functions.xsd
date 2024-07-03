@@ -19,12 +19,59 @@
         </xs:annotation>
         
             <xs:restriction base="xs:string">
+                <xs:enumeration value="expr" />
                 <xs:enumeration value="h-s-cp" />
                 <xs:enumeration value="tdb" />
                 <xs:enumeration value="CSdat" />
                 <xs:enumeration value="gibbs" />
             </xs:restriction>
     </xs:simpleType>
+
+    <xs:complexType name="FunctionTypeExprRange">
+        <xs:annotation>
+            <xs:documentation>
+                A range for a function that is stored in strict ThermML expression style.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            
+            <xs:extension base="xs:string">
+                <xs:attribute name="low" type="xs:double" use="required">
+                <xs:annotation>
+                    <xs:documentation>Lower range limit.</xs:documentation>
+                </xs:annotation>
+                </xs:attribute>
+                <xs:attribute name="high" type="xs:double" use="required"/>
+            </xs:extension>
+        </xs:simpleContent>
+    
+    </xs:complexType>
+
+    <xs:complexType name="FunctionReferenceType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                Reference to a function that is a child of the functions element.
+            </xs:documentation>
+        </xs:annotation>
+            <xs:attribute name="type" use="required" type="FunctionType" />
+            <xs:attribute name="factor" use="optional" type="xs:float" default="1.0" />
+            <xs:attribute name="name" use="required" type="FunctionIDType" />
+    </xs:complexType>
+
+
+    <xs:complexType  name="FunctionTypeExpr">
+    <xs:annotation>
+        <xs:documentation>
+            A temperature dependent function that is stored in strict ThermML expression style.
+        </xs:documentation>
+        
+    </xs:annotation>
+    <xs:sequence>
+        <xs:element name="range" type="FunctionTypeExprRange" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attribute name="name" type="FunctionIDType" use="required" />
+    
+    </xs:complexType>   
 
     <xs:complexType name="FunctionHSCPTermType">
         <xs:annotation>

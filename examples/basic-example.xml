@@ -32,7 +32,7 @@
                 <stoich component="Si" coeff="1"/>
                 <stoich component="O"  coeff="2"/>
             </stoichiometry>
-            <property type="free-energy" function_of="T">
+            <property type="G">
                 <reference type="h-s-cp" factor="1" name="SiO2#quartz" />
             </property>
         </phase>
@@ -41,7 +41,7 @@
             <stoichiometry>
                 <stoich component="Ni" coeff="1"/>
             </stoichiometry>
-            <property type="free-energy" function_of="T">
+            <property type="G">
                 <tdb name="GHSERNI">
                     298.15  -5179.159+117.854*T-22.096*T*LN(T)-0.0048407*T**2;
                     1728.00  Y  -27840.62+279.134977*T-43.1*T*LN(T)+1.12754E+31*T**(-9);
@@ -52,6 +52,11 @@
     </phases>
 
     <functions>
+        <expr name="SiO2#other_func">
+            <range low="298.15" high="373.0">
+                80.0119918*T^0 + -3546683.99888*T^(-2) + -240.275998928*T^(-0.5) + 491568369.44*T^(-3)
+            </range>
+        </expr>
         <hscp name="SiO2#quartz">
             <h298 value="-910699.94184" />
             <s298 value="41.4600015888" />

@@ -106,7 +106,34 @@
         <xs:list>
             <xs:simpleType>
                 <xs:restriction base="xs:string">
-                    <xs:enumeration value="free-energy" />
+                    <xs:enumeration value="G">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">
+                                Gibbs energy
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="BMAG">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">
+                                Bohr magneton
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="TC">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">
+                                Curie Temperature
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                    <xs:enumeration value="TN">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">
+                                Neel Temperature
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
                     <!--  this is where additional properties should go. -->
                 </xs:restriction>
             </xs:simpleType>
