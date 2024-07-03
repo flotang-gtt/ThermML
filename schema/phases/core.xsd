@@ -9,7 +9,6 @@
     <xs:include schemaLocation="../system-components/main.xsd" />
 
 
-
     <xs:complexType name="PhaseType" abstract="true">
         <xs:annotation>
             <xs:documentation xml:lang="en">
