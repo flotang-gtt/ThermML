@@ -8,21 +8,10 @@
     <xs:simpleType name="SystemComponentIdType">
         <xs:annotation>
             <xs:documentation xml:lang="en">
-                A unique identifier for system componet.
+                An identifier for system component, typically an element of the periodic table.
             </xs:documentation>
         </xs:annotation>
-        <xs:restriction base="xs:ID">
-            <xs:pattern value="[A-Z][a-z]?" />
-        </xs:restriction>
-    </xs:simpleType>
-
-    <xs:simpleType name="SystemComponentIdRefType">
-        <xs:annotation>
-            <xs:documentation xml:lang="en">
-                A unique identifier reference for system componet.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:IDREF">
+        <xs:restriction base="xs:string">
             <xs:pattern value="[A-Z][a-z]?" />
         </xs:restriction>
     </xs:simpleType>
@@ -33,7 +22,6 @@
                 The most basic component from which phase constituents are constructed.
             </xs:documentation>
         </xs:annotation>
-        <!-- <xs:attribute name="id"          type="SystemComponentIdType"  use="required"/> -->
         <xs:attribute name="symbol"      type="SystemComponentIdType"              use="required">
             <xs:annotation>
                 <xs:documentation xml:lang="en">

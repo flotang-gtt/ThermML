@@ -17,17 +17,17 @@
     </nonChemicalPotentials>
 
     <systemComponents>
-        <systemComponent  symbol="Va" />
-        <systemComponent  symbol="Mo" refstate="BCC_A2" molar_mass="95.940"  h298="4589.0" s298="28.560" />
-        <systemComponent  symbol="Re" refstate="HCP_A3" molar_mass="186.21"  h298="5355.5" s298="36.526" />
-        <systemComponent  symbol="Cr" refstate="BCC_A2" molar_mass="51.996"  h298="4050.0" s298="23.5429" />
-        <systemComponent  symbol="Ni" refstate="FCC_A1" molar_mass="58.69"   h298="4787.0" s298="29.7955" />
-        <systemComponent  symbol="Si" refstate="???"    molar_mass="28.0855" h298="0.0"    s298="1.234" />
-        <systemComponent  symbol="O"  refstate="???"    molar_mass="15.9994" h298="0.0"    s298="2.345" />
+        <systemComponent symbol="Va" />
+        <systemComponent symbol="Mo" refstate="BCC_A2" molar_mass="95.940"  h298="4589.0" s298="28.560" />
+        <systemComponent symbol="Re" refstate="HCP_A3" molar_mass="186.21"  h298="5355.5" s298="36.526" />
+        <systemComponent symbol="Cr" refstate="BCC_A2" molar_mass="51.996"  h298="4050.0" s298="23.5429" />
+        <systemComponent symbol="Ni" refstate="FCC_A1" molar_mass="58.69"   h298="4787.0" s298="29.7955" />
+        <systemComponent symbol="Si" refstate="???"    molar_mass="28.0855" h298="0.0"    s298="1.234" />
+        <systemComponent symbol="O"  refstate="???"    molar_mass="15.9994" h298="0.0"    s298="2.345" />
     </systemComponents>
 
     <phases>
-        <phase id="phaQuartz" name="SiO2(quartz)" state="solid" xsi:type="PurePhaseType">
+        <phase name="SiO2(quartz)" alias="Amirite(NotReal)" state="solid" xsi:type="PurePhaseType">
             <stoichiometry>
                 <stoich component="Si" coeff="1"/>
                 <stoich component="O"  coeff="2"/>
@@ -37,7 +37,7 @@
             </property>
         </phase>
 
-        <phase id="phaNi" name="Ni(FCC_A1)" state="solid" xsi:type="PurePhaseType">
+        <phase name="Ni(FCC_A1)" state="solid" xsi:type="PurePhaseType">
             <stoichiometry>
                 <stoich component="Ni" coeff="1"/>
             </stoichiometry>
