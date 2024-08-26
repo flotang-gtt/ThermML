@@ -1,0 +1,77 @@
+<database
+        xmlns="http://calphad.org/thermml/0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xi="http://www.w3.org/2001/XInclude"
+        xsi:schemaLocation="http://calphad.org/thermml/0.0 ../schema/thermml-schema.xsd"
+
+        name="Example Simple Solution Database">
+
+    <description>
+        This is an example thermodynamic database for demonstrating the ThermML schema for simple solutions.
+    </description>
+
+    <nonChemicalPotentials>
+        <nonChemicalPotential id="potT" symbol="T" units="K"/>
+        <nonChemicalPotential id="potP" symbol="P" units="bar"/>
+        <nonChemicalPotential id="potB" symbol="B" units="T"/>
+    </nonChemicalPotentials>
+
+    <systemComponents>
+        <systemComponent symbol="Va" />
+        <systemComponent symbol="C"  refstate="GRAPHITE" molar_mass="12.011"  h298="1054.0"   s298="5.7423"  />
+        <systemComponent symbol="Fe" refstate="BCC_A2"   molar_mass="55.847"  h298="4489.0"   s298="27.2797" />
+        <systemComponent symbol="Mn" refstate="CBCC_A12" molar_mass="54.9380" h298="4995.696" s298="32.2206" />
+    </systemComponents>
+
+    <phases>
+        <phase name="FCC_A1" alias="Austenite" state="solid" xsi:type="SimpleSolutionPhaseType">
+            <structure>
+                <sublattices Multiplicities="1 1" >​
+                    <sublattice List="Fe Mn"/>​
+                    <sublattice List="C Va"/>​
+                </sublattices>​
+            </structure>
+
+            <property type="G">
+                <reference type="h-s-cp" factor="1" name="SiO2#quartz" />
+            </property>
+        </phase>
+
+    </phases>
+
+    <functions>
+        <function name="SiO2#other_func" xsi:type="FunctionTypeExpr">
+            <range low="298.15" high="373.0" >
+                80.0119918*T^0 + -3546683.99888*T^(-2) + -240.275998928*T^(-0.5) + 491568369.44*T^(-3)
+            </range>
+        </function>
+        <function name="Al#HSER" xsi:type="FunctionTypeExpr" >
+            <range low="298.15" high="700.0" >
+                -7976.15+137.093038*T-24.3671976*T*LN(T)-0.001884662*T**2-8.77664E-07*T**3+74092*T**(-1)
+            </range>
+            <range low="700.0" high="933.47" >
+                -11276.24+223.048446*T-38.5844296*T*LN(T)+0.018531982*T**2-5.764227E-06*T**3+74092*T**(-1)
+            </range>
+            <range low="933.47" high="2900.0" >
+                -11278.378+188.684153*T-31.748192*T*LN(T)-1.230524E+28*T**(-9)
+            </range>
+        </function>
+        <function name="Fe#HSER" xsi:type="FunctionTypeExpr">
+            <range low="298.15" high="1811.0" >
+                +1225.7+124.134*T-23.5143*T*LN(T)-0.00439752*T**2-5.8927E-08*T**3+77359*T**(-1)
+            </range>
+            <range low="1811.0" high="6000.0" >
+                -25383.581+299.31255*T-46*T*LN(T)+2.29603E+31*T**(-9)
+            </range>
+        </function>
+        <function name="Fe#FCC" xsi:type="FunctionTypeExpr" >
+            <range low="298.15" high="1811.0" >
+                -1462.4+8.282*T-1.15*T*LN(T)+6.4E-04*T**2+GHSERFE
+            </range>
+            <range low="1811.0" high="6000.0" >
+                -1713.815+0.940009*T+GHSERFE+4.9251E+30*T**(-9)
+            </range>
+        </function>
+    </functions>
+
+</database>

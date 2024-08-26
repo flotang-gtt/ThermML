@@ -6,7 +6,15 @@
         xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:include schemaLocation="core.xsd" />
-    <xs:include schemaLocation="pure-substances.xsd" />
-    <xs:include schemaLocation="simple-solution.xsd" />
+    <xs:include schemaLocation="functions.xsd" />
 
+    <xs:complexType name="SimpleSolutionPhaseType">
+        <xs:complexContent>
+            <xs:extension base="PhaseType">
+
+            <!-- TODO -->
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+        
 </xs:schema>
