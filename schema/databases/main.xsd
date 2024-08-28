@@ -27,7 +27,12 @@
                 </xs:complexType>
             </xs:element>
 
-            <xs:element name="systemComponents">
+            <xs:element name="systemComponents" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The system components that are defined in the database. Can only exist once.
+                    </xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                     <xs:sequence minOccurs="1" maxOccurs="unbounded">
                         <xs:element name="systemComponent" type="SystemComponentType" />
@@ -35,7 +40,12 @@
                 </xs:complexType>
             </xs:element>
 
-            <xs:element name="phases">
+            <xs:element name="phases" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        The phases that are defined in the database. Can only exist once.
+                    </xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
                         <xs:element name="phase" type="PhaseType" minOccurs="0" maxOccurs="unbounded"/>
