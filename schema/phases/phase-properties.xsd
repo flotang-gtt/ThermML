@@ -5,7 +5,7 @@
     xmlns="http://calphad.org/thermml/0.0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:complexType name="AbstractPhasePropertyType" abstract="true">
+    <xs:complexType name="PhasePropertyType" abstract="true">
         <xs:annotation>
             <xs:documentation xml:lang="en"> A property node of the phase, e.g. Gibbs energy,
                 enthalpy, Bohr magneton, ... </xs:documentation>
@@ -15,7 +15,7 @@
 
     <xs:complexType name="G">
         <xs:complexContent>
-            <xs:extension base="AbstractPhasePropertyType">
+            <xs:extension base="PhasePropertyType">
                 <xs:annotation>
                     <xs:documentation xml:lang="en"> A sublattice in a phase. </xs:documentation>
                 </xs:annotation>
