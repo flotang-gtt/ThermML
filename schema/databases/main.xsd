@@ -43,6 +43,14 @@
                 </xs:complexType>
             </xs:element>
 
+            <xs:element name="functions" minOccurs="0">
+                <xs:complexType>
+                    <xs:choice maxOccurs="unbounded">        
+                        <xs:element name="function" type="AbstractFunctionType"/>
+                    </xs:choice>
+                </xs:complexType>
+            </xs:element>
+
         </xs:sequence>
         <xs:attribute name="name" type="xs:string" />
     </xs:complexType>
