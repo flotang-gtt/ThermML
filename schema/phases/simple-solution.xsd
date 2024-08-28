@@ -116,6 +116,18 @@
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="PhaseType">
+            <xs:sequence>
+                <xs:element name="structure" type="SublatticePhaseModelType" />
+                <xs:choice>
+                    <xs:element name="property" type="PhasePropertyType" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">
+                            A property of the phase, e.g. Gibbs energy, enthalpy, Bohr magneton, ...
+                        </xs:documentation>
+                    </xs:annotation>
+                    </xs:element>
+                </xs:choice>
+            </xs:sequence>        
 
             <!-- TODO -->
             </xs:extension>
