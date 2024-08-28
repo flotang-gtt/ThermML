@@ -49,36 +49,41 @@
     </phases>
 
     <functions>
-        <function name="SiO2#other_func" xsi:type="FunctionTypeExpr">
-            <range low="298.15" high="373.0" >
-                80.0119918*T^0 + -3546683.99888*T^(-2) + -240.275998928*T^(-0.5) + 491568369.44*T^(-3)
-            </range>
-        </function>
-        <function name="Al#HSER" xsi:type="FunctionTypeExpr" >
-            <range low="298.15" high="700.0" >
-                -7976.15+137.093038*T-24.3671976*T*LN(T)-0.001884662*T**2-8.77664E-07*T**3+74092*T**(-1)
-            </range>
-            <range low="700.0" high="933.47" >
-                -11276.24+223.048446*T-38.5844296*T*LN(T)+0.018531982*T**2-5.764227E-06*T**3+74092*T**(-1)
-            </range>
-            <range low="933.47" high="2900.0" >
-                -11278.378+188.684153*T-31.748192*T*LN(T)-1.230524E+28*T**(-9)
-            </range>
-        </function>
         <function name="Fe#HSER" xsi:type="FunctionTypeExpr">
             <range low="298.15" high="1811.0" >
-                +1225.7+124.134*T-23.5143*T*LN(T)-0.00439752*T**2-5.8927E-08*T**3+77359*T**(-1)
+                  1225.7  +  124.134*T  +  -23.5143*T*LN(T)  +  -0.00439752*T**2  +  -5.8927E-08*T**3  +  77359*T**(-1)
             </range>
             <range low="1811.0" high="6000.0" >
-                -25383.581+299.31255*T-46*T*LN(T)+2.29603E+31*T**(-9)
+                -25383.581  +  299.31255*T  +  -46*T*LN(T)  +  2.29603E+31*T**(-9)
             </range>
         </function>
-        <function name="Fe#FCC" xsi:type="FunctionTypeExpr" >
+        <function name="Fe#FCC_A1" xsi:type="FunctionTypeExpr" >
             <range low="298.15" high="1811.0" >
-                -1462.4+8.282*T-1.15*T*LN(T)+6.4E-04*T**2+GHSERFE
+                -1462.4  +  8.282*T  +  -1.15*T*LN(T)  +  6.4E-04*T**2  +  Fe#HSER
             </range>
             <range low="1811.0" high="6000.0" >
-                -1713.815+0.940009*T+GHSERFE+4.9251E+30*T**(-9)
+                -1713.815  +  0.940009*T  +  Fe#HSER  +  4.9251E+30*T**(-9)
+            </range>
+        </function>
+        <function name="Mn#FCC_A1" xsi:type="FunctionTypeExpr" >
+            <range low="298.15" high="1519.0">
+                -3439.3  +  131.884*T  +  -24.5177*T*LN(T)0.006*T**2  +  69600*T**(-1)
+            </range>
+            <range low="1519.0" high="2000.0">
+                +2663.31  +  -2.5984*T  +  Mn#HSER  +  2.205113E+30*T**(-9)
+            </range>
+        </function>
+        <function name="Mn#HSER" xsi:type="FunctionTypeExpr" >
+            <range low="298.15" high="1519.0">
+                -8115.28  +  130.059*T  +  -23.4582*T*LN(T)  +  -0.00734768*T**2  +  69827*T**(-1)            
+            </range>
+            <range low="1519.0" high="2000.0">
+                -28733.41  +  312.2648*T  +  -48*T*LN(T)  +  1.656847E+30*T**(-9)
+            </range>
+        </function>
+        <function name="C#HSER" xsi:type="FunctionTypeExpr">
+            <range low="298.15" high="6000.0">
+                -17368.441  +  170.73*T  +  -24.3*T*LN(T)  +  -4.723E-04*T**2  +  2562600*T**(-1)  +  -2.643E+08*T**(-2)  +  1.2E+10*T**(-3)
             </range>
         </function>
     </functions>
