@@ -106,6 +106,14 @@
     </xs:complexType>
 
     <xs:complexType name="SimpleSolutionPhaseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A simple solution phase.
+
+                TODO: still needs extensions for e.g. magnetic models and other property 'extensions'.
+                TODO: think about how vendor-extensions can be flexibly added.
+            </xs:documentation>
+        </xs:annotation>
         <xs:complexContent>
             <xs:extension base="PhaseType">
 
