@@ -5,7 +5,6 @@
     xmlns="http://calphad.org/thermml/0.0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-<<<<<<< HEAD
     <xs:complexType name="PhasePropertyType" abstract="true">
         <xs:annotation>
             <xs:documentation xml:lang="en"> A property node of the phase, e.g. Gibbs energy,
