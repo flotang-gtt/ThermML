@@ -25,11 +25,11 @@
 
     <phases>
         <phase name="FCC_A1" alias="Austenite" state="solid" xsi:type="SimpleSolutionPhaseType">
-            <structure>
-                <sublattices Multiplicities="1 1" >​
-                    <sublattice List="Fe Mn"/>​
-                    <sublattice List="C Va"/>​
-                </sublattices>​
+            <structure spacegroup="225" prototype="NaCl">
+                <sublattices multiplicities="1.0 1.0">
+                    <site constituents="Fe Mn" wyckhof="4a"/>
+                    <site constituents="C Va" wyckhof="4b"/>
+                </sublattices>
             </structure>
 
             <property type="G">

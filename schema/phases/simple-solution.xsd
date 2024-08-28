@@ -8,6 +8,103 @@
     <xs:include schemaLocation="core.xsd" />
     <xs:include schemaLocation="functions.xsd" />
 
+    <xs:simpleType name="MultiplicitiesStringType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A string that describes the Multiplicities.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(([0-9\.]*)|(\s*))*" />
+        </xs:restriction>
+
+    </xs:simpleType>
+
+    <xs:complexType name="SublatticeSiteType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A sublattice in a phase.
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="site" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en">
+                            A site in a sublattice.
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xs:attribute name="constituents" use="required" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">
+                                The constituents of the site.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                    <xs:attribute name="wyckhof" use="optional" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en">
+                                The Wyckhoff position of the site.
+                            </xs:documentation>
+                        </xs:annotation>
+                    </xs:attribute>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>        
+        
+        <xs:attribute name="multiplicities" use="required" type="MultiplicitiesStringType" />
+    </xs:complexType>
+
+
+    <xs:complexType name="PhasePropertyType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                A property node of the phase, e.g. Gibbs energy, enthalpy, Bohr magneton, ...
+            </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="expr" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en">
+                        A site in a sublattice.
+                    </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>        
+        <xs:attribute name="type" use="required" type="PhasePropertyAttributeType">
+            <xs:annotation>
+                <xs:documentation xml:lang="en">
+                    The type of the property, e.g. Gibbs energy, enthalpy, Bohr magneton, ...
+                </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="constituents" use="optional" type="xs:string" />
+        <xs:attribute name="reference" use="optional" type="xs:string" />
+        
+    </xs:complexType>
+
+
+    <xs:complexType name="SublatticePhaseModelType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en">
+                The structure descriptors of a phase.
+            </xs:documentation>
+        </xs:annotation>
+            <xs:choice>
+                <xs:element name="sublattices" minOccurs="1" maxOccurs="1" type="SublatticeSiteType"> 
+                                <xs:annotation>
+                                    <xs:documentation xml:lang="en">
+                                        A site in a sublattice.
+                                    </xs:documentation>
+                                </xs:annotation>
+                            </xs:element> 
+            </xs:choice>
+            <xs:attribute use="optional" name="spacegroup" type="xs:integer" />
+            <xs:attribute use="optional" name="prototype" type="xs:string" />
+            <!--  TODO: here, more structure information can be added. -->
+
+    </xs:complexType>
+
     <xs:complexType name="SimpleSolutionPhaseType">
         <xs:complexContent>
             <xs:extension base="PhaseType">
