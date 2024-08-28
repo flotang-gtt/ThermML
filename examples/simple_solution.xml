@@ -32,8 +32,17 @@
                 </sublattices>
             </structure>
 
-            <property type="G">
-                <reference type="h-s-cp" factor="1" name="SiO2#quartz" />
+            <property type="G" constituents="Fe:Va" reference="91Din">
+                <expr>Fe#FCC_A1</expr>
+            </property>
+            <property type="G" constituents="Mn:Va" reference="91Din">
+                <expr>Mn#FCC_A1</expr>
+            </property>
+            <property type="G" constituents="Fe:C" reference="85Gus">
+                <expr>Fe#FCC_A1  +  C#HSER  +  77207  +  -15.877*T</expr>
+            </property>
+            <property type="G" constituents="Mn:C" reference="10Dju">
+                <expr>+Mn#HSER  +  C#HSER  +  13.659*T</expr>
             </property>
         </phase>
 
