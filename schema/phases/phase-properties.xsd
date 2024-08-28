@@ -1,0 +1,60 @@
+<xs:schema
+    targetNamespace="http://calphad.org/thermml/0.0"
+    elementFormDefault="qualified"
+    version="0.0"
+    xmlns="http://calphad.org/thermml/0.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:complexType name="AbstractPhasePropertyType" abstract="true">
+        <xs:annotation>
+            <xs:documentation xml:lang="en"> A property node of the phase, e.g. Gibbs energy,
+                enthalpy, Bohr magneton, ... </xs:documentation>
+        </xs:annotation>
+    </xs:complexType>
+
+
+    <xs:complexType name="G">
+        <xs:complexContent>
+            <xs:extension base="AbstractPhasePropertyType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en"> A sublattice in a phase. </xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="constituents" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en"> The constituents of the property. </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string" />
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="reference" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en"> A reference of the property. </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string" />
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="expr" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en"> The expression for that property. </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string" />
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+
+        </xs:complexContent>
+    </xs:complexType>
+
+
+</xs:schema>

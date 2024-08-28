@@ -32,16 +32,29 @@
                 </sublattices>
             </structure>
 
-            <property type="G" constituents="Fe:Va" reference="91Din">
+
+
+            <property xsi:type="G">
+                <constituents>Fe:Va</constituents> 
+                <reference>91Din</reference>
                 <expr>Fe#FCC_A1</expr>
             </property>
-            <property type="G" constituents="Mn:Va" reference="91Din">
+
+            <property xsi:type="G">
+                <constituents>Mn:Va</constituents> 
+                <reference>91Din</reference>
                 <expr>Mn#FCC_A1</expr>
             </property>
-            <property type="G" constituents="Fe:C" reference="85Gus">
+
+            <property xsi:type="G">
+                <constituents>Fe:C</constituents> 
+                <reference>85Gus</reference>
                 <expr>Fe#FCC_A1  +  C#HSER  +  77207  +  -15.877*T</expr>
             </property>
-            <property type="G" constituents="Mn:C" reference="10Dju">
+
+            <property xsi:type="G">
+                <constituents>Mn:C</constituents> 
+                <reference>10Dju</reference>
                 <expr>+Mn#HSER  +  C#HSER  +  13.659*T</expr>
             </property>
         </phase>
