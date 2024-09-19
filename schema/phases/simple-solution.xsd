@@ -74,7 +74,7 @@
         <!--  TODO: here, more structure information can be added. -->
     </xs:complexType>
 
-    <xs:complexType name="SimpleSolutionPhaseType">
+    <xs:complexType name="CEFPhaseType">
         <xs:annotation>
             <xs:documentation xml:lang="en"> A simple solution phase. </xs:documentation>
         </xs:annotation>

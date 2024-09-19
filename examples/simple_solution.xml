@@ -24,7 +24,7 @@
     </systemComponents>
 
     <phases>
-        <phase name="FCC_A1" alias="Austenite" state="solid" xsi:type="SimpleSolutionPhaseType">
+        <phase name="FCC_A1" alias="Austenite" state="solid" xsi:type="CEFPhaseType">
             <structure spacegroup="225" prototype="NaCl">
                 <sublattices multiplicities="1.0 1.0">
                     <site constituents="Fe Mn" wyckhof="4a"/>
