@@ -33,7 +33,7 @@
                 <stoich component="O"  coeff="2"/>
             </stoichiometry>
             <property type="G">
-                <reference type="h-s-cp" factor="1" name="SiO2#quartz" />
+                <ref type="h-s-cp" factor="1" name="SiO2#quartz" />
             </property>
         </phase>
 

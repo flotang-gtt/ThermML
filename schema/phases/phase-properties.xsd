@@ -1,0 +1,144 @@
+<xs:schema
+    targetNamespace="http://calphad.org/thermml/0.0"
+    elementFormDefault="qualified"
+    version="0.0"
+    xmlns="http://calphad.org/thermml/0.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:complexType name="AbstractPhasePropertyType" abstract="true">
+        <xs:annotation>
+            <xs:documentation xml:lang="en"> A property node of the phase, e.g. Gibbs energy,
+                enthalpy, Bohr magneton, ... </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="ref" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en"> A reference to the source of the data. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string" />
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en"> A comment may help to understand inform certain values. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string" />
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PhasePropertyType">
+        <xs:complexContent>
+            <xs:extension base="AbstractPhasePropertyType">
+                <!-- Additional elements or attributes specific to PhasePropertyType -->
+            </xs:extension>
+        </xs:complexContent>
+
+    </xs:complexType>
+
+
+    <xs:complexType name="G">
+        <xs:annotation>
+            <xs:documentation> A Gibbs energy parameter, as used for endmember energies. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="PhasePropertyType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en"> A sublattice in a phase. </xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="expr" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en"> The expression for that property. </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string" />
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <xs:complexType name="M">
+        <xs:complexContent>
+            <xs:extension base="PhasePropertyType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en"> Magnetic properties according to IHJ formalism. </xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="temperature" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en"> The expression for that property. </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:decimal">
+                                    <xs:attribute name="type" type="xs:string" use="required" />
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                        
+                    </xs:element>
+                    <xs:element name="moment" minOccurs="0" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en"> The magnetic moment of the endmember. </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:decimal" />
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+        
+    </xs:complexType>
+
+    <xs:complexType name="L">
+        <xs:complexContent>
+            <xs:extension base="PhasePropertyType">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en"> Magnetic interaction properties according to IHJ formalism (using RK) </xs:documentation>
+                </xs:annotation>
+                <xs:sequence>
+                    <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en"> The expression for that property. </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                    <xs:attribute name="rank" type="xs:int" use="required" />
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                        
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+        
+    </xs:complexType>
+    <xs:complexType name="BML">
+        <xs:complexContent>
+            <xs:extension base="L">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en"> Magnetic interaction properties according to IHJ formalism (using RK) </xs:documentation>
+                </xs:annotation>
+            </xs:extension>
+        </xs:complexContent>
+        
+    </xs:complexType>
+
+</xs:schema>
