@@ -25,33 +25,110 @@
 
     <phases>
         <phase name="FCC_A1" alias="Austenite" state="solid" xsi:type="CEFPhaseType">
-            <structure spacegroup="225" prototype="NaCl">
+            <description>There should be a valid, extensive description of this phase in clear language.</description>
+
+            <structure>
                 <sublattices multiplicities="1.0 1.0">
+                    <site constituents="Fe Mn"/>
+                    <site constituents="C Va"/>
+                </sublattices>             
+               
+                <crystallographic xsi:type="CrystalInformationType">
+                    <spacegroup>225</spacegroup>
+                    <prototype>225</prototype>
                     <site constituents="Fe Mn" wyckhof="4a"/>
                     <site constituents="C Va" wyckhof="4b"/>
-                </sublattices>
+                    <map>
+                        <site from="4a" to="1"/>
+                        <site from="4b" to="2"/>
+                    </map>
+                </crystallographic>
             </structure>
 
-            <property xsi:type="G">
-                <constituents>Fe:Va</constituents> 
-                <reference>91Din</reference>
-                <expr>Fe#FCC_A1</expr>
-            </property>
-            <property xsi:type="G">
-                <constituents>Mn:Va</constituents> 
-                <reference>91Din</reference>
-                <expr>Mn#FCC_A1</expr>
-            </property>
-            <property xsi:type="G">
-                <constituents>Fe:C</constituents> 
-                <reference>85Gus</reference>
-                <expr>Fe#FCC_A1  +  C#HSER  +  77207  +  -15.877*T</expr>
-            </property>
-            <property xsi:type="G">
-                <constituents>Mn:C</constituents> 
-                <reference>10Dju</reference>
-                <expr>+Mn#HSER  +  C#HSER  +  13.659*T</expr>
-            </property>
+            <!-- additional, optional 'feature' nodes -->
+            <!-- <magnetic xsi:type="MagneticPropertiesType" /> -->
+            <!-- <assessed_systems></assessed_systems> -->
+            <!-- <ordering  xsi:type="OrderingPropertiesType"></ordering> -->
+
+            <endmember constituents="Fe:Va">
+                <name>Austenite</name> 
+                <description> A phase description of pure iron - the austenitic phase. </description>
+                <property xsi:type="G">
+                    <ref>91Din</ref>
+                    <expr>Fe#FCC_A1</expr>
+                </property>
+                <property xsi:type="G">
+                    <ref>91Din</ref>
+                    <expr>Fe#FCC_A1</expr>
+                </property>
+                <!-- Magnetism: one property node that has all parameters, or multiple? -->
+                <property xsi:type="M">
+                    <ref>91Din</ref>
+                    <comment>This is not the correct value.</comment>
+                    <temperature type="Neel">1043.0</temperature>
+                    <moment>3.0</moment>
+                </property>
+                <!-- Property types that are missing: Compressibility, thermal expansion, -->
+            </endmember>
+            <endmember constituents="Mn:Va">
+                <name>gamma Mn</name> 
+                <property xsi:type="G">
+                    <ref>91Din</ref>
+                    <expr>Mn#FCC_A1</expr>
+                </property>
+            </endmember>
+            <endmember constituents="Fe:C">
+                <name>Fe:C</name> 
+                <description>This is not a stable endmember.</description>
+                <property xsi:type="G">
+                    <ref>85Gus</ref>
+                    <comment>This parameter is not great. Check the TDB!</comment>
+                    <expr>Fe#FCC_A1  +  C#HSER  +  77207  +  -15.877*T</expr>
+                </property>
+            </endmember>
+            <endmember constituents="Mn:C">
+                <name>Mn:C</name> 
+                <property xsi:type="G">
+                    <ref>10Dju</ref>
+                    <expr>+Mn#HSER  +  C#HSER  +  13.659*T</expr>
+                </property>
+            </endmember>
+
+            <interaction constituents="Fe:C,Va">
+                <property xsi:type="L">
+                    <ref>91Din</ref>
+                    <expr rank="0">7099.0  +  123*T</expr>
+                    <expr rank="1">22*T</expr>
+                </property>
+                <property xsi:type="BML">
+                    <ref>91Din</ref>
+                    <expr rank="0">7099.0  +  123*T</expr>
+                </property>
+            </interaction>
+            <interaction constituents="Fe,Mn:Va">
+                <property xsi:type="L">
+                    <ref>91Din</ref>
+                    <expr rank="0">4000.0</expr>
+                    <expr rank="1">22*T</expr>
+                </property>
+                <property xsi:type="BML">
+                    <ref>91Din</ref>
+                    <expr rank="0">7099.0  +  123*T</expr>
+                </property>
+            </interaction>
+
+            <interaction constituents="Mn:C,Va">
+                <property xsi:type="L">
+                    <ref>91Din</ref>
+                    <expr rank="0">-992.22</expr>
+                </property>
+                <property xsi:type="BML">
+                    <ref>91Din</ref>
+                    <expr rank="0">7099.0+123*T</expr>
+                </property>
+            </interaction>
+
+
         </phase>
 
     </phases>
