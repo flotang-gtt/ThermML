@@ -24,7 +24,7 @@
     </systemComponents>
 
     <phases>
-        <phase name="FCC_A1" alias="Austenite" state="solid" xsi:type="CEFPhaseType">
+        <phase xsi:type="CEFPhaseType" name="FCC_A1" alias="Austenite" state="solid">
             <description>There should be a valid, extensive description of this phase in clear language.</description>
 
             <structure>
