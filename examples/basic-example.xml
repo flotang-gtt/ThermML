@@ -59,7 +59,7 @@
                 80.0119918*T^0 + -3546683.99888*T^(-2) + -240.275998928*T^(-0.5) + 491568369.44*T^(-3)
             </range>
         </expression>
-        <expression name="SiO2#quartz" xsi:type="FunctionTypeHSCP">
+        <expression name="SiO2#quartz" xsi:type="HSCPTemperatureExpr">
             <h298 value="-910699.94184" />
             <s298 value="41.4600015888" />
             <range low="298.15" high="373.0">
