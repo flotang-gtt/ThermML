@@ -84,17 +84,19 @@
             </xs:element>
             <xs:element name="map" minOccurs="0">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> Provide mapping information for lattice sites and crystallographic sites </xs:documentation>
+                    <xs:documentation xml:lang="en"> Provide mapping information for lattice sites
+                        and crystallographic sites </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
 
                         <xs:element name="site" minOccurs="1" maxOccurs="unbounded">
                             <xs:complexType>
-                                
+
                                 <xs:attribute name="from" use="required" type="xs:string">
                                     <xs:annotation>
-                                        <xs:documentation xml:lang="en"> The Wychhoff position of the site. </xs:documentation>
+                                        <xs:documentation xml:lang="en"> The Wychhoff position of
+                                            the site. </xs:documentation>
                                     </xs:annotation>
                                 </xs:attribute>
                                 <xs:attribute name="to" use="optional" type="xs:string">
@@ -153,20 +155,22 @@
             </xs:element>
             <xs:element name="description" minOccurs="0" type="xs:string">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> Description of the phase. Potentially: Sources, DOI links. </xs:documentation>
+                    <xs:documentation xml:lang="en"> Description of the phase. Potentially: Sources,
+                        DOI links. </xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="comment" minOccurs="0" type="xs:string">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> Comment, mostly for assessor's opinion, less meant for valuable metadata. Use description for this. </xs:documentation>
+                    <xs:documentation xml:lang="en"> Comment, mostly for assessor's opinion, less
+                        meant for valuable metadata. Use description for this. </xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:choice maxOccurs="unbounded">
                 <xs:element name="property" type="PhasePropertyType" minOccurs="0"
-                maxOccurs="unbounded">
-                <xs:annotation>
-                    <xs:documentation xml:lang="en"> A property of the phase, e.g. Gibbs
-                        energy, enthalpy, Bohr magneton, ... </xs:documentation>
+                    maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en"> A property of the phase, e.g. Gibbs energy,
+                            enthalpy, Bohr magneton, ... </xs:documentation>
                     </xs:annotation>
                 </xs:element>
 
@@ -187,10 +191,10 @@
 
             <xs:choice maxOccurs="unbounded">
                 <xs:element name="property" type="PhasePropertyType" minOccurs="0"
-                maxOccurs="unbounded">
-                <xs:annotation>
-                    <xs:documentation xml:lang="en"> A property of the phase, e.g. Gibbs
-                        energy, enthalpy, Bohr magneton, ... </xs:documentation>
+                    maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation xml:lang="en"> A property of the phase, e.g. Gibbs energy,
+                            enthalpy, Bohr magneton, ... </xs:documentation>
                     </xs:annotation>
                 </xs:element>
 
@@ -238,13 +242,14 @@
                             </xs:annotation>
                         </xs:element>
                     </xs:choice>
-                    
+
                     <xs:choice maxOccurs="unbounded">
                         <!-- endmembers-->
-                        <xs:element name="endmember" type="CEFEndmemberType" minOccurs="1" maxOccurs="unbounded"/>
+                        <xs:element name="endmember" type="CEFEndmemberType" minOccurs="1"
+                            maxOccurs="unbounded" />
 
                         <!-- interactions-->
-                        <xs:element name="interaction" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element name="interaction" minOccurs="0" maxOccurs="unbounded" />
                     </xs:choice>
                 </xs:sequence>
 

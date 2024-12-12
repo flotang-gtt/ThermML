@@ -1,212 +1,189 @@
 <xs:schema
-        targetNamespace="http://calphad.org/thermml/0.0"
-        elementFormDefault="qualified"
-        version="0.0"
-        xmlns="http://calphad.org/thermml/0.0"
-        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    targetNamespace="http://calphad.org/thermml/0.0"
+    elementFormDefault="qualified"
+    version="0.0"
+    xmlns="http://calphad.org/thermml/0.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:include schemaLocation="core.xsd" />
     <xs:include schemaLocation="../simple-types/main.xsd" />
 
 
-
-
-    <xs:simpleType  name="FunctionType">
+    <xs:simpleType name="FunctionType">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                A descriptor for different function types.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> A descriptor for different function types. </xs:documentation>
         </xs:annotation>
-        
-            <xs:restriction base="xs:string">
-                <xs:enumeration value="expr" />
-                <xs:enumeration value="h-s-cp" />
-                <xs:enumeration value="tdb" />
-                <xs:enumeration value="CSdat" />
-                <xs:enumeration value="gibbs" />
-            </xs:restriction>
+
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="expr" />
+            <xs:enumeration value="h-s-cp" />
+            <xs:enumeration value="tdb" />
+            <xs:enumeration value="CSdat" />
+            <xs:enumeration value="gibbs" />
+        </xs:restriction>
     </xs:simpleType>
 
     <xs:complexType name="FunctionTypeExprRange">
         <xs:annotation>
-            <xs:documentation>
-                A range for a function that is stored in strict ThermML expression style.
-            </xs:documentation>
+            <xs:documentation> A range for a function that is stored in strict ThermML expression
+                style. </xs:documentation>
         </xs:annotation>
         <xs:simpleContent>
-            
+
             <xs:extension base="xs:string">
                 <xs:attribute name="low" type="xs:double" use="required">
-                <xs:annotation>
-                    <xs:documentation>Lower range limit.</xs:documentation>
-                </xs:annotation>
+                    <xs:annotation>
+                        <xs:documentation>Lower range limit.</xs:documentation>
+                    </xs:annotation>
                 </xs:attribute>
-                <xs:attribute name="high" type="xs:double" use="required"/>
+                <xs:attribute name="high" type="xs:double" use="required" />
             </xs:extension>
         </xs:simpleContent>
-    
+
     </xs:complexType>
 
     <xs:complexType name="FunctionReferenceType">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                Reference to a function that is a child of the functions element.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> Reference to a function that is a child of the
+                functions element. </xs:documentation>
         </xs:annotation>
-            <xs:attribute name="type" use="required" type="FunctionType" />
-            <xs:attribute name="factor" use="optional" type="xs:float" default="1.0" />
-            <xs:attribute name="name" use="required" type="FunctionIDType" />
+        <xs:attribute name="type" use="required" type="FunctionType" />
+        <xs:attribute name="factor" use="optional" type="xs:float" default="1.0" />
+        <xs:attribute name="name" use="required" type="FunctionIDType" />
     </xs:complexType>
 
 
     <xs:complexType name="AbstractFunctionType" abstract="true">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                An abstract function type.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> An abstract function type. </xs:documentation>
         </xs:annotation>
         <xs:attribute name="name" use="required" type="FunctionIDType" />
     </xs:complexType>
 
-    <xs:complexType  name="FunctionTypeExpr">
+    <xs:complexType name="FunctionTypeExpr">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                A temperature dependent function that is stored in strict ThermML expression style.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> A temperature dependent function that is stored in
+                strict ThermML expression style. </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
 
             <xs:extension base="AbstractFunctionType">
                 <xs:sequence>
-                    <xs:element name="range" type="FunctionTypeExprRange" minOccurs="1" maxOccurs="unbounded">
-                    <xs:annotation>
-                        <xs:documentation>A temperature range expression.</xs:documentation>
+                    <xs:element name="range" type="FunctionTypeExprRange" minOccurs="1"
+                        maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>A temperature range expression.</xs:documentation>
                         </xs:annotation>
                     </xs:element>
                 </xs:sequence>
             </xs:extension>
 
-            </xs:complexContent>
-    
-    </xs:complexType>   
+        </xs:complexContent>
+
+    </xs:complexType>
 
     <xs:complexType name="FunctionHSCPTermType">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                A term in a H-S-CP function.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> A term in a H-S-CP function. </xs:documentation>
         </xs:annotation>
 
         <xs:attribute name="coeff" use="required" type="xs:double">
             <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    Coefficient of the term. A simple floating point number.
-                </xs:documentation>
+                <xs:documentation xml:lang="en"> Coefficient of the term. A simple floating point
+                    number. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="fun" use="required" type="FunctionHSCPTempTermType"/>
+        <xs:attribute name="fun" use="required" type="FunctionHSCPTempTermType" />
 
     </xs:complexType>
 
     <xs:simpleType name="FunctionHSCPTempTermType">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                Temperature exponent term in a H-S-CP function. Has to be T^('number').
-
-                For integers &gt;= 0, the brackets can be omitted. (e.g. T^5)
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> Temperature exponent term in a H-S-CP function. Has to
+                be T^('number'). For integers &gt;= 0, the brackets can be omitted. (e.g. T^5) </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <!-- CAUTION: This regex isn't properly matching actual floating point 
              numbers as exponents, only the general shape for this term. 
              For positive integers, the brackets can be omitted. -->
-            <xs:pattern value="T\^\(-?[0-9.]*\)|T\^[0-9]*" /> 
+            <xs:pattern value="T\^\(-?[0-9.]*\)|T\^[0-9]*" />
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:complexType  name="FunctionTypeHSCP">
+    <xs:complexType name="FunctionTypeHSCP">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                A H-S-CP function. 
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> A H-S-CP function. </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
 
-        <xs:extension base="AbstractFunctionType">
+            <xs:extension base="AbstractFunctionType">
 
-        <xs:sequence>
-        <xs:element name="h298">
-            <xs:complexType>
-              <xs:attribute name="value" type="xs:double" use="required"/>
-            </xs:complexType>
-          </xs:element>
-          <xs:element name="s298">
-            <xs:complexType>
-              <xs:attribute name="value" type="xs:double" use="required"/>
-            </xs:complexType>
-          </xs:element>
-          <xs:element name="range" minOccurs="1" maxOccurs="unbounded" >
-            <xs:complexType>
-              <xs:sequence>
-                <xs:element name="term" type="FunctionHSCPTermType" maxOccurs="unbounded"/>
-              </xs:sequence>
-              <xs:attribute name="low" type="xs:double" use="required"/>
-              <xs:attribute name="high" type="xs:double" use="required"/>
-            </xs:complexType>
-          </xs:element>
-        </xs:sequence>
-        </xs:extension>
+                <xs:sequence>
+                    <xs:element name="h298">
+                        <xs:complexType>
+                            <xs:attribute name="value" type="xs:double" use="required" />
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="s298">
+                        <xs:complexType>
+                            <xs:attribute name="value" type="xs:double" use="required" />
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="range" minOccurs="1" maxOccurs="unbounded">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="term" type="FunctionHSCPTermType"
+                                    maxOccurs="unbounded" />
+                            </xs:sequence>
+                            <xs:attribute name="low" type="xs:double" use="required" />
+                            <xs:attribute name="high" type="xs:double" use="required" />
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
         </xs:complexContent>
-    </xs:complexType>   
+    </xs:complexType>
 
-    <!-- As is, this can not inherit from the abstract Function Type, as it is a simpleContent. This is likely impossible. -->
-    <xs:complexType  name="FunctionTypeTDB">
-    <xs:annotation>
-        <xs:documentation>
-            A TDB function, as copied from a TDB file.
-        </xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-        <xs:extension base="AbstractFunctionType">
-        <xs:sequence>
+    <!-- As is, this can not inherit from the abstract Function Type, as it is a simpleContent. This
+    is likely impossible. -->
+    <xs:complexType name="FunctionTypeTDB">
+        <xs:annotation>
+            <xs:documentation> A TDB function, as copied from a TDB file. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="AbstractFunctionType">
+                <xs:sequence>
 
-            <xs:element name="tdb" type="xs:string" minOccurs="1" maxOccurs="unbounded">
-                <xs:annotation>
-                    <xs:documentation>
-                        A TDB function, as copied from a TDB file.
-                    </xs:documentation>
-                </xs:annotation>
-            </xs:element>
-        </xs:sequence>
-    </xs:extension>
-    </xs:complexContent>
-    </xs:complexType>   
+                    <xs:element name="tdb" type="xs:string" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation> A TDB function, as copied from a TDB file. </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
 
-    <!-- As is, this can not inherit from the abstract Function Type, as it is a simpleContent. This is likely impossible. -->
-    <xs:complexType  name="FunctionTypeCSdat">
-    <xs:annotation>
-        <xs:documentation>
-            A ChemSage.dat function, as can be copied from a file.
+    <!-- As is, this can not inherit from the abstract Function Type, as it is a simpleContent. This
+    is likely impossible. -->
+    <xs:complexType name="FunctionTypeCSdat">
+        <xs:annotation>
+            <xs:documentation> A ChemSage.dat function, as can be copied from a file. The first row
+                may contain additional stoichiometric information. This will be ignored. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="AbstractFunctionType">
+                <xs:sequence>
 
-            The first row may contain additional stoichiometric information.
-            This will be ignored.
-        </xs:documentation>
-    </xs:annotation>
-    <xs:complexContent>
-        <xs:extension base="AbstractFunctionType">
-        <xs:sequence>
-
-        <xs:element name="chemsage" type="xs:string" minOccurs="1" maxOccurs="unbounded">
-            <xs:annotation>
-                <xs:documentation>
-                    A TDB function, as copied from a TDB file.
-                </xs:documentation>
-            </xs:annotation>
-        </xs:element>
-    </xs:sequence>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>   
+                    <xs:element name="chemsage" type="xs:string" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation> A TDB function, as copied from a TDB file. </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
 
 
 </xs:schema>

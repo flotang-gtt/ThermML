@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema
-        targetNamespace="http://calphad.org/thermml/0.0"
-        elementFormDefault="qualified"
-        version="0.0"
-        xmlns="http://calphad.org/thermml/0.0"
-        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    targetNamespace="http://calphad.org/thermml/0.0"
+    elementFormDefault="qualified"
+    version="0.0"
+    xmlns="http://calphad.org/thermml/0.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:include schemaLocation="simple-types/main.xsd" />
     <xs:include schemaLocation="potentials/main.xsd" />
@@ -12,6 +12,6 @@
     <xs:include schemaLocation="phases/main.xsd" />
     <xs:include schemaLocation="databases/main.xsd" />
 
-    <xs:element name="database" type="DatabaseType"/>
+    <xs:element name="database" type="DatabaseType" />
 
 </xs:schema>

@@ -1,11 +1,11 @@
 <xs:schema
-        targetNamespace="http://calphad.org/thermml/0.0"
-        elementFormDefault="qualified"
-        version="0.0"
-        xmlns="http://calphad.org/thermml/0.0"
-        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    targetNamespace="http://calphad.org/thermml/0.0"
+    elementFormDefault="qualified"
+    version="0.0"
+    xmlns="http://calphad.org/thermml/0.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:simpleType name="MatterStateType" final="restriction" >
+    <xs:simpleType name="MatterStateType" final="restriction">
         <xs:restriction base="xs:string">
             <xs:enumeration value="solid" />
             <xs:enumeration value="liquid" />
@@ -13,12 +13,10 @@
             <xs:enumeration value="plasma" />
         </xs:restriction>
     </xs:simpleType>
-    
+
     <xs:simpleType name="SpeciesType">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                An identifier for phases.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> An identifier for phases. </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <!-- match all 
@@ -35,14 +33,12 @@
     <xs:simpleType name="FractionType">
 
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                A fraction between zero and one.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> A fraction between zero and one. </xs:documentation>
         </xs:annotation>
 
         <xs:restriction base="xs:float">
-            <xs:minInclusive value = "0.0"/>
-            <xs:maxInclusive value = "1.0"/>
+            <xs:minInclusive value="0.0" />
+            <xs:maxInclusive value="1.0" />
         </xs:restriction>
 
     </xs:simpleType>
@@ -51,12 +47,10 @@
     <xs:simpleType name="FractionsType">
 
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                A list of fractions.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> A list of fractions. </xs:documentation>
         </xs:annotation>
 
-        <xs:list itemType="FractionType"/>
+        <xs:list itemType="FractionType" />
 
     </xs:simpleType>
 

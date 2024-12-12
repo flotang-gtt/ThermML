@@ -23,7 +23,8 @@
             </xs:element>
             <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> A comment may help to understand inform certain values. </xs:documentation>
+                    <xs:documentation xml:lang="en"> A comment may help to understand inform certain
+                        values. </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:simpleContent>
@@ -68,7 +69,7 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    
+
     <xs:complexType name="M">
         <xs:complexContent>
             <xs:extension base="PhasePropertyType">
@@ -87,7 +88,7 @@
                                 </xs:extension>
                             </xs:simpleContent>
                         </xs:complexType>
-                        
+
                     </xs:element>
                     <xs:element name="moment" minOccurs="0" maxOccurs="unbounded">
                         <xs:annotation>
@@ -102,14 +103,15 @@
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
-        
+
     </xs:complexType>
 
     <xs:complexType name="L">
         <xs:complexContent>
             <xs:extension base="PhasePropertyType">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> Magnetic interaction properties according to IHJ formalism (using RK) </xs:documentation>
+                    <xs:documentation xml:lang="en"> Magnetic interaction properties according to
+                        IHJ formalism (using RK) </xs:documentation>
                 </xs:annotation>
                 <xs:sequence>
                     <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
@@ -123,22 +125,23 @@
                                 </xs:extension>
                             </xs:simpleContent>
                         </xs:complexType>
-                        
+
                     </xs:element>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
-        
+
     </xs:complexType>
     <xs:complexType name="BML">
         <xs:complexContent>
             <xs:extension base="L">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> Magnetic interaction properties according to IHJ formalism (using RK) </xs:documentation>
+                    <xs:documentation xml:lang="en"> Magnetic interaction properties according to
+                        IHJ formalism (using RK) </xs:documentation>
                 </xs:annotation>
             </xs:extension>
         </xs:complexContent>
-        
+
     </xs:complexType>
 
 </xs:schema>

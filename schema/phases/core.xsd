@@ -1,9 +1,9 @@
 <xs:schema
-        targetNamespace="http://calphad.org/thermml/0.0"
-        elementFormDefault="qualified"
-        version="0.0"
-        xmlns="http://calphad.org/thermml/0.0"
-        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    targetNamespace="http://calphad.org/thermml/0.0"
+    elementFormDefault="qualified"
+    version="0.0"
+    xmlns="http://calphad.org/thermml/0.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:include schemaLocation="../simple-types/main.xsd" />
     <xs:include schemaLocation="../system-components/main.xsd" />
@@ -11,106 +11,82 @@
 
     <xs:complexType name="PhaseType" abstract="true">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                A collection of matter in a single physical state, immiscible with other phases.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> A collection of matter in a single physical state,
+                immiscible with other phases. </xs:documentation>
         </xs:annotation>
-        <xs:attribute name="name"   type="xs:string"        use="required">
+        <xs:attribute name="name" type="xs:string" use="required">
             <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    A name used for display purposes.
-                </xs:documentation>
+                <xs:documentation xml:lang="en"> A name used for display purposes. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="alias"   type="xs:string"        use="optional">
+        <xs:attribute name="alias" type="xs:string" use="optional">
             <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    Any alias phase names, a comma separated list.
-                </xs:documentation>
+                <xs:documentation xml:lang="en"> Any alias phase names, a comma separated list. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="state"  type="MatterStateType"  use="required">
+        <xs:attribute name="state" type="MatterStateType" use="required">
             <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    The phase's state of matter.
-                </xs:documentation>
+                <xs:documentation xml:lang="en"> The phase's state of matter. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
     </xs:complexType>
-    
+
     <xs:complexType name="StoichiometryRecordType">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                Used to specify the content of a system component in a phase constituent.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> Used to specify the content of a system component in a
+                phase constituent. </xs:documentation>
         </xs:annotation>
-        <xs:attribute name="component"    type="SystemComponentIdType"  use="required">
+        <xs:attribute name="component" type="SystemComponentIdType" use="required">
             <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    System component ID.
-                </xs:documentation>
+                <xs:documentation xml:lang="en"> System component ID. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="coeff"  type="xs:float"                  use="optional"  default="1.0">
+        <xs:attribute name="coeff" type="xs:float" use="optional" default="1.0">
             <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    Stoichiometry coefficient in mol per mole of phase constituent.
-                </xs:documentation>
+                <xs:documentation xml:lang="en"> Stoichiometry coefficient in mol per mole of phase
+                    constituent. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="EnergyFunctionType">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                Used to specify the energy of a phase. This should list all the
-                possible energy function types.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> Used to specify the energy of a phase. This should list
+                all the possible energy function types. </xs:documentation>
         </xs:annotation>
-        <xs:attribute name="coeff"  type="xs:float"                  use="optional"  default="1.0">
+        <xs:attribute name="coeff" type="xs:float" use="optional" default="1.0">
             <xs:annotation>
-                <xs:documentation xml:lang="en">
-                    Stoichiometry coefficient in mol per mole of phase constituent.
-                </xs:documentation>
+                <xs:documentation xml:lang="en"> Stoichiometry coefficient in mol per mole of phase
+                    constituent. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
     </xs:complexType>
 
     <xs:simpleType name="PhasePropertyAttributeType">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                A fixed list of available phase properties. 
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> A fixed list of available phase properties. </xs:documentation>
         </xs:annotation>
         <xs:list>
             <xs:simpleType>
                 <xs:restriction base="xs:string">
                     <xs:enumeration value="G">
                         <xs:annotation>
-                            <xs:documentation xml:lang="en">
-                                Gibbs energy
-                            </xs:documentation>
+                            <xs:documentation xml:lang="en"> Gibbs energy </xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="BMAG">
                         <xs:annotation>
-                            <xs:documentation xml:lang="en">
-                                Bohr magneton
-                            </xs:documentation>
+                            <xs:documentation xml:lang="en"> Bohr magneton </xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="TC">
                         <xs:annotation>
-                            <xs:documentation xml:lang="en">
-                                Curie Temperature
-                            </xs:documentation>
+                            <xs:documentation xml:lang="en"> Curie Temperature </xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <xs:enumeration value="TN">
                         <xs:annotation>
-                            <xs:documentation xml:lang="en">
-                                Neel Temperature
-                            </xs:documentation>
+                            <xs:documentation xml:lang="en"> Neel Temperature </xs:documentation>
                         </xs:annotation>
                     </xs:enumeration>
                     <!--  this is where additional properties should go. -->
@@ -121,9 +97,7 @@
 
     <xs:simpleType name="FunctionVariableType">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                A fixed list of available function variables. 
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> A fixed list of available function variables. </xs:documentation>
         </xs:annotation>
         <xs:list>
             <xs:simpleType>
@@ -140,10 +114,8 @@
 
     <xs:simpleType name="FunctionIDType">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                Name to identify a function. Certain vendor specific
-                restrictions may apply.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> Name to identify a function. Certain vendor specific
+                restrictions may apply. </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <!-- This pattern makes sure that if a '#' is used, it has to be "in

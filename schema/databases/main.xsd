@@ -1,9 +1,9 @@
 <xs:schema
-        targetNamespace="http://calphad.org/thermml/0.0"
-        elementFormDefault="qualified"
-        version="0.0"
-        xmlns="http://calphad.org/thermml/0.0"
-        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    targetNamespace="http://calphad.org/thermml/0.0"
+    elementFormDefault="qualified"
+    version="0.0"
+    xmlns="http://calphad.org/thermml/0.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:include schemaLocation="../potentials/main.xsd" />
     <xs:include schemaLocation="../system-components/main.xsd" />
@@ -11,14 +11,12 @@
 
     <xs:complexType name="DatabaseType">
         <xs:annotation>
-            <xs:documentation xml:lang="en">
-                A database that stores material thermodynamic and thermophysical data.
-            </xs:documentation>
+            <xs:documentation xml:lang="en"> A database that stores material thermodynamic and
+                thermophysical data. </xs:documentation>
         </xs:annotation>
         <xs:sequence>
 
-            <xs:element name="description" type="xs:string" minOccurs="0"/>
-
+            <xs:element name="description" type="xs:string" minOccurs="0" />
             <xs:element name="nonChemicalPotentials" minOccurs="0">
                 <xs:complexType>
                     <xs:sequence minOccurs="1" maxOccurs="unbounded">
@@ -29,9 +27,8 @@
 
             <xs:element name="systemComponents" maxOccurs="1">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en">
-                        The system components that are defined in the database. Can only exist once.
-                    </xs:documentation>
+                    <xs:documentation xml:lang="en"> The system components that are defined in the
+                        database. Can only exist once. </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:sequence minOccurs="1" maxOccurs="unbounded">
@@ -42,21 +39,21 @@
 
             <xs:element name="phases" maxOccurs="1">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en">
-                        The phases that are defined in the database. Can only exist once.
-                    </xs:documentation>
+                    <xs:documentation xml:lang="en"> The phases that are defined in the database.
+                        Can only exist once. </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
-                        <xs:element name="phase" type="PhaseType" minOccurs="0" maxOccurs="unbounded"/>
+                        <xs:element name="phase" type="PhaseType" minOccurs="0"
+                            maxOccurs="unbounded" />
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
 
             <xs:element name="functions" minOccurs="0">
                 <xs:complexType>
-                    <xs:choice maxOccurs="unbounded">        
-                        <xs:element name="function" type="AbstractFunctionType"/>
+                    <xs:choice maxOccurs="unbounded">
+                        <xs:element name="function" type="AbstractFunctionType" />
                     </xs:choice>
                 </xs:complexType>
             </xs:element>

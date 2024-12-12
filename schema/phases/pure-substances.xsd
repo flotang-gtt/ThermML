@@ -1,9 +1,9 @@
 <xs:schema
-        targetNamespace="http://calphad.org/thermml/0.0"
-        elementFormDefault="qualified"
-        version="0.0"
-        xmlns="http://calphad.org/thermml/0.0"
-        xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    targetNamespace="http://calphad.org/thermml/0.0"
+    elementFormDefault="qualified"
+    version="0.0"
+    xmlns="http://calphad.org/thermml/0.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:include schemaLocation="core.xsd" />
     <xs:include schemaLocation="functions.xsd" />
@@ -21,24 +21,25 @@
                     </xs:element>
                     <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
                         <xs:annotation>
-                            <xs:documentation xml:lang="en">
-                                A property of the phase, e.g. Gibbs energy, enthalpy, Bohr magneton, ...
-                            </xs:documentation>
+                            <xs:documentation xml:lang="en"> A property of the phase, e.g. Gibbs
+                                energy, enthalpy, Bohr magneton, ... </xs:documentation>
                         </xs:annotation>
                         <xs:complexType>
                             <xs:choice>
-                                <xs:element name="ref" type="FunctionReferenceType"/>
-                                <xs:choice minOccurs="1" maxOccurs="1">  
-                                    <xs:element name="function" type="AbstractFunctionType"/>      
+                                <xs:element name="ref" type="FunctionReferenceType" />
+                                <xs:choice minOccurs="1" maxOccurs="1">
+                                    <xs:element name="function" type="AbstractFunctionType" />
                                 </xs:choice>
                             </xs:choice>
-                            <xs:attribute name="type" use="required" type="PhasePropertyAttributeType" />
-                            <xs:attribute name="function_of" use="optional" type="FunctionVariableType" />
+                            <xs:attribute name="type" use="required"
+                                type="PhasePropertyAttributeType" />
+                            <xs:attribute name="function_of" use="optional"
+                                type="FunctionVariableType" />
                         </xs:complexType>
                     </xs:element>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-        
+
 </xs:schema>
