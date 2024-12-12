@@ -50,7 +50,7 @@
                 </xs:complexType>
             </xs:element>
 
-            <xs:element name="functions" minOccurs="0">
+            <xs:element name="globalExpressions" minOccurs="0">
                 <xs:complexType>
                     <xs:choice maxOccurs="unbounded" minOccurs="0">
                         <xs:element name="function" type="AbstractFunctionType" />
