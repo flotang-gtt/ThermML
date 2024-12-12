@@ -34,7 +34,7 @@
                             <xs:documentation xml:lang="en"> The constituents of the site. </xs:documentation>
                         </xs:annotation>
                     </xs:attribute>
-                    <xs:attribute name="wyckhof" use="optional" type="xs:string">
+                    <xs:attribute name="wyckoff" use="optional" type="xs:string">
                         <xs:annotation>
                             <xs:documentation xml:lang="en"> The Wyckhoff position of the site. </xs:documentation>
                         </xs:annotation>
