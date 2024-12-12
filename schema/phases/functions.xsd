@@ -57,6 +57,31 @@
         <xs:annotation>
             <xs:documentation xml:lang="en"> An abstract function type. </xs:documentation>
         </xs:annotation>
+
+        <xs:sequence>
+            <xs:element name="ref" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en"> A reference to the source of the data. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string" />
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="comment" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en"> Commentary on the parameter that does not fit
+                        into any of the other fields. </xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:simpleContent>
+                        <xs:extension base="xs:string" />
+                    </xs:simpleContent>
+                </xs:complexType>
+            </xs:element>
+
+        </xs:sequence>
         <xs:attribute name="name" use="required" type="FunctionIDType" />
     </xs:complexType>
 
