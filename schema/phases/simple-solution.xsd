@@ -153,7 +153,12 @@
             </xs:element>
             <xs:element name="description" minOccurs="0" type="xs:string">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> Description of the phase. Potentially: Sources, comments. </xs:documentation>
+                    <xs:documentation xml:lang="en"> Description of the phase. Potentially: Sources, DOI links. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="comment" minOccurs="0" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation xml:lang="en"> Comment, mostly for assessor's opinion, less meant for valuable metadata. Use description for this. </xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:choice maxOccurs="unbounded">
