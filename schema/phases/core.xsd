@@ -8,16 +8,6 @@
     <xs:include schemaLocation="../simple-types/main.xsd" />
     <xs:include schemaLocation="../system-components/main.xsd" />
 
-    <xs:simpleType name="PhaseIdType">
-        <xs:annotation>
-            <xs:documentation xml:lang="en">
-                An identifier for phases.
-            </xs:documentation>
-        </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:pattern value="[A-Z][A-Za-z]*" />
-        </xs:restriction>
-    </xs:simpleType>
 
     <xs:complexType name="PhaseType" abstract="true">
         <xs:annotation>
@@ -86,7 +76,7 @@
         </xs:attribute>
     </xs:complexType>
 
-    <xs:simpleType name="PhasePropertyType">
+    <xs:simpleType name="PhasePropertyAttributeType">
         <xs:annotation>
             <xs:documentation xml:lang="en">
                 A fixed list of available phase properties. 
