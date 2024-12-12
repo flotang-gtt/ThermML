@@ -121,7 +121,7 @@
             <!-- This pattern makes sure that if a '#' is used, it has to be "in
 the middle" of the pattern. E.g. SiO2#quartz is ok, MgCl2# is not. TODO there
 may be more characters to consider: -_/. ? -->
-            <xs:pattern value="[A-Z][A-Za-z0-9_]*#?[A-Za-z0-9_]+" />
+            <xs:pattern value="[A-Z][A-Za-z0-9_:]*#?[A-Za-z0-9_]+" />
         </xs:restriction>
     </xs:simpleType>
 
