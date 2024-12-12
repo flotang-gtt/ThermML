@@ -163,3 +163,4 @@ cython_debug/
 
 # VSCode settings directory
 .vscode/
+uncommitted/
