@@ -2,8 +2,8 @@
     xmlns="http://calphad.org/thermml/0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:xi="http://www.w3.org/2001/XInclude"
+    xsi:schemaLocation="http://calphad.org/thermml/0.0 ../schema/thermml-schema.xsd"
     name="Example Quasichemical Database">
-    <!-- xsi:schemaLocation="http://calphad.org/thermml/0.0 ../schema/thermml-schema.xsd" -->
 
     <description>
         This is an example thermodynamic database for demonstrating the ThermML schema for
@@ -36,8 +36,7 @@
             </species>
 
             <endmember cation="Cu[1+]" anion="Cl[1-]">
-                <stoichiometry scalingFactor="1.0" /> <!-- impliziert die stoichiometrie basierend
-                auf ladungsneutralität -->
+                <stoichiometry scalingFactor="1.0" />
                 <name>CuCl</name>
                 <description />
                 <property xsi:type="MQM-G">
@@ -53,11 +52,8 @@
             </endmember>
 
             <endmember cation="Zn[2+]" anion="Cl[1-]">
-                <stoichiometry>
-                    <cation name="Zn[2+]" factor="1.0" />
-                    <anion name="Cl[1-]" factor="2.0" />
-                </stoichiometry>
-                <name />
+                <stoichiometry scalingFactor="1.0">
+                <name>ZnCl2</name>
                 <description />
                 <property xsi:type="MQM-G">
                     <ref />
@@ -72,13 +68,13 @@
                 </property>
             </endmember>
 
-            <!-- fehlen: FeCl3, FeCl2, CuCl2, PbCl2 -->
+            <!-- missing: FeCl3, FeCl2, CuCl2, PbCl2 -->
 
             <interactions>
 
-                <interaction A="Cu[1+]" B="Zn[2+]" X="Cl[1-]"> <!-- implizit: Y = X -->
+                <interaction A="Cu[1+]" B="Zn[2+]" X="Cl[1-]"> <!-- implicit: Y = X -->
                     <property xsi:type="MQM-L-PF">
-                        <ref>2001Pelton</ref>
+                        <ref>Viitala ChemSage.dat</ref>
                         <comment />
 
                         <expr i="0" j="0">3960.66 -3.77326*T</expr>
@@ -87,33 +83,38 @@
                     </property>
                 </interaction>
 
-                <interaction A="Cu[1+]" X="Cl[1-]" Y="O[2-]"> <!-- implizit: A = B (theoretisch auch,
-                    C und Z ? :D) -->
+                <!-- implicit: A = B  -->
+                <interaction A="Cu[1+]" X="Cl[1-]" Y="O[2-]">
+                <!-- PF for pair fraction expansion parameter -->
                     <property xsi:type="MQM-L-PF">
                         <ref>91Din</ref>
                         <expr i="0" j="0">3960.66 -3.77326*T</expr>
                     </property>
+                <!-- Bragg-Williams Redlich Kister: RK (assume BW is implicit?) -->
                     <property xsi:type="MQM-L-RK">
                         <ref>91Din</ref>
                         <expr rank="0">3960.66 -3.77326*T</expr>
                     </property>
                 </interaction>
 
+                <!-- missing more interactions that are in the Viitala dataset. -->
+
             </interactions>
 
             <nonDefaultQuads>
                 <quad cation="Cu[1+] Zn[2+]" anion="Cl[1-]">
-                    <!--  Assuming A/B and X/Y are factually indistinguishable... needs to be
-                    validated (?)-->
+                    <!--  Assuming A/B and X/Y are factually indistinguishable. removes need to be
+                    validated (?) -->
                     <A species="Cu[1+]" value="0.688721875540867" />
                     <X species="Cl[1-]" value="0.688721875540867" />
-                    <!-- <Y species="Cl[1-]" value="0.688721875540867" /> optional -->
+                    <!-- <Y species="Cl[1-]" value="0.688721875540867" /> optional/obsolete -->
                 </quad>
 
             </nonDefaultQuads>
 
 
             <ternaryInterpolations>
+                <!-- option A -->
                 <interpolation>
                     <constituents>
                         <sublattice>
@@ -128,31 +129,13 @@
                     <ij type="Kohler" />
                     <jk type="Muggiano" />
                     <ik type="Toop" constant="i" />
+                    <!-- option B -->
                 </interpolation>
-                <!-- optionalität hier -->
                 <interpolation constituents="Cu[1+],Fe[2+],Zn[2+]:Cl[1-]">
                     <ij type="Kohler" />
                     <jk type="Muggiano" />
                     <ik type="Toop" constant="i" />
                 </interpolation>
-
-
-                <interpolation>
-                    <constituents>
-                        <sublattice>
-                            <const>Cu[1+]</const>
-                        </sublattice>
-                        <sublattice>
-                            <i>Cl[1-]</i>
-                            <j>F[1-]</j>
-                            <k>O[2-]</k>
-                        </sublattice>
-                    </constituents>
-                    <ij type="Kohler" />
-                    <jk type="Muggiano" />
-                    <ik type="Toop" constant="i" />
-                </interpolation>
-
 
             </ternaryInterpolations>
 
