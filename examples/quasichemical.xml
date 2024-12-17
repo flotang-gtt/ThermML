@@ -1,0 +1,167 @@
+<database
+    xmlns="http://calphad.org/thermml/0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    name="Example Quasichemical Database">
+    <!-- xsi:schemaLocation="http://calphad.org/thermml/0.0 ../schema/thermml-schema.xsd" -->
+
+    <description>
+        This is an example thermodynamic database for demonstrating the ThermML schema for
+        quasichemical models.
+    </description>
+
+
+    <systemComponents>
+        <systemComponent symbol="Va" />
+
+        <systemComponent symbol="Cl" refstate="BLANK" molar_mass="35.453" h298="0.0" s298="0.0" />
+        <systemComponent symbol="Cu" refstate="BLANK" molar_mass="63.546" h298="0.0" s298="0.0" />
+        <systemComponent symbol="Fe" refstate="BLANK" molar_mass="55.845" h298="0.0" s298="0.0" />
+        <systemComponent symbol="Pb" refstate="BLANK" molar_mass="207.2" h298="0.0" s298="0.0" />
+        <systemComponent symbol="Zn" refstate="BLANK" molar_mass="65.38" h298="0.0" s298="0.0" />
+    </systemComponents>
+
+    <phases>
+        <phase xsi:type="ModifiedQuasichemicalPhase" name="Liquid" state="liquid">
+            <description>There should be a valid, extensive description of this phase in clear
+                language.</description>
+            <species>
+                <specie name="Cu[1+]" composition="Cu1" charge="+1" group="1" />
+                <specie name="Zn[2+]" composition="Zn1" charge="+2" group="1" />
+                <specie name="Fe[3+]" composition="Fe1" charge="+3" group="1" />
+                <specie name="Cu[2+]" composition="Cu1" charge="+2" group="1" />
+                <specie name="Fe[2+]" composition="Fe1" charge="+2" group="1" />
+                <specie name="Pb[2+]" composition="Pb1" charge="+2" group="1" />
+                <specie name="Cl[1-]" composition="Cl1" charge="-1" group="1" />
+            </species>
+
+            <endmember cation="Cu[1+]" anion="Cl[1-]">
+                <stoichiometry scalingFactor="1.0" /> <!-- impliziert die stoichiometrie basierend
+                auf ladungsneutralität -->
+                <name>CuCl</name>
+                <description />
+                <property xsi:type="MQM-G">
+                    <ref />
+                    <comment />
+                    <expr>CuCl#Liquid</expr>
+                    <zeta>2.4</zeta>
+                    <coordinationNumbers>
+                        <cation>6.0</cation>
+                        <anion>6.0</anion>
+                    </coordinationNumbers>
+                </property>
+            </endmember>
+
+            <endmember cation="Zn[2+]" anion="Cl[1-]">
+                <stoichiometry>
+                    <cation name="Zn[2+]" factor="1.0" />
+                    <anion name="Cl[1-]" factor="2.0" />
+                </stoichiometry>
+                <name />
+                <description />
+                <property xsi:type="MQM-G">
+                    <ref />
+                    <comment />
+                    <expr>ZnCl2#Liquid</expr>
+                    <zeta>2.4</zeta>
+                    <coordinationNumbers>
+                        <comment>'Second Nearest Neighbor' coordination numbers</comment>
+                        <cation>6.0</cation>
+                        <anion>3.0</anion>
+                    </coordinationNumbers>
+                </property>
+            </endmember>
+
+            <!-- fehlen: FeCl3, FeCl2, CuCl2, PbCl2 -->
+
+            <interactions>
+
+                <interaction A="Cu[1+]" B="Zn[2+]" X="Cl[1-]"> <!-- implizit: Y = X -->
+                    <property xsi:type="MQM-L-PF">
+                        <ref>2001Pelton</ref>
+                        <comment />
+
+                        <expr i="0" j="0">3960.66 -3.77326*T</expr>
+                        <expr i="1" j="0">-2018.27</expr>
+                        <expr i="0" j="1">-4457.21 -0.783*T</expr>
+                    </property>
+                </interaction>
+
+                <interaction A="Cu[1+]" X="Cl[1-]" Y="O[2-]"> <!-- implizit: A = B (theoretisch auch,
+                    C und Z ? :D) -->
+                    <property xsi:type="MQM-L-PF">
+                        <ref>91Din</ref>
+                        <expr i="0" j="0">3960.66 -3.77326*T</expr>
+                    </property>
+                    <property xsi:type="MQM-L-RK">
+                        <ref>91Din</ref>
+                        <expr rank="0">3960.66 -3.77326*T</expr>
+                    </property>
+                </interaction>
+
+            </interactions>
+
+            <nonDefaultQuads>
+                <quad cation="Cu[1+] Zn[2+]" anion="Cl[1-]">
+                    <!--  Assuming A/B and X/Y are factually indistinguishable... needs to be
+                    validated (?)-->
+                    <A species="Cu[1+]" value="0.688721875540867" />
+                    <X species="Cl[1-]" value="0.688721875540867" />
+                    <!-- <Y species="Cl[1-]" value="0.688721875540867" /> optional -->
+                </quad>
+
+            </nonDefaultQuads>
+
+
+            <ternaryInterpolations>
+                <interpolation>
+                    <constituents>
+                        <sublattice>
+                            <i>Cu[1+]</i>
+                            <j>Fe[2+]</j>
+                            <k>Zn[2+]</k>
+                        </sublattice>
+                        <sublattice>
+                            <const>Cl[1-]</const>
+                        </sublattice>
+                    </constituents>
+                    <ij type="Kohler" />
+                    <jk type="Muggiano" />
+                    <ik type="Toop" constant="i" />
+                </interpolation>
+                <!-- optionalität hier -->
+                <interpolation constituents="Cu[1+],Fe[2+],Zn[2+]:Cl[1-]">
+                    <ij type="Kohler" />
+                    <jk type="Muggiano" />
+                    <ik type="Toop" constant="i" />
+                </interpolation>
+
+
+                <interpolation>
+                    <constituents>
+                        <sublattice>
+                            <const>Cu[1+]</const>
+                        </sublattice>
+                        <sublattice>
+                            <i>Cl[1-]</i>
+                            <j>F[1-]</j>
+                            <k>O[2-]</k>
+                        </sublattice>
+                    </constituents>
+                    <ij type="Kohler" />
+                    <jk type="Muggiano" />
+                    <ik type="Toop" constant="i" />
+                </interpolation>
+
+
+            </ternaryInterpolations>
+
+        </phase>
+
+    </phases>
+
+    <globalExpressions>
+        ...
+    </globalExpressions>
+
+</database>
