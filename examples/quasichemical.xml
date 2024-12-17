@@ -12,7 +12,7 @@
 
 
     <systemComponents>
-        <systemComponent symbol="Va" />
+        <systemComponent symbol="Va" />  <!-- do we need "Va" as system component? -->
 
         <systemComponent symbol="Cl" refstate="BLANK" molar_mass="35.453" h298="0.0" s298="0.0" />
         <systemComponent symbol="Cu" refstate="BLANK" molar_mass="63.546" h298="0.0" s298="0.0" />
@@ -38,7 +38,7 @@
             <endmember cation="Cu[1+]" anion="Cl[1-]">
                 <stoichiometry scalingFactor="1.0" />
                 <name>CuCl</name>
-                <description />
+                <description Copper-I Chloride/>
                 <property xsi:type="MQM-G">
                     <ref />
                     <comment />
