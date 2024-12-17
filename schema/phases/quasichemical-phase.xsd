@@ -1,0 +1,90 @@
+<xs:schema
+    targetNamespace="http://calphad.org/thermml/0.0"
+    elementFormDefault="qualified"
+    version="0.0"
+    xmlns="http://calphad.org/thermml/0.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:include schemaLocation="core.xsd" />
+    <xs:include schemaLocation="functions.xsd" />
+    <xs:include schemaLocation="phase-properties.xsd" />
+
+
+    <xs:complexType name="MQMEndmemberPropertyType">
+        <xs:complexContent>
+            <xs:extension base="AbstractPhasePropertyType">
+                <!-- Additional elements or attributes specific to PhasePropertyType -->
+            </xs:extension>
+        </xs:complexContent>
+
+    </xs:complexType>
+
+    <xs:complexType name="MQM-G">
+        <xs:complexContent>
+            <xs:extension base="MQMEndmemberPropertyType">
+                <xs:sequence>
+                    <xs:element name="expr" />
+                    <xs:element name="zeta" type="xs:float" />
+                    <xs:element name="coordinationNumbers">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="comment" type="xs:string" minOccurs="0" />
+                                <xs:element name="cation" type="xs:float" maxOccurs="1" />
+                                <xs:element name="anion" type="xs:float" maxOccurs="1" />
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MQMEndmemberType">
+        <xs:annotation>
+            <xs:documentation> The endmember of a quasichemical phase model.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="stoichiometry">
+                <xs:complexType>
+                    <xs:attribute name="scalingFactor" type="xs:decimal" use="required" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="name" type="xs:string" />
+            <xs:element name="description" type="xs:string" />
+            <xs:element name="property" type="MQMEndmemberPropertyType" minOccurs="1"
+                maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="cation" type="xs:string" use="required" />
+        <xs:attribute name="anion" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="ModifiedQuasichemicalPhaseType">
+        <xs:annotation>
+            <xs:documentation xml:lang="en"> A quasichemical phase model type. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="PhaseType">
+                <xs:sequence>
+                    <xs:element name="description" type="xs:string" minOccurs="0" />
+                    <xs:element name="species">
+                        <xs:annotation>
+                            <xs:documentation xml:lang="en"> The structure of the phase. </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+
+                    <xs:choice maxOccurs="unbounded">
+                        <!-- endmembers-->
+                        <xs:element name="endmember" type="MQMEndmemberType" minOccurs="1"
+                            maxOccurs="unbounded" />
+
+                        <!-- interactions-->
+                        <xs:element name="interactions" minOccurs="0" maxOccurs="unbounded" />
+                    </xs:choice>
+                </xs:sequence>
+
+                <!-- TODO -->
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

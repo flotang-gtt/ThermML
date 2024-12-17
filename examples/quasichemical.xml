@@ -22,7 +22,7 @@
     </systemComponents>
 
     <phases>
-        <phase xsi:type="ModifiedQuasichemicalPhase" name="Liquid" state="liquid">
+        <phase xsi:type="ModifiedQuasichemicalPhaseType" name="Liquid" state="liquid">
             <description>There should be a valid, extensive description of this phase in clear
                 language.</description>
             <species>
@@ -38,7 +38,7 @@
             <endmember cation="Cu[1+]" anion="Cl[1-]">
                 <stoichiometry scalingFactor="1.0" />
                 <name>CuCl</name>
-                <description Copper-I Chloride/>
+                <description>Copper-I Chloride</description>
                 <property xsi:type="MQM-G">
                     <ref />
                     <comment />
@@ -52,7 +52,7 @@
             </endmember>
 
             <endmember cation="Zn[2+]" anion="Cl[1-]">
-                <stoichiometry scalingFactor="1.0">
+                <stoichiometry scalingFactor="1.0" />
                 <name>ZnCl2</name>
                 <description />
                 <property xsi:type="MQM-G">
