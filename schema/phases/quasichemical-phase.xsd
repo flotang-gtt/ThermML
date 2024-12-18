@@ -58,6 +58,65 @@
         <xs:attribute name="anion" type="xs:string" use="required" />
     </xs:complexType>
 
+    <xs:complexType name="MQMInteractionPropertyType">
+        <xs:complexContent>
+            <xs:extension base="AbstractPhasePropertyType">
+                <!-- Additional elements or attributes specific to PhasePropertyType -->
+            </xs:extension>
+        </xs:complexContent>
+
+    </xs:complexType>
+
+    <xs:complexType name="MQM-L-PF">
+        <xs:complexContent>
+            <xs:extension base="MQMInteractionPropertyType">
+                <xs:sequence>
+                    <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation> The expression for a pair fraction expansion. Has to
+                                have two attributes, "i" and "j" for the respective exponents of the
+                                expression: </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                    <xs:attribute name="j" type="xs:integer" use="required" />
+                                    <xs:attribute name="i" type="xs:integer" use="required" />
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+
+
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MQM-L-RK">
+        <xs:complexContent>
+            <xs:extension base="MQMInteractionPropertyType">
+                <xs:sequence>
+                    <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation> The expression for a Redlich-Kister excess formulation. Has to have only a single attribute, "rank".</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                    <xs:attribute name="rank" type="xs:integer" use="required" />
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+
+
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
     <xs:complexType name="ModifiedQuasichemicalPhaseType">
         <xs:annotation>
             <xs:documentation xml:lang="en"> A quasichemical phase model type. </xs:documentation>
@@ -78,7 +137,30 @@
                             maxOccurs="unbounded" />
 
                         <!-- interactions-->
-                        <xs:element name="interactions" minOccurs="0" maxOccurs="unbounded" />
+                        <xs:element name="interactions" minOccurs="0" maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation> Interactions for excess modeling of mixing in the
+                                    quasichemical model.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="interaction" minOccurs="1"
+                                        maxOccurs="unbounded">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="property"
+                                                    type="MQMInteractionPropertyType"
+                                                    minOccurs="1" maxOccurs="unbounded" />
+                                            </xs:sequence>
+                                            <xs:attribute name="A" type="xs:string" use="required" />
+                                            <xs:attribute name="B" type="xs:string" use="optional" />
+                                            <xs:attribute name="X" type="xs:string" use="required" />
+                                            <xs:attribute name="Y" type="xs:string" use="optional" />
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
                     </xs:choice>
                 </xs:sequence>
 
