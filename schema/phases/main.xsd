@@ -7,6 +7,7 @@
 
     <xs:include schemaLocation="core.xsd" />
     <xs:include schemaLocation="pure-substances.xsd" />
-    <xs:include schemaLocation="simple-solution.xsd" />
+    <xs:include schemaLocation="cef-phase.xsd" />
+    <xs:include schemaLocation="quasichemical-phase.xsd" />
 
 </xs:schema>
