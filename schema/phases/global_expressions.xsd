@@ -107,7 +107,7 @@
 
     </xs:complexType>
 
-    <xs:complexType name="FunctionHSCPTermType">
+    <xs:complexType name="HSCPTemperatureTermExpr">
         <xs:annotation>
             <xs:documentation> A term in a H-S-CP function. </xs:documentation>
         </xs:annotation>
@@ -118,11 +118,11 @@
                     number. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="fun" use="required" type="FunctionHSCPTempTermType" />
+        <xs:attribute name="fun" use="required" type="HSCPTemperatureExprTermType" />
 
     </xs:complexType>
 
-    <xs:simpleType name="FunctionHSCPTempTermType">
+    <xs:simpleType name="HSCPTemperatureExprTermType">
         <xs:annotation>
             <xs:documentation> Temperature exponent term in a H-S-CP function. Has to
                 be T^('number'). For integers &gt;= 0, the brackets can be omitted. (e.g. T^5) </xs:documentation>
@@ -135,7 +135,7 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:complexType name="FunctionTypeHSCP">
+    <xs:complexType name="HSCPTemperatureExpr">
         <xs:annotation>
             <xs:documentation> A H-S-CP function. </xs:documentation>
         </xs:annotation>
@@ -157,7 +157,7 @@
                     <xs:element name="range" minOccurs="1" maxOccurs="unbounded">
                         <xs:complexType>
                             <xs:sequence>
-                                <xs:element name="term" type="FunctionHSCPTermType"
+                                <xs:element name="term" type="HSCPTemperatureExprTermType"
                                     maxOccurs="unbounded" />
                             </xs:sequence>
                             <xs:attribute name="low" type="xs:double" use="required" />
