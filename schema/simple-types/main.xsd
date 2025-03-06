@@ -16,7 +16,7 @@
 
     <xs:simpleType name="SpeciesType">
         <xs:annotation>
-            <xs:documentation xml:lang="en"> An identifier for phases. </xs:documentation>
+            <xs:documentation> An identifier for phases. </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <!-- match all 
@@ -33,7 +33,7 @@
     <xs:simpleType name="FractionType">
 
         <xs:annotation>
-            <xs:documentation xml:lang="en"> A fraction between zero and one. </xs:documentation>
+            <xs:documentation> A fraction between zero and one. </xs:documentation>
         </xs:annotation>
 
         <xs:restriction base="xs:float">
@@ -47,7 +47,7 @@
     <xs:simpleType name="FractionsType">
 
         <xs:annotation>
-            <xs:documentation xml:lang="en"> A list of fractions. </xs:documentation>
+            <xs:documentation> A list of fractions. </xs:documentation>
         </xs:annotation>
 
         <xs:list itemType="FractionType" />

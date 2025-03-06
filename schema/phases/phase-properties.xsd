@@ -7,13 +7,13 @@
 
     <xs:complexType name="AbstractPhasePropertyType" abstract="true">
         <xs:annotation>
-            <xs:documentation xml:lang="en"> A property node of the phase, e.g. Gibbs energy,
+            <xs:documentation> A property node of the phase, e.g. Gibbs energy,
                 enthalpy, Bohr magneton, ... </xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="ref" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> A reference to the source of the data. </xs:documentation>
+                    <xs:documentation> A reference to the source of the data. </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:simpleContent>
@@ -23,7 +23,7 @@
             </xs:element>
             <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> A comment may help to understand inform certain
+                    <xs:documentation> A comment may help to understand inform certain
                         values. </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
@@ -52,12 +52,12 @@
         <xs:complexContent>
             <xs:extension base="PhasePropertyType">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> A sublattice in a phase. </xs:documentation>
+                    <xs:documentation> A sublattice in a phase. </xs:documentation>
                 </xs:annotation>
                 <xs:sequence>
                     <xs:element name="expr" minOccurs="1" maxOccurs="1">
                         <xs:annotation>
-                            <xs:documentation xml:lang="en"> The expression for that property. </xs:documentation>
+                            <xs:documentation> The expression for that property. </xs:documentation>
                         </xs:annotation>
                         <xs:complexType>
                             <xs:simpleContent>
@@ -74,12 +74,12 @@
         <xs:complexContent>
             <xs:extension base="PhasePropertyType">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> Magnetic properties according to IHJ formalism. </xs:documentation>
+                    <xs:documentation> Magnetic properties according to IHJ formalism. </xs:documentation>
                 </xs:annotation>
                 <xs:sequence>
                     <xs:element name="temperature" minOccurs="1" maxOccurs="1">
                         <xs:annotation>
-                            <xs:documentation xml:lang="en"> The expression for that property. </xs:documentation>
+                            <xs:documentation> The expression for that property. </xs:documentation>
                         </xs:annotation>
                         <xs:complexType>
                             <xs:simpleContent>
@@ -92,7 +92,7 @@
                     </xs:element>
                     <xs:element name="moment" minOccurs="0" maxOccurs="unbounded">
                         <xs:annotation>
-                            <xs:documentation xml:lang="en"> The magnetic moment of the endmember. </xs:documentation>
+                            <xs:documentation> The magnetic moment of the endmember. </xs:documentation>
                         </xs:annotation>
                         <xs:complexType>
                             <xs:simpleContent>
@@ -110,13 +110,13 @@
         <xs:complexContent>
             <xs:extension base="PhasePropertyType">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> Magnetic interaction properties according to
+                    <xs:documentation> Magnetic interaction properties according to
                         IHJ formalism (using RK) </xs:documentation>
                 </xs:annotation>
                 <xs:sequence>
                     <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
                         <xs:annotation>
-                            <xs:documentation xml:lang="en"> The expression for that property. </xs:documentation>
+                            <xs:documentation> The expression for that property. </xs:documentation>
                         </xs:annotation>
                         <xs:complexType>
                             <xs:simpleContent>
@@ -136,7 +136,7 @@
         <xs:complexContent>
             <xs:extension base="L">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> Magnetic interaction properties according to
+                    <xs:documentation> Magnetic interaction properties according to
                         IHJ formalism (using RK) </xs:documentation>
                 </xs:annotation>
             </xs:extension>

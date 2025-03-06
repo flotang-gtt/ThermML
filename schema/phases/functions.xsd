@@ -11,7 +11,7 @@
 
     <xs:simpleType name="FunctionType">
         <xs:annotation>
-            <xs:documentation xml:lang="en"> A descriptor for different function types. </xs:documentation>
+            <xs:documentation> A descriptor for different function types. </xs:documentation>
         </xs:annotation>
 
         <xs:restriction base="xs:string">
@@ -44,7 +44,7 @@
 
     <xs:complexType name="FunctionReferenceType">
         <xs:annotation>
-            <xs:documentation xml:lang="en"> Reference to a function that is a child of the
+            <xs:documentation> Reference to a function that is a child of the
                 functions element. </xs:documentation>
         </xs:annotation>
         <xs:attribute name="type" use="required" type="FunctionType" />
@@ -55,13 +55,13 @@
 
     <xs:complexType name="AbstractFunctionType" abstract="true">
         <xs:annotation>
-            <xs:documentation xml:lang="en"> An abstract function type. </xs:documentation>
+            <xs:documentation> An abstract function type. </xs:documentation>
         </xs:annotation>
 
         <xs:sequence>
             <xs:element name="ref" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> A reference to the source of the data. </xs:documentation>
+                    <xs:documentation> A reference to the source of the data. </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:simpleContent>
@@ -71,7 +71,7 @@
             </xs:element>
             <xs:element name="comment" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> Commentary on the parameter that does not fit
+                    <xs:documentation> Commentary on the parameter that does not fit
                         into any of the other fields. </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
@@ -87,7 +87,7 @@
 
     <xs:complexType name="FunctionTypeExpr">
         <xs:annotation>
-            <xs:documentation xml:lang="en"> A temperature dependent function that is stored in
+            <xs:documentation> A temperature dependent function that is stored in
                 strict ThermML expression style. </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
@@ -109,12 +109,12 @@
 
     <xs:complexType name="FunctionHSCPTermType">
         <xs:annotation>
-            <xs:documentation xml:lang="en"> A term in a H-S-CP function. </xs:documentation>
+            <xs:documentation> A term in a H-S-CP function. </xs:documentation>
         </xs:annotation>
 
         <xs:attribute name="coeff" use="required" type="xs:double">
             <xs:annotation>
-                <xs:documentation xml:lang="en"> Coefficient of the term. A simple floating point
+                <xs:documentation> Coefficient of the term. A simple floating point
                     number. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
@@ -124,7 +124,7 @@
 
     <xs:simpleType name="FunctionHSCPTempTermType">
         <xs:annotation>
-            <xs:documentation xml:lang="en"> Temperature exponent term in a H-S-CP function. Has to
+            <xs:documentation> Temperature exponent term in a H-S-CP function. Has to
                 be T^('number'). For integers &gt;= 0, the brackets can be omitted. (e.g. T^5) </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
@@ -137,7 +137,7 @@
 
     <xs:complexType name="FunctionTypeHSCP">
         <xs:annotation>
-            <xs:documentation xml:lang="en"> A H-S-CP function. </xs:documentation>
+            <xs:documentation> A H-S-CP function. </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
 

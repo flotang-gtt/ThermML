@@ -7,7 +7,7 @@
 
     <xs:simpleType name="NonChemicalPotentialIdType">
         <xs:annotation>
-            <xs:documentation xml:lang="en"> A unique identifier for non-chemical potentials. </xs:documentation>
+            <xs:documentation> A unique identifier for non-chemical potentials. </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:ID">
             <xs:pattern value="pot[A-Z]" />
@@ -16,7 +16,7 @@
 
     <xs:simpleType name="NonChemicalPotentialIdRefType">
         <xs:annotation>
-            <xs:documentation xml:lang="en"> A unique identifier reference for non-chemical
+            <xs:documentation> A unique identifier reference for non-chemical
                 potentials. </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:IDREF">
@@ -26,7 +26,7 @@
 
     <xs:complexType name="NonChemicalPotentialType">
         <xs:annotation>
-            <xs:documentation xml:lang="en"> A non-chemical, or non-compositional, potential used in
+            <xs:documentation> A non-chemical, or non-compositional, potential used in
                 the calculation thermodynamic quantities. Temperature is the potential most commonly
                 used. Others include pressure, magnetic field strength, stress, and surface energy. </xs:documentation>
         </xs:annotation>
