@@ -13,6 +13,10 @@
             <xs:extension base="PhaseType">
                 <xs:sequence>
                     <xs:element name="stoichiometry">
+                        <xs:annotation>
+                            <xs:documentation>The stoichiometry of a pure Phase should be given
+                                directly as a vector of elements and associated coefficients.</xs:documentation>
+                        </xs:annotation>
                         <xs:complexType>
                             <xs:sequence minOccurs="1" maxOccurs="unbounded">
                                 <xs:element name="stoich" type="StoichiometryRecordType" />
@@ -21,8 +25,8 @@
                     </xs:element>
                     <xs:element name="property" minOccurs="0" maxOccurs="unbounded">
                         <xs:annotation>
-                            <xs:documentation xml:lang="en"> A property of the phase, e.g. Gibbs
-                                energy, enthalpy, Bohr magneton, ... </xs:documentation>
+                            <xs:documentation> A property of the phase, e.g. Gibbs energy, enthalpy,
+                                Bohr magneton, ... </xs:documentation>
                         </xs:annotation>
                         <xs:complexType>
                             <xs:choice>

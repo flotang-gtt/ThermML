@@ -1,0 +1,129 @@
+<database
+    xmlns="http://calphad.org/thermml/0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xi="http://www.w3.org/2001/XInclude"
+    xsi:schemaLocation="http://calphad.org/thermml/0.0 ../schema/thermml-schema.xsd"
+    name="Example Quasichemical Database">
+
+    <description>
+        This is an example thermodynamic database for demonstrating the ThermML schema for
+        quasichemical models.
+    </description>
+
+
+    <systemComponents>
+        <systemComponent symbol="Va" />  <!-- do we need "Va" as system component? -->
+
+        <systemComponent symbol="Cl" refstate="BLANK" molar_mass="35.453" h298="0.0" s298="0.0" />
+        <systemComponent symbol="Cu" refstate="BLANK" molar_mass="63.546" h298="0.0" s298="0.0" />
+        <systemComponent symbol="Fe" refstate="BLANK" molar_mass="55.845" h298="0.0" s298="0.0" />
+        <systemComponent symbol="Pb" refstate="BLANK" molar_mass="207.2" h298="0.0" s298="0.0" />
+        <systemComponent symbol="Zn" refstate="BLANK" molar_mass="65.38" h298="0.0" s298="0.0" />
+    </systemComponents>
+
+    <phases>
+        <phase xsi:type="ModifiedQuasichemicalPhaseType" name="Liquid" state="liquid">
+            <description>There should be a valid, extensive description of this phase in clear
+                language.</description>
+            <species>
+                <specie name="Cu[1+]" composition="Cu1" charge="+1" group="1" />
+                <specie name="Zn[2+]" composition="Zn1" charge="+2" group="1" />
+                <specie name="Fe[3+]" composition="Fe1" charge="+3" group="1" />
+                <specie name="Cu[2+]" composition="Cu1" charge="+2" group="1" />
+                <specie name="Fe[2+]" composition="Fe1" charge="+2" group="1" />
+                <specie name="Pb[2+]" composition="Pb1" charge="+2" group="1" />
+                <specie name="Cl[1-]" composition="Cl1" charge="-1" group="1" />
+            </species>
+
+            <endmember constituents="Cu[1+]:Cl[1-]">
+                <stoichiometry scalingFactor="1.0" />
+                <name>CuCl</name>
+                <description>Copper-I Chloride</description>
+                <property xsi:type="MQM-G">
+                    <ref />
+                    <comment />
+                    <expr>CuCl#Liquid</expr>
+                    <zeta>2.4</zeta>
+                    <coordinationNumbers>
+                        <cation>6.0</cation>
+                        <anion>6.0</anion>
+                    </coordinationNumbers>
+                </property>
+            </endmember>
+
+            <endmember constituents="Zn[2+]:Cl[1-]">
+                <stoichiometry scalingFactor="1.0" />
+                <name>ZnCl2</name>
+                <description />
+                <property xsi:type="MQM-G">
+                    <ref />
+                    <comment />
+                    <expr>ZnCl2#Liquid</expr>
+                    <zeta>2.4</zeta>
+                    <coordinationNumbers>
+                        <comment>'Second Nearest Neighbor' coordination numbers</comment>
+                        <cation>6.0</cation>
+                        <anion>3.0</anion>
+                    </coordinationNumbers>
+                </property>
+            </endmember>
+
+            <!-- missing: FeCl3, FeCl2, CuCl2, PbCl2 -->
+
+            <interactions>
+
+                <interaction constituents="Cu[1+],Zn[2+]:Cl[1-]">
+                    <property xsi:type="MQM-L-PF">
+                        <ref>Viitala ChemSage.dat</ref>
+                        <comment />
+
+                        <expr i="0" j="0">3960.66 -3.77326*T</expr>
+                        <expr i="1" j="0">-2018.27</expr>
+                        <expr i="0" j="1">-4457.21 -0.783*T</expr>
+                    </property>
+                </interaction>
+
+                <interaction constituents="Cu[1+]:Cl[1-],O[2-]">
+                    <!-- PF for pair fraction expansion parameter -->
+                    <property xsi:type="MQM-L-PF">
+                        <ref>91Din</ref>
+                        <expr i="0" j="0">3960.66 -3.77326*T</expr>
+                    </property>
+                    <!-- Bragg-Williams Redlich Kister: RK (assume BW is implicit?) -->
+                    <property xsi:type="MQM-L-RK">
+                        <ref>91Din</ref>
+                        <expr rank="0">3960.66 -3.77326*T</expr>
+                    </property>
+                </interaction>
+
+                <!-- missing more interactions that are in the Viitala dataset. -->
+
+            </interactions>
+
+            <nonDefaultQuads>
+                <quad constituents="Cu[1+],Zn[2+]:Cl[1-]">
+                    <A species="Cu[1+]" value="0.688721875540867" />
+                    <B species="Zn[2+]" value="0.688721875540867" />
+                    <X species="Cl[1-]" value="0.688721875540867" />
+                    <Y species="Cl[1-]" value="0.688721875540867" />
+                </quad>
+            </nonDefaultQuads>
+
+
+            <ternaryInterpolations>
+                <interpolation constituents="Cu[1+],Fe[2+],Zn[2+]:Cl[1-]">
+                    <ij type="Kohler" />
+                    <jk type="Muggiano" />
+                    <ik type="Toop" constant="i" />
+                </interpolation>
+            </ternaryInterpolations>
+
+        </phase>
+
+    </phases>
+
+    <functions>
+
+    </functions>
+
+</database>

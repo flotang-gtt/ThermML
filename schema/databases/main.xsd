@@ -11,8 +11,8 @@
 
     <xs:complexType name="DatabaseType">
         <xs:annotation>
-            <xs:documentation xml:lang="en"> A database that stores material thermodynamic and
-                thermophysical data. </xs:documentation>
+            <xs:documentation> A database that stores material thermodynamic and thermophysical
+                data. </xs:documentation>
         </xs:annotation>
         <xs:sequence>
 
@@ -27,8 +27,8 @@
 
             <xs:element name="systemComponents" maxOccurs="1">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> The system components that are defined in the
-                        database. Can only exist once. </xs:documentation>
+                    <xs:documentation> The system components that are defined in the database. Can
+                        only exist once. </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:sequence minOccurs="1" maxOccurs="unbounded">
@@ -39,8 +39,8 @@
 
             <xs:element name="phases" maxOccurs="1">
                 <xs:annotation>
-                    <xs:documentation xml:lang="en"> The phases that are defined in the database.
-                        Can only exist once. </xs:documentation>
+                    <xs:documentation> The phases that are defined in the database. Can only exist
+                        once. </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
@@ -51,9 +51,18 @@
             </xs:element>
 
             <xs:element name="functions" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> The functions that are defined in the database. Can only
+                        exist once. </xs:documentation>
+                </xs:annotation>
+
                 <xs:complexType>
                     <xs:choice maxOccurs="unbounded" minOccurs="0">
-                        <xs:element name="function" type="AbstractFunctionType" />
+                        <xs:element name="function" type="AbstractFunctionType">
+                            <xs:annotation>
+                                <xs:documentation> A function that is defined in the database. </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
                     </xs:choice>
                 </xs:complexType>
             </xs:element>

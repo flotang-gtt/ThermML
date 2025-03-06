@@ -1,0 +1,282 @@
+<xs:schema
+    targetNamespace="http://calphad.org/thermml/0.0"
+    elementFormDefault="qualified"
+    version="0.0"
+    xmlns="http://calphad.org/thermml/0.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:include schemaLocation="core.xsd" />
+    <xs:include schemaLocation="functions.xsd" />
+    <xs:include schemaLocation="phase-properties.xsd" />
+
+
+    <xs:complexType name="MQMEndmemberPropertyType">
+        <xs:complexContent>
+            <xs:extension base="AbstractPhasePropertyType">
+                <!-- Additional elements or attributes specific to PhasePropertyType -->
+            </xs:extension>
+        </xs:complexContent>
+
+    </xs:complexType>
+
+    <xs:complexType name="MQM-G">
+        <xs:complexContent>
+            <xs:extension base="MQMEndmemberPropertyType">
+                <xs:sequence>
+                    <xs:element name="expr" />
+                    <xs:element name="zeta" type="xs:float">
+                        <xs:annotation>
+                            <xs:documentation>Typically set to 2.4</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="coordinationNumbers">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="comment" type="xs:string" minOccurs="0" />
+                                <xs:element name="cation" type="xs:float" maxOccurs="1" />
+                                <xs:element name="anion" type="xs:float" maxOccurs="1" />
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MQMEndmemberType">
+        <xs:annotation>
+            <xs:documentation> The endmember of a quasichemical phase model.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="stoichiometry">
+                <xs:complexType>
+                    <xs:attribute name="scalingFactor" type="xs:decimal" use="required" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="name" type="xs:string" />
+            <xs:element name="description" type="xs:string" />
+            <xs:element name="property" type="MQMEndmemberPropertyType" minOccurs="1"
+                maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="constituents" type="xs:string" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="MQMInteractionPropertyType">
+        <xs:complexContent>
+            <xs:extension base="AbstractPhasePropertyType">
+                <!-- Additional elements or attributes specific to PhasePropertyType -->
+            </xs:extension>
+        </xs:complexContent>
+
+    </xs:complexType>
+
+    <xs:complexType name="MQM-L-PF">
+        <xs:complexContent>
+            <xs:extension base="MQMInteractionPropertyType">
+                <xs:sequence>
+                    <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation> The expression for a pair fraction expansion. Has to
+                                have two attributes, "i" and "j" for the respective exponents of the
+                                expression: </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                    <xs:attribute name="j" type="xs:integer" use="required" />
+                                    <xs:attribute name="i" type="xs:integer" use="required" />
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+
+
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MQM-L-RK">
+        <xs:complexContent>
+            <xs:extension base="MQMInteractionPropertyType">
+                <xs:sequence>
+                    <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation> The expression for a Redlich-Kister excess
+                                formulation. Has to have only a single attribute, "rank".</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                    <xs:attribute name="rank" type="xs:integer" use="required" />
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+
+
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MQMquadSite">
+        <xs:annotation>
+            <xs:documentation> Type that defines a quadruplet 'site' in the quasichemical model. It
+                is only used to construct non-default quadruplets.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="species" type="xs:string" />
+        <xs:attribute name="value" type="xs:float" />
+
+    </xs:complexType>
+
+
+    <xs:simpleType name="chargeValues">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="+1" />
+            <xs:enumeration value="+2" />
+            <xs:enumeration value="+3" />
+            <xs:enumeration value="+4" />
+            <xs:enumeration value="+5" />
+            <xs:enumeration value="+6" />
+            <xs:enumeration value="+7" />
+            <xs:enumeration value="+8" />
+            <xs:enumeration value="-1" />
+            <xs:enumeration value="-2" />
+            <xs:enumeration value="-3" />
+            <xs:enumeration value="-4" />
+            <xs:enumeration value="-5" />
+            <xs:enumeration value="-6" />
+            <xs:enumeration value="-7" />
+            <xs:enumeration value="-8" />
+        </xs:restriction>
+    </xs:simpleType>
+
+
+    <xs:complexType name="ModifiedQuasichemicalPhaseType">
+        <xs:annotation>
+            <xs:documentation> A quasichemical phase model type. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="PhaseType">
+                <xs:sequence>
+                    <xs:element name="description" type="xs:string" minOccurs="0" >
+                        <xs:annotation>
+                            <xs:documentation> A quasichemical model has the concept of quadruplets
+                                that are categorized into cations and anions. There are no neutral
+                                constituents allowed. </xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+
+                    <!-- species -->
+                    <xs:element name="species">
+                        <xs:annotation>
+                            <xs:documentation> A quasichemical model has the concept of quadruplets
+                                that are categorized into cations and anions. There are no neutral
+                                constituents allowed. </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="specie" minOccurs="1" maxOccurs="unbounded">
+                                    <xs:complexType>
+                                        <xs:attribute name="name" type="xs:string" use="required" />
+                                        <xs:attribute name="composition" type="xs:string" use="required"  />
+                                        <xs:attribute name="charge" type="chargeValues" use="required" />
+                                        <xs:attribute name="group" type="xs:int"  use="required" />
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+
+                    <xs:choice maxOccurs="unbounded">
+                        <!-- endmembers-->
+                        <xs:element name="endmember" type="MQMEndmemberType" minOccurs="1"
+                            maxOccurs="unbounded">
+                            <xs:annotation>
+                                <xs:documentation>A quasichemical endmember.</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+
+                        <!-- interactions-->
+                        <xs:element name="interactions" minOccurs="0" maxOccurs="1">
+                            <xs:annotation>
+                                <xs:documentation> Interactions for excess modeling of mixing in the
+                                    quasichemical model.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="interaction" minOccurs="0"
+                                        maxOccurs="unbounded">
+                                        <xs:complexType>
+                                            <xs:sequence>
+                                                <xs:element name="property"
+                                                    type="MQMInteractionPropertyType"
+                                                    minOccurs="1" maxOccurs="unbounded" />
+                                            </xs:sequence>
+                                            <xs:attribute name="constituents" type="xs:string"
+                                                use="required" />
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+
+                        <!-- non default quads -->
+                        <xs:element name="nonDefaultQuads">
+                            <xs:annotation>
+                                <xs:documentation>Quadruplets that have zeta values that are not the
+                                    default calculated zeta values can be entered. As they are
+                                    interdependent, some of the information is superfluous, and
+                                    special care should be taken that they are complying to the laws
+                                    of the model to avoid problems. The reading program has to check
+                                    the integrity.</xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="quad" minOccurs="1" maxOccurs="unbounded">
+                                        <xs:annotation>
+                                            <xs:documentation>The quadruplets are usually named A,B
+                                                (cations) and X,Y (anions). As the zeta values for
+                                                A-B and X-Y are dependent, defining only 2 of them
+                                                automatically yields the values for the other two.
+                                                Therefore, only one of these values should be set,
+                                                as the other is implied.</xs:documentation>
+                                        </xs:annotation>
+                                        <xs:complexType>
+                                            <xs:all>
+                                                <xs:element name="A" type="MQMquadSite" />
+                                                <xs:element name="B" type="MQMquadSite" />
+                                                <xs:element name="X" type="MQMquadSite" />
+                                                <xs:element name="Y" type="MQMquadSite" />
+                                            </xs:all>
+                                            <xs:attribute name="constituents" type="xs:string" />
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+
+                        </xs:element>
+
+                        <!-- ternary interpolations -->
+                        <xs:element name="ternaryInterpolations">
+                            <xs:annotation>
+                                <xs:documentation>Ternary interpolations as per default are assumed
+                                    to be Muggiano mixing, but other types such as Kohler and Toop
+                                    are allowed. </xs:documentation>
+                            </xs:annotation>
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="interpolation" type="InterpolationType" />
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:choice>
+                </xs:sequence>
+
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+</xs:schema>

@@ -7,7 +7,7 @@
 
     <xs:simpleType name="SystemComponentIdType">
         <xs:annotation>
-            <xs:documentation xml:lang="en"> An identifier for system component, typically an
+            <xs:documentation> An identifier for system component, typically an
                 element of the periodic table. </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
@@ -17,33 +17,33 @@
 
     <xs:complexType name="SystemComponentType">
         <xs:annotation>
-            <xs:documentation xml:lang="en"> The most basic component from which phase constituents
+            <xs:documentation> The most basic component from which phase constituents
                 are constructed. </xs:documentation>
         </xs:annotation>
         <xs:attribute name="symbol" type="SystemComponentIdType" use="required">
             <xs:annotation>
-                <xs:documentation xml:lang="en"> A symbol used for display purposes. </xs:documentation>
+                <xs:documentation> A symbol used for display purposes. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="molar_mass" type="xs:float" use="optional" default="0.0">
             <xs:annotation>
-                <xs:documentation xml:lang="en"> The molar mass of a system component, in g/mol. </xs:documentation>
+                <xs:documentation> The molar mass of a system component, in g/mol. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="refstate" type="xs:string" use="optional" default="0.0">
             <xs:annotation>
-                <xs:documentation xml:lang="en"> The component reference state, in the form of the
+                <xs:documentation> The component reference state, in the form of the
                     common phase names, e.g. FCC_A1, BCC_A2, HCP_A3, DIAMOND_A4, LIQUID, GAS, etc. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="h298" type="xs:float" use="optional" default="0.0">
             <xs:annotation>
-                <xs:documentation xml:lang="en"> Component enthalpy at 298.15 K in J/mol. </xs:documentation>
+                <xs:documentation> Component enthalpy at 298.15 K in J/mol. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="s298" type="xs:float" use="optional" default="0.0">
             <xs:annotation>
-                <xs:documentation xml:lang="en"> Component entropy at 298.15 K in J/K/mol. </xs:documentation>
+                <xs:documentation> Component entropy at 298.15 K in J/K/mol. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
     </xs:complexType>
