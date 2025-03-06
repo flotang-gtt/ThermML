@@ -35,7 +35,7 @@
                 <specie name="Cl[1-]" composition="Cl1" charge="-1" group="1" />
             </species>
 
-            <endmember cation="Cu[1+]" anion="Cl[1-]">
+            <endmember constituents="Cu[1+]:Cl[1-]">
                 <stoichiometry scalingFactor="1.0" />
                 <name>CuCl</name>
                 <description>Copper-I Chloride</description>
@@ -51,7 +51,7 @@
                 </property>
             </endmember>
 
-            <endmember cation="Zn[2+]" anion="Cl[1-]">
+            <endmember constituents="Zn[2+]:Cl[1-]">
                 <stoichiometry scalingFactor="1.0" />
                 <name>ZnCl2</name>
                 <description />
@@ -72,7 +72,7 @@
 
             <interactions>
 
-                <interaction A="Cu[1+]" B="Zn[2+]" X="Cl[1-]"> <!-- implicit: Y = X -->
+                <interaction constituents="Cu[1+],Zn[2+]:Cl[1-]">
                     <property xsi:type="MQM-L-PF">
                         <ref>Viitala ChemSage.dat</ref>
                         <comment />
@@ -83,14 +83,13 @@
                     </property>
                 </interaction>
 
-                <!-- implicit: A = B  -->
-                <interaction A="Cu[1+]" X="Cl[1-]" Y="O[2-]">
-                <!-- PF for pair fraction expansion parameter -->
+                <interaction constituents="Cu[1+]:Cl[1-],O[2-]">
+                    <!-- PF for pair fraction expansion parameter -->
                     <property xsi:type="MQM-L-PF">
                         <ref>91Din</ref>
                         <expr i="0" j="0">3960.66 -3.77326*T</expr>
                     </property>
-                <!-- Bragg-Williams Redlich Kister: RK (assume BW is implicit?) -->
+                    <!-- Bragg-Williams Redlich Kister: RK (assume BW is implicit?) -->
                     <property xsi:type="MQM-L-RK">
                         <ref>91Din</ref>
                         <expr rank="0">3960.66 -3.77326*T</expr>
@@ -102,49 +101,29 @@
             </interactions>
 
             <nonDefaultQuads>
-                <quad cation="Cu[1+] Zn[2+]" anion="Cl[1-]">
-                    <!--  Assuming A/B and X/Y are factually indistinguishable. removes need to be
-                    validated (?) -->
+                <quad constituents="Cu[1+],Zn[2+]:Cl[1-]">
                     <A species="Cu[1+]" value="0.688721875540867" />
+                    <B species="Zn[2+]" value="0.688721875540867" />
                     <X species="Cl[1-]" value="0.688721875540867" />
-                    <!-- <Y species="Cl[1-]" value="0.688721875540867" /> optional/obsolete -->
+                    <Y species="Cl[1-]" value="0.688721875540867" />
                 </quad>
-
             </nonDefaultQuads>
 
 
             <ternaryInterpolations>
-                <!-- option A -->
-                <interpolation>
-                    <constituents>
-                        <sublattice>
-                            <i>Cu[1+]</i>
-                            <j>Fe[2+]</j>
-                            <k>Zn[2+]</k>
-                        </sublattice>
-                        <sublattice>
-                            <const>Cl[1-]</const>
-                        </sublattice>
-                    </constituents>
-                    <ij type="Kohler" />
-                    <jk type="Muggiano" />
-                    <ik type="Toop" constant="i" />
-                    <!-- option B -->
-                </interpolation>
                 <interpolation constituents="Cu[1+],Fe[2+],Zn[2+]:Cl[1-]">
                     <ij type="Kohler" />
                     <jk type="Muggiano" />
                     <ik type="Toop" constant="i" />
                 </interpolation>
-
             </ternaryInterpolations>
 
         </phase>
 
     </phases>
 
-    <globalExpressions>
-        ...
-    </globalExpressions>
+    <functions>
+
+    </functions>
 
 </database>
