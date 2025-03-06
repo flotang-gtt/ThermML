@@ -58,8 +58,7 @@
             <xs:element name="property" type="MQMEndmemberPropertyType" minOccurs="1"
                 maxOccurs="unbounded" />
         </xs:sequence>
-        <xs:attribute name="cation" type="xs:string" use="required" />
-        <xs:attribute name="anion" type="xs:string" use="required" />
+        <xs:attribute name="constituents" type="xs:string" use="required" />
     </xs:complexType>
 
     <xs:complexType name="MQMInteractionPropertyType">
