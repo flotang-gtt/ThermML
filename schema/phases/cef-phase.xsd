@@ -36,7 +36,7 @@
                     </xs:attribute>
                     <xs:attribute name="wyckoff" use="optional" type="xs:string">
                         <xs:annotation>
-                            <xs:documentation> The Wyckhoff position of the site. </xs:documentation>
+                            <xs:documentation xml:lang="en"> The Wyckhoff position of the site. </xs:documentation>
                         </xs:annotation>
                     </xs:attribute>
                 </xs:complexType>
@@ -75,9 +75,9 @@
                             <xs:documentation> The constituents of the site. </xs:documentation>
                         </xs:annotation>
                     </xs:attribute>
-                    <xs:attribute name="wyckhof" use="optional" type="xs:string">
+                    <xs:attribute name="wyckoff" use="optional" type="xs:string">
                         <xs:annotation>
-                            <xs:documentation> The Wyckhoff position of the site. </xs:documentation>
+                            <xs:documentation xml:lang="en"> The Wyckoff position of the site. </xs:documentation>
                         </xs:annotation>
                     </xs:attribute>
                 </xs:complexType>
@@ -95,7 +95,7 @@
 
                                 <xs:attribute name="from" use="required" type="xs:string">
                                     <xs:annotation>
-                                        <xs:documentation> The Wychhoff position of
+                                        <xs:documentation xml:lang="en"> The Wychhoff position of
                                             the site. </xs:documentation>
                                     </xs:annotation>
                                 </xs:attribute>
