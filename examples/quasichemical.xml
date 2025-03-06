@@ -122,8 +122,8 @@
 
     </phases>
 
-    <functions>
+    <globalExpressions>
 
-    </functions>
+    </globalExpressions>
 
 </database>

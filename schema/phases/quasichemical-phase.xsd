@@ -6,7 +6,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:include schemaLocation="core.xsd" />
-    <xs:include schemaLocation="functions.xsd" />
+    <xs:include schemaLocation="global-expressions.xsd" />
     <xs:include schemaLocation="phase-properties.xsd" />
 
 
