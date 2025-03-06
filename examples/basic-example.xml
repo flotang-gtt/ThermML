@@ -53,7 +53,7 @@
         </phase>
     </phases>
 
-    <functions>
+    <globalExpressions>
         <function name="SiO2#other_func" xsi:type="FunctionTypeExpr">
             <range low="298.15" high="373.0" >
                 80.0119918*T^0 + -3546683.99888*T^(-2) + -240.275998928*T^(-0.5) + 491568369.44*T^(-3)
@@ -87,6 +87,6 @@
                 1  0.0000000       0.00
             </chemsage>
         </function>
-    </functions>
+    </globalExpressions>
 
 </database>
