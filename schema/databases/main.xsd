@@ -53,11 +53,7 @@
             <xs:element name="globalExpressions" minOccurs="0">
                 <xs:complexType>
                     <xs:choice maxOccurs="unbounded" minOccurs="0">
-                        <xs:element name="function" type="AbstractFunctionType">
-                            <xs:annotation>
-                                <xs:documentation> A function that is defined in the database. </xs:documentation>
-                            </xs:annotation>
-                        </xs:element>
+                        <xs:element name="expression" type="AbstractFunctionType" />
                     </xs:choice>
                 </xs:complexType>
             </xs:element>

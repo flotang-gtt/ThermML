@@ -134,43 +134,43 @@
     </phases>
 
     <globalExpressions>
-        <function name="Fe#HSER" xsi:type="RangedTemperatureExpr">
+        <expression name="Fe#HSER" xsi:type="RangedTemperatureExpr">
             <range low="298.15" high="1811.0" >
                   1225.7  +  124.134*T  +  -23.5143*T*LN(T)  +  -0.00439752*T**2  +  -5.8927E-08*T**3  +  77359*T**(-1)
             </range>
             <range low="1811.0" high="6000.0" >
                 -25383.581  +  299.31255*T  +  -46*T*LN(T)  +  2.29603E+31*T**(-9)
             </range>
-        </function>
-        <function name="Fe#FCC_A1" xsi:type="RangedTemperatureExpr" >
+        </expression>
+        <expression name="Fe#FCC_A1" xsi:type="RangedTemperatureExpr" >
             <range low="298.15" high="1811.0" >
                 -1462.4  +  8.282*T  +  -1.15*T*LN(T)  +  6.4E-04*T**2  +  Fe#HSER
             </range>
             <range low="1811.0" high="6000.0" >
                 -1713.815  +  0.940009*T  +  Fe#HSER  +  4.9251E+30*T**(-9)
             </range>
-        </function>
-        <function name="Mn#FCC_A1" xsi:type="RangedTemperatureExpr" >
+        </expression>
+        <expression name="Mn#FCC_A1" xsi:type="RangedTemperatureExpr" >
             <range low="298.15" high="1519.0">
                 -3439.3  +  131.884*T  +  -24.5177*T*LN(T)0.006*T**2  +  69600*T**(-1)
             </range>
             <range low="1519.0" high="2000.0">
                 +2663.31  +  -2.5984*T  +  Mn#HSER  +  2.205113E+30*T**(-9)
             </range>
-        </function>
-        <function name="Mn#HSER" xsi:type="RangedTemperatureExpr" >
+        </expression>
+        <expression name="Mn#HSER" xsi:type="RangedTemperatureExpr" >
             <range low="298.15" high="1519.0">
                 -8115.28  +  130.059*T  +  -23.4582*T*LN(T)  +  -0.00734768*T**2  +  69827*T**(-1)            
             </range>
             <range low="1519.0" high="2000.0">
                 -28733.41  +  312.2648*T  +  -48*T*LN(T)  +  1.656847E+30*T**(-9)
             </range>
-        </function>
-        <function name="C#HSER" xsi:type="RangedTemperatureExpr">
+        </expression>
+        <expression name="C#HSER" xsi:type="RangedTemperatureExpr">
             <range low="298.15" high="6000.0">
                 -17368.441  +  170.73*T  +  -24.3*T*LN(T)  +  -4.723E-04*T**2  +  2562600*T**(-1)  +  -2.643E+08*T**(-2)  +  1.2E+10*T**(-3)
             </range>
-        </function>
+        </expression>
     </globalExpressions>
 
 </database>
