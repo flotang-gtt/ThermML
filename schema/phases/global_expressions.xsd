@@ -23,7 +23,7 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:complexType name="FunctionTypeExprRange">
+    <xs:complexType name="RangedTemperatureExprRange">
         <xs:annotation>
             <xs:documentation> A range for a function that is stored in strict ThermML expression
                 style. </xs:documentation>
@@ -85,7 +85,7 @@
         <xs:attribute name="name" use="required" type="FunctionIDType" />
     </xs:complexType>
 
-    <xs:complexType name="FunctionTypeExpr">
+    <xs:complexType name="RangedTemperatureExpr">
         <xs:annotation>
             <xs:documentation> A temperature dependent function that is stored in
                 strict ThermML expression style. </xs:documentation>
@@ -94,7 +94,7 @@
 
             <xs:extension base="AbstractFunctionType">
                 <xs:sequence>
-                    <xs:element name="range" type="FunctionTypeExprRange" minOccurs="1"
+                    <xs:element name="range" type="RangedTemperatureExprRange" minOccurs="1"
                         maxOccurs="unbounded">
                         <xs:annotation>
                             <xs:documentation>A temperature range expression.</xs:documentation>
