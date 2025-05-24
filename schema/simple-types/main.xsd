@@ -6,7 +6,11 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:simpleType name="MatterStateType" final="restriction">
+        <xs:annotation>
+            <xs:documentation> An enumeration type of the matter of state of a phase. </xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:string">
+
             <xs:enumeration value="solid" />
             <xs:enumeration value="liquid" />
             <xs:enumeration value="gas" />
@@ -14,44 +18,35 @@
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:simpleType name="SpeciesType">
+
+    <xs:simpleType name="SignedIntegerString">
         <xs:annotation>
-            <xs:documentation> An identifier for phases. </xs:documentation>
+            <xs:documentation> An integer value that must always include a sign (+ or -), e.g., "+2", "-3", or be "0"
+                without a sign. </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <!-- match all 
-             * capital letters (has to start with any letter)
-             * small letters
-             * any number 
-             * special characters [, ], ., +, - 
-             -->
-            <xs:pattern value="[A-Za-z][A-Za-z0-9\[\]\.\+\-]*" />
+            <xs:pattern value="0|[\+\-][1-9][0-9]*" />
         </xs:restriction>
     </xs:simpleType>
 
 
-    <xs:simpleType name="FractionType">
-
+    <xs:simpleType name="NoWhitespaceString">
         <xs:annotation>
-            <xs:documentation> A fraction between zero and one. </xs:documentation>
+            <xs:documentation> A string that must not contain any whitespace characters (spaces, tabs, newlines). </xs:documentation>
         </xs:annotation>
-
-        <xs:restriction base="xs:float">
-            <xs:minInclusive value="0.0" />
-            <xs:maxInclusive value="1.0" />
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[^ \t\r\n]+" />
         </xs:restriction>
-
     </xs:simpleType>
 
-
-    <xs:simpleType name="FractionsType">
-
+    <xs:simpleType name="ConstituentSpeciesType">
         <xs:annotation>
-            <xs:documentation> A list of fractions. </xs:documentation>
+            <xs:documentation> A string that types a general sublattice constituent. Not many checks imposed, other than
+                disallowing whitespace. </xs:documentation>
         </xs:annotation>
-
-        <xs:list itemType="FractionType" />
-
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[^ \t\r\n]+" />
+        </xs:restriction>
     </xs:simpleType>
 
 </xs:schema>

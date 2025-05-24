@@ -13,12 +13,11 @@
 
     <xs:complexType name="DatabaseType">
         <xs:annotation>
-            <xs:documentation> A database that stores material thermodynamic and thermophysical
-                data. </xs:documentation>
+            <xs:documentation> A database that stores material thermodynamic and thermophysical data. </xs:documentation>
         </xs:annotation>
         <xs:sequence>
 
-            <xs:element name="metadata" type="MetadataType" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="metadata" type="MetadataType" minOccurs="1" maxOccurs="1" />
 
             <xs:element name="nonChemicalPotentials" minOccurs="0">
                 <xs:complexType>
@@ -30,8 +29,7 @@
 
             <xs:element name="systemComponents" maxOccurs="1">
                 <xs:annotation>
-                    <xs:documentation> The system components that are defined in the database. Can
-                        only exist once. </xs:documentation>
+                    <xs:documentation> The system components that are defined in the database. Can only exist once. </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:sequence minOccurs="1" maxOccurs="unbounded">
@@ -42,22 +40,25 @@
 
             <xs:element name="phases" maxOccurs="1">
                 <xs:annotation>
-                    <xs:documentation> The phases that are defined in the database. Can only exist
-                        once. </xs:documentation>
+                    <xs:documentation> The phases that are defined in the database. Can only exist once. </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="phase" type="PhaseType" minOccurs="0"
-                            maxOccurs="unbounded" />
+                    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                        <xs:element name="phase" type="PhaseType" />
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
 
             <xs:element name="globalExpressions" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> A collection of global expressions that are used in the database. Typically,
+                        thermodynamic functions for endmembers go here. </xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
-                    <xs:choice maxOccurs="unbounded" minOccurs="0">
-                        <xs:element name="expression" type="AbstractFunctionType" />
-                    </xs:choice>
+                    <xs:sequence>
+                        <xs:element name="expression" type="AbstractFunctionType" minOccurs="0"
+                            maxOccurs="unbounded" />
+                    </xs:sequence>
                 </xs:complexType>
             </xs:element>
 
