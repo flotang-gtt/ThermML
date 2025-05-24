@@ -1,0 +1,141 @@
+<xs:schema
+    targetNamespace="http://calphad.org/thermml/0.0"
+    elementFormDefault="qualified"
+    version="0.0"
+    xmlns="http://calphad.org/thermml/0.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:include schemaLocation="../simple-types/main.xsd" />
+    <xs:include schemaLocation="../system-components/main.xsd" />
+
+
+    <xs:simpleType name="TernarySiteLocatorType">
+        <xs:annotation>
+            <xs:documentation> A fixed list of available site locators </xs:documentation>
+        </xs:annotation>
+        <xs:list>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="i" />
+                    <xs:enumeration value="j" />
+                    <xs:enumeration value="k" />
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:list>
+
+    </xs:simpleType>
+    <xs:simpleType name="FunctionVariableType">
+        <xs:annotation>
+            <xs:documentation> A fixed list of available function variables. </xs:documentation>
+        </xs:annotation>
+        <xs:list>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="T" />
+                    <xs:enumeration value="P" />
+                    <xs:enumeration value="T,P" />
+                    <!-- To be extended -->
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:list>
+
+    </xs:simpleType>
+
+    <xs:simpleType name="FunctionIDType">
+        <xs:annotation>
+            <xs:documentation> Name to identify a function. Certain vendor specific restrictions may apply. </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <!-- This pattern makes sure that if a '#' is used, it has to be "in
+the middle" of the pattern. E.g. SiO2#quartz is ok, MgCl2# is not. TODO there
+may be more characters to consider: -_/. ? -->
+            <xs:pattern value="[A-Z(][A-Za-z0-9_():\[\]+-]*#?[A-Za-z0-9_():]+" />
+        </xs:restriction>
+    </xs:simpleType>
+
+<xs:complexType name="InterpolationMethodType" abstract="true" />
+
+    <xs:complexType name="Kohler">
+        <xs:annotation>
+            <xs:documentation> Kohler type ternary interpolation. No parameters. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="InterpolationMethodType" />
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Muggiano">
+        <xs:annotation>
+            <xs:documentation> Muggiano type ternary interpolation. No parameters. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="InterpolationMethodType" />
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Toop">
+        <xs:annotation>
+            <xs:documentation> Toop type ternary interpolation. Requires a constant parameter. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="InterpolationMethodType">
+                <xs:sequence>
+                    <xs:element name="constant" type="TernarySiteLocatorType" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+
+    <xs:complexType name="InterpolationType">
+        <xs:annotation>
+            <xs:documentation>As the three interacting species are separated by "," in the constituents attribute, the
+                respective interpolation method is declared in the ij, jk or ik child elements. Please note that the
+                order of i, j, k is fixed. For Toop-type, the designated constituent needs to be set to either of the
+                two i, j, or k that are the subset of the Toop-type parameter.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="constituents" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                    <xs:annotation>
+                        <xs:documentation> Defines the constituents for each lattice site in a CEF phase endmember or
+                            interaction. Each &lt;site&gt; element represents a sublattice, and contains one or more
+                            &lt;const&gt; elements, each referencing a species name defined in the &lt;species&gt; block
+                            of the same phase. </xs:documentation>
+                    </xs:annotation>
+                    <xs:sequence>
+                        <xs:element name="site" minOccurs="1" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:sequence>
+                                    <xs:element name="const" minOccurs="1" maxOccurs="unbounded">
+                                        <xs:complexType>
+                                            <xs:annotation>
+                                                <xs:documentation> The name of the species occupying this site. Must
+                                                    match a species name defined in the &lt;species&gt; block of the
+                                                    same phase. </xs:documentation>
+                                            </xs:annotation>
+                                            <xs:simpleContent>
+                                                <xs:extension base="ConstituentSpeciesType">
+
+                                                    <xs:attribute name="site" type="TernarySiteLocatorType"
+                                                        use="optional">
+                                                        <xs:annotation>
+                                                            <xs:documentation>The site of the interpolation, one of "i",
+                                                                "j" or "k".</xs:documentation>
+                                                        </xs:annotation>
+                                                    </xs:attribute>
+                                                </xs:extension>
+                                            </xs:simpleContent>
+                                        </xs:complexType>
+                                    </xs:element>
+                                </xs:sequence>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="ij" minOccurs="1" maxOccurs="1" type="InterpolationMethodType" />
+            <xs:element name="jk" minOccurs="1" maxOccurs="1" type="InterpolationMethodType" />
+            <xs:element name="ik" minOccurs="1" maxOccurs="1" type="InterpolationMethodType" />
+        </xs:sequence>
+        <xs:attribute name="constituents" type="xs:string" />
+    </xs:complexType>
+</xs:schema>

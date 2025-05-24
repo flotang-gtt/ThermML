@@ -8,6 +8,7 @@
     <xs:include schemaLocation="../potentials/main.xsd" />
     <xs:include schemaLocation="../system-components/main.xsd" />
     <xs:include schemaLocation="../phases/main.xsd" />
+    <xs:include schemaLocation="../expressions/main.xsd" />
 
     <xs:complexType name="DatabaseType">
         <xs:annotation>

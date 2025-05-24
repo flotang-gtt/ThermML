@@ -5,8 +5,8 @@
     xmlns="http://calphad.org/thermml/0.0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <xs:include schemaLocation="core.xsd" />
     <xs:include schemaLocation="../simple-types/main.xsd" />
+    <xs:include schemaLocation="core.xsd" />
 
 
     <xs:simpleType name="FunctionType">
@@ -25,8 +25,7 @@
 
     <xs:complexType name="RangedTemperatureExprRange">
         <xs:annotation>
-            <xs:documentation> A range for a function that is stored in strict ThermML expression
-                style. </xs:documentation>
+            <xs:documentation> A range for a function that is stored in strict ThermML expression style. </xs:documentation>
         </xs:annotation>
         <xs:simpleContent>
 
@@ -44,8 +43,7 @@
 
     <xs:complexType name="FunctionReferenceType">
         <xs:annotation>
-            <xs:documentation> Reference to a function that is a child of the
-                functions element. </xs:documentation>
+            <xs:documentation> Reference to a function that is a child of the functions element. </xs:documentation>
         </xs:annotation>
         <xs:attribute name="type" use="required" type="FunctionType" />
         <xs:attribute name="factor" use="optional" type="xs:float" default="1.0" />
@@ -71,8 +69,7 @@
             </xs:element>
             <xs:element name="comment" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
-                    <xs:documentation> Commentary on the parameter that does not fit
-                        into any of the other fields. </xs:documentation>
+                    <xs:documentation> Commentary on the parameter that does not fit into any of the other fields. </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:simpleContent>
@@ -87,8 +84,7 @@
 
     <xs:complexType name="RangedTemperatureExpr">
         <xs:annotation>
-            <xs:documentation> A temperature dependent function that is stored in
-                strict ThermML expression style. </xs:documentation>
+            <xs:documentation> A temperature dependent function that is stored in strict ThermML expression style. </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
 
@@ -107,6 +103,39 @@
 
     </xs:complexType>
 
+    <xs:complexType name="FunctionTypeExpr">
+        <xs:annotation>
+            <xs:documentation> Represents a piecewise-defined thermodynamic function or expression, typically used for
+                endmember or phase properties. Each function is defined by one or more temperature ranges, each with its
+                own mathematical expression. This type omits reference and comment elements and extends
+                AbstractFunctionType. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="AbstractFunctionType">
+                <xs:sequence>
+                    <xs:element name="range" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation> Defines a temperature range and the corresponding mathematical expression
+                                for this segment. </xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType mixed="true">
+                            <xs:attribute name="low" type="xs:decimal" use="required">
+                                <xs:annotation>
+                                    <xs:documentation> Lower bound of the temperature range (inclusive), in Kelvin. </xs:documentation>
+                                </xs:annotation>
+                            </xs:attribute>
+                            <xs:attribute name="high" type="xs:decimal" use="required">
+                                <xs:annotation>
+                                    <xs:documentation> Upper bound of the temperature range (exclusive), in Kelvin. </xs:documentation>
+                                </xs:annotation>
+                            </xs:attribute>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
     <xs:complexType name="HSCPTemperatureTermExpr">
         <xs:annotation>
             <xs:documentation> A term in a H-S-CP function. </xs:documentation>
@@ -114,8 +143,7 @@
 
         <xs:attribute name="coeff" use="required" type="xs:double">
             <xs:annotation>
-                <xs:documentation> Coefficient of the term. A simple floating point
-                    number. </xs:documentation>
+                <xs:documentation> Coefficient of the term. A simple floating point number. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="fun" use="required" type="HSCPTemperatureExprTermType" />
@@ -124,8 +152,8 @@
 
     <xs:simpleType name="HSCPTemperatureExprTermType">
         <xs:annotation>
-            <xs:documentation> Temperature exponent term in a H-S-CP function. Has to
-                be T^('number'). For integers &gt;= 0, the brackets can be omitted. (e.g. T^5) </xs:documentation>
+            <xs:documentation> Temperature exponent term in a H-S-CP function. Has to be T^('number'). For integers
+                &gt;= 0, the brackets can be omitted. (e.g. T^5) </xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <!-- CAUTION: This regex isn't properly matching actual floating point 
@@ -193,8 +221,8 @@
     is likely impossible. -->
     <xs:complexType name="FunctionTypeCSdat">
         <xs:annotation>
-            <xs:documentation> A ChemSage.dat function, as can be copied from a file. The first row
-                may contain additional stoichiometric information. This will be ignored. </xs:documentation>
+            <xs:documentation> A ChemSage.dat function, as can be copied from a file. The first row may contain
+                additional stoichiometric information. This will be ignored. </xs:documentation>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="AbstractFunctionType">
