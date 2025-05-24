@@ -8,6 +8,7 @@
     <xs:include schemaLocation="../simple-types/main.xsd" />
     <xs:include schemaLocation="../system-components/main.xsd" />
     <xs:include schemaLocation="../phases/cef-phase.xsd" />
+    <xs:include schemaLocation="../phases/quasichemical-phase.xsd" />
 
 
     <xs:complexType name="PhaseType" abstract="true">
