@@ -84,8 +84,7 @@
             </xs:element>
             <xs:element name="map" minOccurs="0">
                 <xs:annotation>
-                    <xs:documentation> Provide mapping information for lattice sites
-                        and crystallographic sites </xs:documentation>
+                    <xs:documentation> Provide mapping information for lattice sites and crystallographic sites </xs:documentation>
                 </xs:annotation>
                 <xs:complexType>
                     <xs:sequence>
@@ -95,8 +94,7 @@
 
                                 <xs:attribute name="from" use="required" type="xs:string">
                                     <xs:annotation>
-                                        <xs:documentation xml:lang="en"> The Wyckoff position of
-                                            the site. </xs:documentation>
+                                        <xs:documentation xml:lang="en"> The Wyckoff position of the site. </xs:documentation>
                                     </xs:annotation>
                                 </xs:attribute>
                                 <xs:attribute name="to" use="optional" type="xs:string">
@@ -114,6 +112,64 @@
 
     </xs:complexType>
 
+
+    <xs:complexType name="IHJMagneticType">
+        <xs:annotation>
+            <xs:documentation> Describes magnetic properties for a phase structure following the "classic"
+                Inden-Hillert-Jarl model.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="ref" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> Reference for the magnetic data (e.g., literature citation). </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="comment" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> Optional comment or explanation for the magnetic parameters. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="structureFactor" type="xs:double" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> Structure factor for the magnetic model (dimensionless). </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="pFactor" type="xs:double" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> p-factor for the magnetic model (dimensionless). </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IHXMagneticType">
+        <xs:annotation>
+            <xs:documentation> Describes magnetic properties for a phase structure based on the effective formalism by
+                Xiong, W. doi:10.1016/j.calphad.2012.07.002W. Xiong </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="ref" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> Reference for the magnetic data (e.g., literature citation). </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="comment" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> Optional comment or explanation for the magnetic parameters. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="structureFactor" type="xs:double" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> Structure factor for the magnetic model (dimensionless). </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="pFactor" type="xs:double" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation> p-factor for the magnetic model (dimensionless). </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="SublatticePhaseModelType">
         <xs:annotation>
             <xs:documentation> The structure descriptors of a phase. </xs:documentation>
@@ -122,6 +178,12 @@
             <xs:element name="sublattices" minOccurs="1" maxOccurs="1" type="SublatticeSiteType">
                 <xs:annotation>
                     <xs:documentation> A site in a sublattice. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+
+            <xs:element name="magnetic" minOccurs="0" type="IHJMagneticType">
+                <xs:annotation>
+                    <xs:documentation> The crystallographic information of the phase. </xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="crystallographic" minOccurs="0" type="CrystalInformationType">
@@ -143,42 +205,71 @@
         <!--  TODO: here, more structure information can be added. -->
     </xs:complexType>
 
+    <xs:complexType name="CEFConstituentArrayType">
+        <xs:annotation>
+            <xs:documentation> Defines the constituents for each lattice site in a CEF phase endmember or interaction.
+                Each &lt;site&gt; element represents a sublattice, and contains one or more &lt;const&gt; elements, each
+                referencing a species name defined in the &lt;species&gt; block of the same phase. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="site" minOccurs="1" maxOccurs="unbounded">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="const" minOccurs="1" maxOccurs="unbounded">
+                            <xs:complexType>
+                                <xs:attribute name="species" type="NoWhitespaceString" use="required">
+                                    <xs:annotation>
+                                        <xs:documentation> The name of the species occupying this site. Must match a
+                                            species name defined in the &lt;species&gt; block of the same phase. </xs:documentation>
+                                    </xs:annotation>
+                                </xs:attribute>
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="CEFEndmemberType">
         <xs:annotation>
             <xs:documentation> An endmember of a CEF phase. </xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string">
-                <xs:annotation>
-                    <xs:documentation> The name </xs:documentation>
-                </xs:annotation>
-            </xs:element>
             <xs:element name="description" minOccurs="0" type="xs:string">
                 <xs:annotation>
-                    <xs:documentation> Description of the phase. Potentially: Sources,
-                        DOI links. </xs:documentation>
+                    <xs:documentation> Description of the phase. Potentially: Sources, DOI links. </xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="comment" minOccurs="0" type="xs:string">
                 <xs:annotation>
-                    <xs:documentation> Comment, mostly for assessor's opinion, less
-                        meant for valuable metadata. Use description for this. </xs:documentation>
+                    <xs:documentation> Comment, mostly for assessor's opinion, less meant for valuable metadata. Use
+                        description for this. </xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:choice maxOccurs="unbounded">
+            <xs:element name="constituents" minOccurs="1" maxOccurs="1" type="CEFConstituentArrayType">
+                <xs:annotation>
+                    <xs:documentation> The constituent array for this endmember. </xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:sequence maxOccurs="unbounded">
                 <xs:element name="property" type="PhasePropertyType" minOccurs="0"
                     maxOccurs="unbounded">
                     <xs:annotation>
-                        <xs:documentation> A property of the phase, e.g. Gibbs energy,
-                            enthalpy, Bohr magneton, ... </xs:documentation>
+                        <xs:documentation> A property of the phase, e.g. Gibbs energy, enthalpy, Bohr magneton, ... </xs:documentation>
                     </xs:annotation>
                 </xs:element>
 
-            </xs:choice>
+            </xs:sequence>
         </xs:sequence>
-        <xs:attribute use="required" name="constituents" type="xs:string">
+        <xs:attribute use="required" name="name" type="NoWhitespaceString">
             <xs:annotation>
-                <xs:documentation> The constituents. </xs:documentation>
+                <xs:documentation> The name of the endmember, can not contain spaces. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute use="optional" name="charge" type="SignedIntegerString" default="0">
+            <xs:annotation>
+                <xs:documentation> Optional: the charge of the endmember. If not given, 0 is assumed. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
     </xs:complexType>
@@ -189,20 +280,52 @@
         </xs:annotation>
         <xs:sequence minOccurs="1" maxOccurs="unbounded">
 
-            <xs:choice maxOccurs="unbounded">
+            <xs:sequence maxOccurs="unbounded">
                 <xs:element name="property" type="PhasePropertyType" minOccurs="0"
                     maxOccurs="unbounded">
                     <xs:annotation>
-                        <xs:documentation> A property of the phase, e.g. Gibbs energy,
-                            enthalpy, Bohr magneton, ... </xs:documentation>
+                        <xs:documentation> A property of the phase, e.g. Gibbs energy, enthalpy, Bohr magneton, ... </xs:documentation>
                     </xs:annotation>
                 </xs:element>
 
-            </xs:choice>
+            </xs:sequence>
         </xs:sequence>
         <xs:attribute use="required" name="constituents" type="xs:string">
             <xs:annotation>
                 <xs:documentation> The constituents. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="CEFSpeciesType">
+        <xs:annotation>
+            <xs:documentation> Container for all species (site occupiers) in a CEF phase. Each species is described by a
+                set of attributes such as name, composition, and charge. </xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="species" type="CEFSpecieType" minOccurs="1" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="CEFSpecieType">
+        <xs:annotation>
+            <xs:documentation> Defines a single species (site occupier) for a CEF phase. The name is required;
+                composition and charge are optional but recommended for clarity. </xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation> Unique identifier for the species, e.g., "Al3[9+]", "O-2", etc. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="composition" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation> Chemical composition of the species, e.g., "Al3", "O1", "Al2Si1". </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="charge" type="SignedIntegerString" use="optional">
+            <xs:annotation>
+                <xs:documentation> Formal charge of the species, e.g., "+9", "-2", or empty if not applicable. For
+                    clarity, the sign is mandatory. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
     </xs:complexType>
@@ -214,8 +337,12 @@
         <xs:complexContent>
             <xs:extension base="PhaseType">
                 <xs:sequence>
-
                     <xs:choice maxOccurs="unbounded">
+                        <xs:element name="species" type="CEFSpeciesType" minOccurs="0">
+                            <xs:annotation>
+                                <xs:documentation> The structure of the phase. </xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
                         <xs:element name="structure" type="SublatticePhaseModelType">
                             <xs:annotation>
                                 <xs:documentation> The structure of the phase. </xs:documentation>

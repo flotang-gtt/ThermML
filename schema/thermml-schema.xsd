@@ -10,6 +10,7 @@
     <xs:include schemaLocation="potentials/main.xsd" />
     <xs:include schemaLocation="system-components/main.xsd" />
     <xs:include schemaLocation="phases/main.xsd" />
+    <xs:include schemaLocation="phases/cef-phase.xsd" />
     <xs:include schemaLocation="databases/main.xsd" />
 
     <xs:element name="database" type="DatabaseType" />
