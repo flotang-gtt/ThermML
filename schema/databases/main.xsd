@@ -6,6 +6,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:include schemaLocation="../potentials/main.xsd" />
+    <xs:include schemaLocation="../metadata/main.xsd" />
     <xs:include schemaLocation="../system-components/main.xsd" />
     <xs:include schemaLocation="../phases/main.xsd" />
     <xs:include schemaLocation="../expressions/main.xsd" />
@@ -17,7 +18,8 @@
         </xs:annotation>
         <xs:sequence>
 
-            <xs:element name="description" type="xs:string" minOccurs="0" />
+            <xs:element name="metadata" type="MetadataType" minOccurs="1" maxOccurs="1"/>
+
             <xs:element name="nonChemicalPotentials" minOccurs="0">
                 <xs:complexType>
                     <xs:sequence minOccurs="1" maxOccurs="unbounded">

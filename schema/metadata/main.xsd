@@ -1,0 +1,138 @@
+<!-- Example XSD for the <metadata> block -->
+<xs:schema targetNamespace="http://calphad.org/thermml/0.0"
+    elementFormDefault="qualified"
+    version="0.0"
+    xmlns="http://calphad.org/thermml/0.0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="metadata" type="MetadataType">
+        <xs:annotation>
+            <xs:documentation> Metadata describing the thermodynamic database, including title, version, authors,
+                creation date, revision log, license, description, and references. </xs:documentation>
+        </xs:annotation>
+    </xs:element>
+
+    <xs:complexType name="MetadataType">
+        <xs:sequence>
+            <xs:element name="title" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Title of the database.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="version" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Version identifier for the database.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="description" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Brief description of the database contents and purpose.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <!-- TODO we surely can get a validation from some other schema for licenses -->
+            <xs:element name="license" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>License under which the database is distributed. Please refer to
+                        https://spdx.org/licenses for appropriate and unified abbreviations/identifiers.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="authors" type="AuthorsType" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>List of authors who contributed to the database.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="created" type="xs:date" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Date the database was first created (YYYY-MM-DD).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="revisions" type="RevisionsType" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Log of revisions made to the database.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="references" type="ReferencesType" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>List of references cited in the database, each with a key for shorthand use.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Authors -->
+    <xs:complexType name="AuthorsType">
+        <xs:sequence>
+            <xs:element name="author" type="AuthorType" minOccurs="1" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AuthorType">
+        <xs:sequence>
+            <xs:element name="name" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Full name of the author.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="affiliation" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Institution or organization of the author.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="email" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Email address of the author.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <!-- Revisions -->
+    <xs:complexType name="RevisionsType">
+        <xs:sequence>
+            <xs:element name="revision" type="RevisionType" minOccurs="1" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="RevisionType">
+        <xs:sequence>
+            <xs:element name="date" type="xs:date">
+                <xs:annotation>
+                    <xs:documentation>Date of the revision (YYYY-MM-DD).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="author" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Name of the author who made the revision.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="description" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Description of the changes made in this revision.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="version" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>Optional version identifier for this revision. It is strongly encouraged to use
+                    Semver.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <!-- References -->
+    <xs:complexType name="ReferencesType">
+        <xs:sequence>
+            <xs:element name="reference" type="ReferenceType" minOccurs="1" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ReferenceType">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="key" type="xs:string" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Short key for referencing this citation elsewhere in the database.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+</xs:schema>
