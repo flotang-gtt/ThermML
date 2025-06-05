@@ -385,4 +385,22 @@
         </xs:complexContent>
     </xs:complexType>
 
+
+    <xs:complexType name="CEFOrderedPhaseType">
+        <xs:annotation>
+            <xs:documentation> An ordered phase type, that basically is identical to a 'disordered' CEFPhase, but adds
+                the reference to the disordered phase as an attribute. </xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="CEFPhaseType">
+                <xs:attribute name="disorderedPhase" type="xs:string" use="required">
+                    <xs:annotation>
+                        <xs:documentation> The related ordered phase </xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+
+            </xs:extension>
+        </xs:complexContent>
+
+    </xs:complexType>
 </xs:schema>

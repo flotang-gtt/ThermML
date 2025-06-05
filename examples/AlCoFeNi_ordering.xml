@@ -1,0 +1,894 @@
+
+<database
+        xmlns="http://calphad.org/thermml/0.0"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:xi="http://www.w3.org/2001/XInclude"
+        xsi:schemaLocation="http://calphad.org/thermml/0.0 ../schema/thermml-schema.xsd" name="System Ni-Co-Fe-Al">
+    <metadata>
+        <title/>
+        <version>1.0</version>
+        <description/>
+        <license/>
+        <created>2025-06-03</created>
+    </metadata>
+    <systemComponents>
+        <systemComponent symbol="Ni" refstate="" molar_mass="58.6934" h298="0" s298="0"/>
+        <systemComponent symbol="Co" refstate="" molar_mass="58.933195" h298="0" s298="0"/>
+        <systemComponent symbol="Fe" refstate="" molar_mass="55.845" h298="0" s298="0"/>
+        <systemComponent symbol="Al" refstate="" molar_mass="26.9815386" h298="0" s298="0"/>
+    </systemComponents>
+    <phases>
+        <phase xsi:type="CEFPhaseType" name="BCC_A2" state="solid">
+            <description/>
+            <species>
+                <species name="Al" composition="Al"/>
+                <species name="Co" composition="Co"/>
+                <species name="Fe" composition="Fe"/>
+                <species name="Ni" composition="Ni"/>
+                <species name="Va" composition="Va"/>
+            </species>
+            <structure>
+                <sublattices multiplicities="1 3">
+                    <site constituents="Al Co Fe Ni" wyckoff=""/>
+                    <site constituents="Va" wyckoff=""/>
+                </sublattices>
+                <magnetic xsi:type="IHJMagneticType">
+                    <ref/>
+                    <comment/>
+                    <structureFactor>0.4</structureFactor>
+                    <pFactor>1</pFactor>
+                </magnetic>
+            </structure>
+            <endmember name="AlVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Al"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{AlVa#BCC_A2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="CoVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Co"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{CoVa#BCC_A2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        1450
+                    </temperature>
+                    <moment>1.35</moment>
+                </property>
+            </endmember>
+            <endmember name="FeVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Fe"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{FeVa#BCC_A2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        1043
+                    </temperature>
+                    <moment>2.22</moment>
+                </property>
+            </endmember>
+            <endmember name="NiVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Ni"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{NiVa#BCC_A2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        575
+                    </temperature>
+                    <moment>0.85</moment>
+                </property>
+            </endmember>
+            <interaction name="">
+                <constituents>
+                    <site>
+                        <const species="Al"/>
+                        <const species="Fe"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <description/>
+                <property xsi:type="BML">
+                    <ref/>
+                    <expr rank="0">
+                        0
+                    </expr>
+                    <expr rank="1">
+                        +504
+                    </expr>
+                </property>
+                <property xsi:type="L">
+                    <ref/>
+                    <comment/>
+                    <expr rank="0">
+                        -122960.16+31.9888*T
+                    </expr>
+                    <expr rank="1">
+                        +2945.2
+                    </expr>
+                </property>
+            </interaction>
+            <interaction name="">
+                <constituents>
+                    <site>
+                        <const species="Co"/>
+                        <const species="Fe"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <description/>
+                <property xsi:type="BML">
+                    <ref/>
+                    <expr rank="0">
+                        +590+2.4127*T
+                    </expr>
+                    <expr rank="1">
+                        +0.2418*T
+                    </expr>
+                </property>
+                <property xsi:type="L">
+                    <ref/>
+                    <comment/>
+                    <expr rank="0">
+                        -23669+103.9627*T-12.7886*T*LN(T)
+                    </expr>
+                </property>
+            </interaction>
+            <interaction name="">
+                <constituents>
+                    <site>
+                        <const species="Co"/>
+                        <const species="Ni"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <description/>
+                <property xsi:type="BML">
+                    <ref/>
+                    <expr rank="0">
+                        +556+0.474*T
+                    </expr>
+                    <expr rank="1">
+                        -288
+                    </expr>
+                </property>
+                <property xsi:type="L">
+                    <ref/>
+                    <comment/>
+                    <expr rank="0">
+                        +2000
+                    </expr>
+                </property>
+            </interaction>
+            <interaction name="">
+                <constituents>
+                    <site>
+                        <const species="Fe"/>
+                        <const species="Ni"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <description/>
+                <property xsi:type="L">
+                    <ref/>
+                    <comment/>
+                    <expr rank="0">
+                        -956.63-1.28726*T
+                    </expr>
+                    <expr rank="1">
+                        +1789.03-1.92912*T
+                    </expr>
+                </property>
+            </interaction>
+        </phase>
+        <phase xsi:type="CEFOrderedPhaseType" name="BCC_B2" disorderedPhase="BCC_A2" state="solid">
+            <description>Ordered phase based on BCC_A2</description>
+
+            <species>
+                <species name="Al" composition="Al"/>
+                <species name="Co" composition="Co"/>
+                <species name="Fe" composition="Fe"/>
+                <species name="Ni" composition="Ni"/>
+                <species name="Va" composition="Va"/>
+            </species>
+            <structure>
+                <sublattices multiplicities="0.5 0.5 3">
+                    <site constituents="Al Co Fe Ni" wyckoff=""/>
+                    <site constituents="Al Co Fe Ni" wyckoff=""/>
+                    <site constituents="Va" wyckoff=""/>
+                </sublattices>
+                <magnetic xsi:type="IHJMagneticType">
+                    <ref/>
+                    <comment/>
+                    <structureFactor>0.4</structureFactor>
+                    <pFactor>1</pFactor>
+                </magnetic>
+            </structure>
+            <endmember name="AlAlVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Al"/>
+                    </site>
+                    <site>
+                        <const species="Al"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{AlAlVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="CoCoVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Co"/>
+                    </site>
+                    <site>
+                        <const species="Co"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{CoCoVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="FeFeVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Fe"/>
+                    </site>
+                    <site>
+                        <const species="Fe"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{FeFeVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="NiNiVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Ni"/>
+                    </site>
+                    <site>
+                        <const species="Ni"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{NiNiVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="FeAlVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Fe"/>
+                    </site>
+                    <site>
+                        <const species="Al"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{FeAlVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="AlFeVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Al"/>
+                    </site>
+                    <site>
+                        <const species="Fe"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{AlFeVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="CoNiVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Co"/>
+                    </site>
+                    <site>
+                        <const species="Ni"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{CoNiVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="FeCoVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Fe"/>
+                    </site>
+                    <site>
+                        <const species="Co"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{FeCoVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="NiAlVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Ni"/>
+                    </site>
+                    <site>
+                        <const species="Al"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{NiAlVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="FeNiVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Fe"/>
+                    </site>
+                    <site>
+                        <const species="Ni"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{FeNiVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="CoAlVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Co"/>
+                    </site>
+                    <site>
+                        <const species="Al"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{CoAlVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="AlCoVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Al"/>
+                    </site>
+                    <site>
+                        <const species="Co"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{AlCoVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="NiCoVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Ni"/>
+                    </site>
+                    <site>
+                        <const species="Co"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{NiCoVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="CoFeVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Co"/>
+                    </site>
+                    <site>
+                        <const species="Fe"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{CoFeVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="NiFeVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Ni"/>
+                    </site>
+                    <site>
+                        <const species="Fe"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{NiFeVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+            <endmember name="AlNiVa">
+                <description/>
+                <comment/>
+                <constituents>
+                    <site>
+                        <const species="Al"/>
+                    </site>
+                    <site>
+                        <const species="Ni"/>
+                    </site>
+                    <site>
+                        <const species="Va"/>
+                    </site>
+                </constituents>
+                <property xsi:type="G">
+                    <ref/>
+                    <comment/>
+                    <expr>+1*{AlNiVa#BCC_B2}</expr>
+                </property>
+                <property xsi:type="M">
+                    <ref>Read from ChemSage.dat</ref>
+                    <comment/>
+                    <temperature type="Curie">
+                        0
+                    </temperature>
+                    <moment>0</moment>
+                </property>
+            </endmember>
+        </phase>
+    </phases>
+    <globalExpressions>
+        <expression xsi:type="FunctionTypeExpr" name="AlVa#BCC_A2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="700">
+                +2106.85+132.280038*T-24.3671976*T*LN(T)-1.8847e-3*T**2-8.7766e-7*T**3+74092*T**(-1)
+            </range>
+            <range low="700" high="933.473">
+                -1193.23906+218.235445*T-38.5844296*T*LN(T)+1.8532e-2*T**2-5.7642e-6*T**3+74092*T**(-1)
+            </range>
+            <range low="933.473" high="2900">
+                -1195.35995+183.871135*T-31.748192*T*LN(T)-1.2306e28*T**(-9)
+            </range>
+            <range low="2900" high="2900.00001">
+                -1195.44478+183.871374*T-31.7482183*T*LN(T)
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="CoVa#BCC_A2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="1768">
+                +3248.241+132.65221*T-25.0861*T*LN(T)-2.6547e-3*T**2-1.7348e-7*T**3+72527*T**(-1)
+            </range>
+            <range low="1768" high="6000">
+                -14259.6635+252.569943*T-40.5*T*LN(T)+9.3488e30*T**(-9)
+            </range>
+            <range low="6000" high="6000.00001">
+                -14259.5708+252.569807*T-40.4999861*T*LN(T)
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="FeVa#BCC_A2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="1811">
+                +1225.7+124.134*T-23.5143*T*LN(T)-4.3975e-3*T**2-5.8927e-8*T**3+77359*T**(-1)
+            </range>
+            <range low="1811" high="6000">
+                -25383.5791+299.312552*T-46*T*LN(T)+2.2960e31*T**(-9)
+            </range>
+            <range low="6000" high="6000.00001">
+                -25383.3512+299.312217*T-45.9999658*T*LN(T)
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="NiVa#BCC_A2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="1728">
+                +3535.925+114.298*T-22.096*T*LN(T)-4.8407e-3*T**2
+            </range>
+            <range low="1728" high="3000">
+                -19125.5361+275.57898*T-43.1*T*LN(T)+1.1275e31*T**(-9)
+            </range>
+            <range low="3000" high="3000.00001">
+                -19068.2511+275.422482*T-43.0828145*T*LN(T)
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="AlAlVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="10000">
+                0
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="CoCoVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="10000">
+                0
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="FeFeVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="10000">
+                0
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="NiNiVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="10000">
+                0
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="FeAlVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="6000">
+                -14300.957
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="AlFeVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="6000">
+                -14300.957
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="CoNiVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="6000">
+                0
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="FeCoVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="6000">
+                0
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="NiAlVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="6000">
+                0
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="FeNiVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="6000">
+                0
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="CoAlVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="6000">
+                0
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="AlCoVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="6000">
+                0
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="NiCoVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="6000">
+                0
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="CoFeVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="6000">
+                0
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="NiFeVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="6000">
+                0
+            </range>
+        </expression>
+        <expression xsi:type="FunctionTypeExpr" name="AlNiVa#BCC_B2">
+            <ref/>
+            <comment/>
+            <range low="298.15" high="6000">
+                0
+            </range>
+        </expression>
+    </globalExpressions>
+</database>
