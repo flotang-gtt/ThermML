@@ -62,7 +62,7 @@
     <!-- Authors -->
     <xs:complexType name="AuthorsType">
         <xs:sequence>
-            <xs:element name="author" type="AuthorType" minOccurs="1" maxOccurs="unbounded" />
+            <xs:element name="author" type="AuthorType" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="AuthorType">
@@ -88,7 +88,7 @@
     <!-- Revisions -->
     <xs:complexType name="RevisionsType">
         <xs:sequence>
-            <xs:element name="revision" type="RevisionType" minOccurs="1" maxOccurs="unbounded" />
+            <xs:element name="revision" type="RevisionType" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="RevisionType">
@@ -120,7 +120,7 @@
     <!-- References -->
     <xs:complexType name="ReferencesType">
         <xs:sequence>
-            <xs:element name="reference" type="ReferenceType" minOccurs="1" maxOccurs="unbounded" />
+            <xs:element name="reference" type="ReferenceType" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="ReferenceType">
