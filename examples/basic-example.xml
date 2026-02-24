@@ -3,12 +3,18 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:xi="http://www.w3.org/2001/XInclude"
         xsi:schemaLocation="http://calphad.org/thermml/0.0 ../schema/thermml-schema.xsd"
-
         name="Example Database">
 
-    <description>
-        This is an example thermodynamic database for demonstrating the ThermML schema.
-    </description>
+    <metadata>
+        <title>Example Database</title>
+        <version>1.0</version>
+        <description>This is an example thermodynamic database for demonstrating the ThermML schema.</description>
+        <license/>
+        <authors/>
+        <created/>
+        <revisions/>
+        <references/>
+    </metadata>
 
     <nonChemicalPotentials>
         <nonChemicalPotential id="potT" symbol="T" units="K"/>
@@ -18,12 +24,12 @@
 
     <systemComponents>
         <systemComponent symbol="Va" />
-        <systemComponent symbol="Mo" refstate="BCC_A2" molar_mass="95.940"  h298="4589.0" s298="28.560" />
-        <systemComponent symbol="Re" refstate="HCP_A3" molar_mass="186.21"  h298="5355.5" s298="36.526" />
-        <systemComponent symbol="Cr" refstate="BCC_A2" molar_mass="51.996"  h298="4050.0" s298="23.5429" />
-        <systemComponent symbol="Ni" refstate="FCC_A1" molar_mass="58.69"   h298="4787.0" s298="29.7955" />
-        <systemComponent symbol="Si" refstate="???"    molar_mass="28.0855" h298="0.0"    s298="1.234" />
-        <systemComponent symbol="O"  refstate="???"    molar_mass="15.9994" h298="0.0"    s298="2.345" />
+        <systemComponent symbol="Mo" refstate="BCC_A2" molarMass="95.940"  h298="4589.0" s298="28.560" />
+        <systemComponent symbol="Re" refstate="HCP_A3" molarMass="186.21"  h298="5355.5" s298="36.526" />
+        <systemComponent symbol="Cr" refstate="BCC_A2" molarMass="51.996"  h298="4050.0" s298="23.5429" />
+        <systemComponent symbol="Ni" refstate="FCC_A1" molarMass="58.69"   h298="4787.0" s298="29.7955" />
+        <systemComponent symbol="Si" refstate="???"    molarMass="28.0855" h298="0.0"    s298="1.234" />
+        <systemComponent symbol="O"  refstate="???"    molarMass="15.9994" h298="0.0"    s298="2.345" />
     </systemComponents>
 
     <phases>
@@ -78,12 +84,12 @@
         </expression>
         <expression name="Cr#FCC_A1" xsi:type="FunctionTypeCSdat">
             <chemsage>
-                4 2     
-                1478.0000     -1490500.2      1740.8682     -248.92708      0.0000000    
-                0.0000000      0.0000000    
+                4 2
+                1478.0000     -1490500.2      1740.8682     -248.92708      0.0000000
+                0.0000000      0.0000000
                 2 -7695.4098       0.50  23184001.      -2.00
-                1550.0000     -1626055.5      1571.5021     -240.58000      0.0000000    
-                0.0000000      0.0000000    
+                1550.0000     -1626055.5      1571.5021     -240.58000      0.0000000
+                0.0000000      0.0000000
                 1  0.0000000       0.00
             </chemsage>
         </expression>

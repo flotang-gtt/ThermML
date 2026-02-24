@@ -1,23 +1,19 @@
-<database
-    xmlns="http://calphad.org/thermml/0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:xi="http://www.w3.org/2001/XInclude"
-    xsi:schemaLocation="http://calphad.org/thermml/0.0 ../schema/thermml-schema.xsd"
-    name="Example Quasichemical Database">
+<?xml version='1.0' encoding='UTF-8'?>
+<database xmlns="http://calphad.org/thermml/0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xi="http://www.w3.org/2001/XInclude" xsi:schemaLocation="http://calphad.org/thermml/0.0 ../schema/thermml-schema.xsd" name="Example Quasichemical Database">
 
     <metadata>
-        <title></title>
-        <version></version>
+        <title/>
+        <version/>
         <description>
         This is an example thermodynamic database for demonstrating the ThermML schema for
         quasichemical models.
     </description>
-        <license></license>
+        <license/>
         <authors>
             <author>
-                <name></name>
-                <affiliation></affiliation>
-                <email></email>
+                <name/>
+                <affiliation/>
+                <email/>
             </author>
         </authors>
         <created>2025-04-24</created>
@@ -25,98 +21,122 @@
 
 
     <systemComponents>
-        <systemComponent symbol="Va" />
+        <systemComponent symbol="Va"/>
 
-        <systemComponent symbol="Cl" refstate="BLANK" molar_mass="35.453" h298="0.0" s298="0.0" />
-        <systemComponent symbol="Cu" refstate="BLANK" molar_mass="63.546" h298="0.0" s298="0.0" />
-        <systemComponent symbol="Fe" refstate="BLANK" molar_mass="55.845" h298="0.0" s298="0.0" />
-        <systemComponent symbol="Pb" refstate="BLANK" molar_mass="207.2" h298="0.0" s298="0.0" />
-        <systemComponent symbol="Zn" refstate="BLANK" molar_mass="65.38" h298="0.0" s298="0.0" />
+        <systemComponent symbol="Cl" refstate="BLANK" molarMass="35.453" h298="0.0" s298="0.0"/>
+        <systemComponent symbol="Cu" refstate="BLANK" molarMass="63.546" h298="0.0" s298="0.0"/>
+        <systemComponent symbol="Fe" refstate="BLANK" molarMass="55.845" h298="0.0" s298="0.0"/>
+        <systemComponent symbol="Pb" refstate="BLANK" molarMass="207.2" h298="0.0" s298="0.0"/>
+        <systemComponent symbol="Zn" refstate="BLANK" molarMass="65.38" h298="0.0" s298="0.0"/>
     </systemComponents>
 
     <phases>
         <phase xsi:type="CEFPhaseType" name="Test" state="solid">
             <description>This is a new phase</description>
+            <species>
+                <specie name="Va" composition="Va"/>
+            </species>
+            <endmembers>
+                <endmember name="Va">
+                    <constituents>
+                        <site><const species="Va"/></site>
+                    </constituents>
+                    <property xsi:type="G">
+                        <expr>0</expr>
+                    </property>
+                </endmember>
+            </endmembers>
         </phase>
         <phase xsi:type="ModifiedQuasichemicalPhaseType" name="Liquid" state="liquid">
             <description>There should be a valid, extensive description of this phase in clear
                 language.</description>
             <species>
-                <specie name="Cu[1+]" composition="Cu1" charge="+1" group="1" />
-                <specie name="Zn[2+]" composition="Zn1" charge="+2" group="1" />
-                <specie name="Fe[3+]" composition="Fe1" charge="+3" group="1" />
-                <specie name="Cu[2+]" composition="Cu1" charge="+2" group="1" />
-                <specie name="Fe[2+]" composition="Fe1" charge="+2" group="1" />
-                <specie name="Pb[2+]" composition="Pb1" charge="+2" group="1" />
-                <specie name="Cl[1-]" composition="Cl1" charge="-1" group="1" />
+                <specie name="Cu[1+]" composition="Cu1" charge="+1" group="1"/>
+                <specie name="Zn[2+]" composition="Zn1" charge="+2" group="1"/>
+                <specie name="Fe[3+]" composition="Fe1" charge="+3" group="1"/>
+                <specie name="Cu[2+]" composition="Cu1" charge="+2" group="1"/>
+                <specie name="Fe[2+]" composition="Fe1" charge="+2" group="1"/>
+                <specie name="Pb[2+]" composition="Pb1" charge="+2" group="1"/>
+                <specie name="Cl[1-]" composition="Cl1" charge="-1" group="1"/>
             </species>
 
-            <endmember name="CuCl">
-                <description>Copper-I Chloride</description>
-                <stoichiometry scalingFactor="1.0" />
-                <constituents>
-                    <site>
-                        <const>Cu[1+]</const>
-                    </site>
-                    <site>
-                        <const>Cl[1-]</const>
-                    </site>
-                </constituents>
-                <property xsi:type="MQM-G">
-                    <ref />
-                    <comment />
-                    <expr>CuCl#Liquid</expr>
-                    <zeta>2.4</zeta>
-                    <coordinationNumbers>
-                        <cation>6.0</cation>
-                        <anion>6.0</anion>
-                    </coordinationNumbers>
-                </property>
-            </endmember>
+            <endmembers>
+                <endmember name="CuCl">
+                    <description>Copper-I Chloride</description>
+                    <stoichiometry scalingFactor="1.0"/>
+                    <constituents>
+                        <site>
+                            <const species="Cu[1+]"/>
+                        </site>
+                        <site>
+                            <const species="Cl[1-]"/>
+                        </site>
+                    </constituents>
+                    <property xsi:type="MQM-G">
+                        <ref/>
+                        <comment/>
+                        <expr>CuCl#Liquid</expr>
+                        <zeta>2.4</zeta>
+                        <coordinationNumbers>
+                            <cation>6.0</cation>
+                            <anion>6.0</anion>
+                        </coordinationNumbers>
+                    </property>
+                </endmember>
 
-            <endmember name="ZnCl2">
-                <description />
-                <stoichiometry scalingFactor="1.0" />
-                <constituents>
-                    <site>
-                        <const>Zn[2+]</const>
-                    </site>
-                    <site>
-                        <const>Cl[1-]</const>
-                    </site>
-                </constituents>
+                <endmember name="ZnCl2">
+                    <description/>
+                    <stoichiometry scalingFactor="1.0"/>
+                    <constituents>
+                        <site>
+                            <const species="Zn[2+]"/>
+                        </site>
+                        <site>
+                            <const species="Cl[1-]"/>
+                        </site>
+                    </constituents>
 
-                <property xsi:type="MQM-G">
-                    <ref />
-                    <comment />
-                    <expr>ZnCl2#Liquid</expr>
-                    <zeta>2.4</zeta>
-                    <coordinationNumbers>
-                        <comment>'Second Nearest Neighbor' coordination numbers</comment>
-                        <cation>6.0</cation>
-                        <anion>3.0</anion>
-                    </coordinationNumbers>
-                </property>
-            </endmember>
+                    <property xsi:type="MQM-G">
+                        <ref/>
+                        <comment/>
+                        <expr>ZnCl2#Liquid</expr>
+                        <zeta>2.4</zeta>
+                        <coordinationNumbers>
+                            <comment>'Second Nearest Neighbor' coordination numbers</comment>
+                            <cation>6.0</cation>
+                            <anion>3.0</anion>
+                        </coordinationNumbers>
+                    </property>
+                </endmember>
+            </endmembers>
 
             <!-- missing: FeCl3, FeCl2, CuCl2, PbCl2 -->
 
+            <quadruplets>
+                <quadruplet name="Cu[1+],Zn[2+]:Cl[1-]">
+                    <a species="Cu[1+]" Z="0.688721875540867"/>
+                    <b species="Zn[2+]" Z="0.688721875540867"/>
+                    <x species="Cl[1-]" Z="0.688721875540867"/>
+                    <y species="Cl[1-]" Z="0.688721875540867"/>
+                </quadruplet>
+            </quadruplets>
+
             <interactions>
-                <interaction>
-                    <ref />
-                    <comment />
+                <interaction name="Cu[1+],Zn[2+]:Cl[1-]">
                     <constituents>
                         <site>
-                            <const>Cu[1+]</const>
-                            <const>Zn[2+]</const>
+                            <const species="Cu[1+]"/>
+                            <const species="Zn[2+]"/>
                         </site>
                         <site>
-                            <const>Cl[1-]</const>
+                            <const species="Cl[1-]"/>
                         </site>
                     </constituents>
+                    <ref/>
+                    <comment/>
                     <property xsi:type="MQM-L-PF">
                         <ref>Viitala ChemSage.dat</ref>
-                        <comment />
+                        <comment/>
 
                         <expr i="0" j="0">3960.66 -3.77326*T</expr>
                         <expr i="1" j="0">-2018.27</expr>
@@ -124,18 +144,18 @@
                     </property>
                 </interaction>
 
-                <interaction>
-                    <ref />
-                    <comment />
+                <interaction name="Cu[1+]:Cl[1-],O[2-]">
                     <constituents>
                         <site>
-                            <const>Cu[1+]</const>
+                            <const species="Cu[1+]"/>
                         </site>
                         <site>
-                            <const>Cl[1-]</const>
-                            <const>O[2-]</const>
+                            <const species="Cl[1-]"/>
+                            <const species="O[2-]"/>
                         </site>
                     </constituents>
+                    <ref/>
+                    <comment/>
                     <property xsi:type="MQM-L-PF">
                         <ref>91Din</ref>
                         <expr i="0" j="0">3960.66 -3.77326*T</expr>
@@ -151,30 +171,21 @@
 
             </interactions>
 
-            <nonDefaultQuads>
-                <quad name="Cu[1+],Zn[2+]:Cl[1-]">
-                    <A species="Cu[1+]" value="0.688721875540867" />
-                    <B species="Zn[2+]" value="0.688721875540867" />
-                    <X species="Cl[1-]" value="0.688721875540867" />
-                    <Y species="Cl[1-]" value="0.688721875540867" />
-                </quad>
-            </nonDefaultQuads>
-
 
             <ternaryInterpolations>
                 <interpolation>
                     <constituents>
                         <site>
-                            <const site="i">Cu[1+]</const>
-                            <const site="j">Fe[2+]</const>
-                            <const site="k">Zn[2+]</const>
+                            <const site="i" species="Cu[1+]"/>
+                            <const site="j" species="Fe[2+]"/>
+                            <const site="k" species="Zn[2+]"/>
                         </site>
                         <site>
-                            <const>Cl[1-]</const>
+                            <const species="Cl[1-]"/>
                         </site>
                     </constituents>
-                    <ij xsi:type="Kohler" />
-                    <jk xsi:type="Muggiano" />
+                    <ij xsi:type="Kohler"/>
+                    <jk xsi:type="Muggiano"/>
                     <ik xsi:type="Toop">
                         <constant>i</constant>
                     </ik>
