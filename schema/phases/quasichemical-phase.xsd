@@ -9,38 +9,68 @@
     <xs:include schemaLocation="../expressions/main.xsd" />
     <xs:include schemaLocation="phase-properties.xsd" />
 
+    <!-- ================================================================== -->
+    <!-- MQM Endmember Property Types                                       -->
+    <!-- ================================================================== -->
 
     <xs:complexType name="MQMEndmemberPropertyType">
         <xs:annotation>
-            <xs:documentation> A sublattice in a phase. </xs:documentation>
+            <xs:documentation>Abstract base type for thermodynamic properties of quasichemical
+                model endmembers. Extends PhasePropertyType so that MQM endmembers can use both
+                MQM-specific properties (e.g. MQM-G) and general physical properties (e.g.
+                MolarVolume, ThermalExpansion) via xsi:type dispatch.</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
-            <xs:extension base="AbstractPhasePropertyType">
-                <!-- Additional elements or attributes specific to PhasePropertyType -->
+            <xs:extension base="PhasePropertyType">
+                <!-- Additional elements or attributes specific to MQM endmember properties -->
             </xs:extension>
         </xs:complexContent>
-
     </xs:complexType>
 
     <xs:complexType name="MQM-G">
         <xs:annotation>
-            <xs:documentation> A Gibbs energy parameter for the Quasichemical Model </xs:documentation>
+            <xs:documentation>Gibbs energy parameter for the Modified Quasichemical Model (MQM).
+                Includes the energy expression, the zeta coordination ratio, and the coordination
+                numbers for cation and anion sublattices.</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="MQMEndmemberPropertyType">
                 <xs:sequence>
-                    <xs:element name="expr" />
+                    <xs:element name="expr" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Mathematical expression for the Gibbs energy of this
+                                MQM endmember. Typically references global functions or other
+                                endmembers, e.g. "+1*{Al#LIQUID}".</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
                     <xs:element name="zeta" type="xs:float">
                         <xs:annotation>
-                            <xs:documentation>Typically set to 2.4</xs:documentation>
+                            <xs:documentation>Zeta coordination ratio for this endmember. Typically
+                                set to 2.4 by convention, but may vary for specific systems.</xs:documentation>
                         </xs:annotation>
                     </xs:element>
                     <xs:element name="coordinationNumbers">
+                        <xs:annotation>
+                            <xs:documentation>Coordination numbers for cation and anion sublattices
+                                in this MQM endmember.</xs:documentation>
+                        </xs:annotation>
                         <xs:complexType>
                             <xs:sequence>
-                                <xs:element name="comment" type="xs:string" minOccurs="0" />
-                                <xs:element name="cation" type="xs:float" maxOccurs="1" />
-                                <xs:element name="anion" type="xs:float" maxOccurs="1" />
+                                <xs:element name="comment" type="xs:string" minOccurs="0">
+                                    <xs:annotation>
+                                        <xs:documentation>Optional comment on the coordination numbers.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element name="cation" type="xs:float" maxOccurs="1">
+                                    <xs:annotation>
+                                        <xs:documentation>Coordination number for the cation sublattice.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
+                                <xs:element name="anion" type="xs:float" maxOccurs="1">
+                                    <xs:annotation>
+                                        <xs:documentation>Coordination number for the anion sublattice.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:element>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
@@ -49,64 +79,102 @@
         </xs:complexContent>
     </xs:complexType>
 
+    <!-- ================================================================== -->
+    <!-- MQM Endmember Type                                                 -->
+    <!-- ================================================================== -->
+
     <xs:complexType name="MQMEndmemberType">
         <xs:annotation>
-            <xs:documentation> The endmember of a quasichemical phase model.</xs:documentation>
+            <xs:documentation>An endmember of a Modified Quasichemical Model (MQM) phase. Each
+                endmember defines a pure-component end of the mixing space, with its own Gibbs
+                energy, coordination parameters, and optional physical properties.</xs:documentation>
         </xs:annotation>
         <xs:sequence>
-            <xs:element name="description" type="xs:string" />
-            <xs:element name="stoichiometry">
+            <xs:element name="description" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Optional description of the endmember, e.g. source references
+                        or DOI links.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="comment" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Optional free-text comment for assessor notes. Use description
+                        for formal metadata.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="stoichiometry" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Stoichiometric scaling factor for this endmember.</xs:documentation>
+                </xs:annotation>
                 <xs:complexType>
                     <xs:attribute name="scalingFactor" type="xs:decimal" use="required" />
                 </xs:complexType>
             </xs:element>
-            <xs:element name="constituents" minOccurs="1" maxOccurs="1" type="MQMConstituentArrayType">
+            <xs:element name="constituents" minOccurs="1" maxOccurs="1" type="ConstituentArrayType">
                 <xs:annotation>
-                    <xs:documentation> The constituent array for this endmember. </xs:documentation>
+                    <xs:documentation>The constituent array for this endmember, referencing species
+                        defined in the parent phase's species block.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-
-            <xs:element name="property" type="MQMEndmemberPropertyType" minOccurs="1"
-                maxOccurs="unbounded" />
+            <xs:element name="property" type="PhasePropertyType" minOccurs="1"
+                maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Thermodynamic or physical properties of this endmember. Use
+                        xsi:type to select the concrete property type (e.g. MQM-G, MolarVolume,
+                        ThermalExpansion, Compressibility, BulkModulusDerivative).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
         </xs:sequence>
-        <xs:attribute name="name" type="xs:string" use="required" />
+        <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation>Name of the endmember, typically a species name like "Al" or
+                    "NaCl".</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
+
+    <!-- ================================================================== -->
+    <!-- MQM Interaction Property Types                                     -->
+    <!-- ================================================================== -->
 
     <xs:complexType name="MQMInteractionPropertyType">
         <xs:annotation>
-            <xs:documentation> Modified quasichemical phase model interaction. Should be subclassed and not used
-                directly.</xs:documentation>
+            <xs:documentation>Base type for MQM interaction properties. Extends
+                AbstractPhasePropertyType to keep MQM interaction types in a separate branch from
+                PhasePropertyType, preventing use of interaction types on endmembers and vice
+                versa.</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="AbstractPhasePropertyType">
-                <!-- Additional elements or attributes specific to PhasePropertyType -->
+                <!-- Concrete subtypes add their own expr elements -->
             </xs:extension>
         </xs:complexContent>
-
     </xs:complexType>
 
     <xs:complexType name="MQM-L-PF">
         <xs:annotation>
-            <xs:documentation> A sublattice in a phase. </xs:documentation>
+            <xs:documentation>Pair-fraction excess energy interaction parameter for the Modified
+                Quasichemical Model. Coefficients are indexed by i,j exponents of the constituent
+                pair fractions. An optional k index supports ternary pair-fraction
+                interactions.</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="MQMInteractionPropertyType">
                 <xs:sequence>
                     <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
                         <xs:annotation>
-                            <xs:documentation> The expression for a pair fraction expansion. Has to have two attributes,
-                                "i" and "j" for the respective exponents of the expression: </xs:documentation>
+                            <xs:documentation>Expression term with pair-fraction exponents i and j,
+                                and optional ternary index k.</xs:documentation>
                         </xs:annotation>
                         <xs:complexType>
                             <xs:simpleContent>
                                 <xs:extension base="xs:string">
-                                    <xs:attribute name="j" type="xs:integer" use="required" />
                                     <xs:attribute name="i" type="xs:integer" use="required" />
+                                    <xs:attribute name="j" type="xs:integer" use="required" />
+                                    <xs:attribute name="k" type="xs:integer" use="optional" />
                                 </xs:extension>
                             </xs:simpleContent>
                         </xs:complexType>
-
-
                     </xs:element>
                 </xs:sequence>
             </xs:extension>
@@ -115,15 +183,16 @@
 
     <xs:complexType name="MQM-L-RK">
         <xs:annotation>
-            <xs:documentation> A sublattice in a phase. </xs:documentation>
+            <xs:documentation>Redlich-Kister excess energy interaction parameter for the Modified
+                Quasichemical Model. Coefficients are indexed by polynomial rank.</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="MQMInteractionPropertyType">
                 <xs:sequence>
                     <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
                         <xs:annotation>
-                            <xs:documentation> The expression for a Redlich-Kister excess formulation. Has to have only
-                                a single attribute, "rank".</xs:documentation>
+                            <xs:documentation>Expression term indexed by Redlich-Kister polynomial
+                                rank (0, 1, 2, ...).</xs:documentation>
                         </xs:annotation>
                         <xs:complexType>
                             <xs:simpleContent>
@@ -132,77 +201,147 @@
                                 </xs:extension>
                             </xs:simpleContent>
                         </xs:complexType>
-
-
                     </xs:element>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
 
-    <xs:complexType name="MQMquadSite">
+    <xs:complexType name="MQM-L-SP">
         <xs:annotation>
-            <xs:documentation> Type that defines a quadruplet 'site' in the quasichemical model. It is only used to
-                construct non-default quadruplets.</xs:documentation>
+            <xs:documentation>Simple Polynomial (SP) interaction parameter for the Modified
+                Quasichemical Model. The excess energy is expressed as a polynomial in pair
+                fractions, where each term is indexed by i,j exponents representing simple
+                polynomial multiplication of the mixing interaction.</xs:documentation>
         </xs:annotation>
-        <xs:attribute name="species" type="xs:string" />
-        <xs:attribute name="value" type="xs:float" />
-
+        <xs:complexContent>
+            <xs:extension base="MQMInteractionPropertyType">
+                <xs:sequence>
+                    <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>Expression term with pair-fraction exponents i and
+                                j.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                    <xs:attribute name="i" type="xs:integer" use="required" />
+                                    <xs:attribute name="j" type="xs:integer" use="required" />
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
+    <xs:complexType name="MQM-L-Reciprocal">
+        <xs:annotation>
+            <xs:documentation>Reciprocal interaction parameter for the Modified Quasichemical
+                Model. Used in systems with more than two sublattices where cation-cation mixing
+                on one sublattice occurs simultaneously with anion-anion mixing on another. The
+                third index k addresses the additional degree of freedom from the reciprocal
+                reaction.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="MQMInteractionPropertyType">
+                <xs:sequence>
+                    <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>Expression term with indices i, j, and k for the
+                                reciprocal interaction polynomial.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                    <xs:attribute name="i" type="xs:integer" use="required" />
+                                    <xs:attribute name="j" type="xs:integer" use="required" />
+                                    <xs:attribute name="k" type="xs:integer" use="required" />
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MQM-L-Quasichemical">
+        <xs:annotation>
+            <xs:documentation>Quasichemical interaction parameter for the Modified Quasichemical
+                Model. Represents interaction parameters expressed directly in the quasichemical
+                formalism, as opposed to pair-fraction or Redlich-Kister expansions. These are
+                polynomial coefficients applied to the quasichemical equilibrium
+                constant.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="MQMInteractionPropertyType">
+                <xs:sequence>
+                    <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>Expression term with pair-fraction exponents i and
+                                j.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                    <xs:attribute name="i" type="xs:integer" use="required" />
+                                    <xs:attribute name="j" type="xs:integer" use="required" />
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- ================================================================== -->
+    <!-- Quadruplet and Charge Types                                        -->
+    <!-- ================================================================== -->
+
+    <xs:complexType name="MQMquadSite">
+        <xs:annotation>
+            <xs:documentation>Defines a quadruplet 'site' in the quasichemical model. Used only
+                to construct non-default quadruplets with custom coordination numbers (Z
+                values).</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="species" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation>Name of the species occupying this quadruplet site.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Z" type="xs:float" use="required">
+            <xs:annotation>
+                <xs:documentation>Coordination number (Z value) for this species in the
+                    quadruplet.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
 
     <xs:simpleType name="chargeValues">
         <xs:annotation>
-            <xs:documentation> A sublattice in a phase. </xs:documentation>
+            <xs:documentation>Formal charge values for ionic species in the quasichemical model.
+                Supports integer charges from -8 to +8, with or without explicit sign.
+                Examples: "+2", "-3", "1", "0".</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:enumeration value="+1" />
-            <xs:enumeration value="+2" />
-            <xs:enumeration value="+3" />
-            <xs:enumeration value="+4" />
-            <xs:enumeration value="+5" />
-            <xs:enumeration value="+6" />
-            <xs:enumeration value="+7" />
-            <xs:enumeration value="+8" />
-            <xs:enumeration value="-1" />
-            <xs:enumeration value="-2" />
-            <xs:enumeration value="-3" />
-            <xs:enumeration value="-4" />
-            <xs:enumeration value="-5" />
-            <xs:enumeration value="-6" />
-            <xs:enumeration value="-7" />
-            <xs:enumeration value="-8" />
+            <xs:pattern value="0|[+-]?[1-8]" />
         </xs:restriction>
     </xs:simpleType>
 
-    <xs:complexType name="MQMConstituentArrayType">
+    <!-- ================================================================== -->
+    <!-- Unified Constituent Array Type (H3)                                -->
+    <!-- ================================================================== -->
+
+    <xs:complexType name="ConstituentArrayType">
         <xs:annotation>
-            <xs:documentation> Defines the constituents for each lattice site in a Modified quasichemical phase
-                endmember or interaction. Each &lt;site&gt; element represents a sublattice, and contains one or more
-                &lt;const&gt; elements, each referencing a species name defined in the &lt;species&gt; block of the same
-                phase. </xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="site" minOccurs="1" maxOccurs="unbounded">
-                <xs:complexType>
-                    <xs:sequence>
-                        <xs:element name="const" minOccurs="1" maxOccurs="unbounded" type="ConstituentSpeciesType">
-                            <xs:annotation>
-                                <xs:documentation> The name of the species occupying this site. Must match a species
-                                    name defined in the &lt;species&gt; block of the same phase. </xs:documentation>
-                            </xs:annotation>
-                        </xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-        </xs:sequence>
-    </xs:complexType>
-    <xs:complexType name="MQMInteractionConstituentArrayType">
-        <xs:annotation>
-            <xs:documentation> Defines the constituents for each lattice site in a Modified quasichemical phase
-                endmember or interaction. Each &lt;site&gt; element represents a sublattice, and contains one or more
-                &lt;const&gt; elements, each referencing a species name defined in the &lt;species&gt; block of the same
-                phase. </xs:documentation>
+            <xs:documentation>Unified constituent array type used by both CEF and MQM models.
+                Each site element represents a sublattice, containing one or more const elements
+                that reference species by name via the required species attribute. This type is
+                used for endmember and interaction constituents. Ternary interpolation constituents
+                use a separate inline type defined in core.xsd.</xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="site" minOccurs="1" maxOccurs="unbounded">
@@ -210,150 +349,271 @@
                     <xs:sequence>
                         <xs:element name="const" minOccurs="1" maxOccurs="unbounded">
                             <xs:annotation>
-                                <xs:documentation> The name of the species occupying this site. Must match a species
-                                    name defined in the &lt;species&gt; block of the same phase. </xs:documentation>
+                                <xs:documentation>References a species by name via the species
+                                    attribute. The species must be defined in the parent phase's
+                                    species block.</xs:documentation>
                             </xs:annotation>
                             <xs:complexType>
-                                <xs:simpleContent>
-                                    <xs:extension base="xs:string">
-                                        <xs:attribute name="site" type="TernarySiteLocatorType" use="optional" />
-                                    </xs:extension>
-                                </xs:simpleContent>
+                                <xs:attribute name="species" type="NoWhitespaceString" use="required">
+                                    <xs:annotation>
+                                        <xs:documentation>Name of the species occupying this site.
+                                            Must match a species name in the phase's species
+                                            block.</xs:documentation>
+                                    </xs:annotation>
+                                </xs:attribute>
                             </xs:complexType>
                         </xs:element>
-
-
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
 
+    <!-- ================================================================== -->
+    <!-- Abstract Interaction Type (H2)                                     -->
+    <!-- ================================================================== -->
+
+    <xs:complexType name="AbstractInteractionType" abstract="true">
+        <xs:annotation>
+            <xs:documentation>Abstract base type for interaction parameters in both CEF and MQM
+                phase models. Captures the shared structure: a name attribute, structured
+                constituents, and optional metadata (description, ref, comment). Concrete
+                subtypes (CEFInteractionType, MQMInteractionType) extend this to add their
+                respective property elements.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="constituents" type="ConstituentArrayType" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Structured definition of which species participate in the
+                        interaction, organized by sublattice site.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="description" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Optional free-text description or annotation for the
+                        interaction.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="ref" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Optional reference to the source of the interaction data
+                        (e.g. literature citation key).</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="comment" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Optional comment for assessor notes on this
+                        interaction.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>Human-readable label for the interaction, typically in the form
+                    "A,B:C" denoting which species interact on which sublattice. Serves as
+                    documentation, not as a programmatic key.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <!-- ================================================================== -->
+    <!-- MQM Interaction Type                                               -->
+    <!-- ================================================================== -->
+
+    <xs:complexType name="MQMInteractionType">
+        <xs:annotation>
+            <xs:documentation>Interaction parameter type for the Modified Quasichemical Model.
+                Extends AbstractInteractionType with MQM-specific property elements. Use xsi:type
+                on property elements to select concrete interaction models (MQM-L-PF, MQM-L-RK,
+                MQM-L-SP, MQM-L-Reciprocal, MQM-L-Quasichemical).</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="AbstractInteractionType">
+                <xs:sequence>
+                    <xs:element name="property" type="MQMInteractionPropertyType" minOccurs="1"
+                        maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>MQM interaction property. Use xsi:type to select
+                                the concrete model: MQM-L-PF (pair fraction), MQM-L-RK
+                                (Redlich-Kister), MQM-L-SP (simple polynomial), MQM-L-Reciprocal,
+                                or MQM-L-Quasichemical.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- ================================================================== -->
+    <!-- Modified Quasichemical Phase Type                                  -->
+    <!-- ================================================================== -->
 
     <xs:complexType name="ModifiedQuasichemicalPhaseType">
         <xs:annotation>
-            <xs:documentation> A quasichemical phase model type. </xs:documentation>
+            <xs:documentation>Phase model type for the Modified Quasichemical Model (MQM). Models
+                ionic or molecular liquids using quadruplet approximations with cation and anion
+                sublattices.</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="PhaseType">
                 <xs:sequence>
+                    <xs:element name="numberOfDatComponents" type="xs:integer" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Serialization metadata from ChemSage .dat format.
+                                Indicates the number of distinct species constituents in this
+                                quasichemical model. Used for format-level consistency validation,
+                                not for thermodynamic computation.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+
                     <xs:element name="description" type="xs:string" minOccurs="0">
                         <xs:annotation>
-                            <xs:documentation> A quasichemical model has the concept of quadruplets that are categorized
-                                into cations and anions. There are no neutral constituents allowed. </xs:documentation>
+                            <xs:documentation>Optional description of the quasichemical phase
+                                model.</xs:documentation>
                         </xs:annotation>
                     </xs:element>
 
                     <!-- species -->
                     <xs:element name="species">
                         <xs:annotation>
-                            <xs:documentation> A quasichemical model has the concept of quadruplets that are categorized
-                                into cations and anions. There are no neutral constituents allowed. </xs:documentation>
+                            <xs:documentation>Container for species definitions in this MQM phase.
+                                Species are categorized into cation and anion groups for the
+                                quadruplet formalism.</xs:documentation>
                         </xs:annotation>
                         <xs:complexType>
                             <xs:sequence>
                                 <xs:element name="specie" minOccurs="1" maxOccurs="unbounded">
+                                    <xs:annotation>
+                                        <xs:documentation>A single ionic species in the MQM
+                                            phase.</xs:documentation>
+                                    </xs:annotation>
                                     <xs:complexType>
-                                        <xs:attribute name="name" type="xs:string" use="required" />
+                                        <xs:attribute name="name" type="xs:string" use="required">
+                                            <xs:annotation>
+                                                <xs:documentation>Unique name of the species, e.g.
+                                                    "Na[+]", "Cl[-]".</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:attribute>
                                         <xs:attribute name="composition" type="xs:string"
-                                            use="required" />
+                                            use="required">
+                                            <xs:annotation>
+                                                <xs:documentation>Chemical composition of the
+                                                    species, e.g. "Na", "Cl".</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:attribute>
                                         <xs:attribute name="charge" type="chargeValues"
-                                            use="required" />
-                                        <xs:attribute name="group" type="xs:int" use="required" />
+                                            use="required">
+                                            <xs:annotation>
+                                                <xs:documentation>Formal ionic charge of the
+                                                    species.</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:attribute>
+                                        <xs:attribute name="group" type="xs:int" use="required">
+                                            <xs:annotation>
+                                                <xs:documentation>Group identifier (1 = cation,
+                                                    2 = anion).</xs:documentation>
+                                            </xs:annotation>
+                                        </xs:attribute>
                                     </xs:complexType>
                                 </xs:element>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
 
-                    <xs:choice maxOccurs="unbounded">
-                        <!-- endmembers-->
-                        <xs:element name="endmember" type="MQMEndmemberType" minOccurs="1"
-                            maxOccurs="unbounded">
-                            <xs:annotation>
-                                <xs:documentation>A quasichemical endmember.</xs:documentation>
-                            </xs:annotation>
-                        </xs:element>
+                    <!-- endmembers -->
+                    <xs:element name="endmembers">
+                        <xs:annotation>
+                            <xs:documentation>Container for all endmember definitions of this MQM
+                                phase. Each endmember represents a pure compound in the quadruplet
+                                mixing space.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="endmember" type="MQMEndmemberType" minOccurs="1"
+                                    maxOccurs="unbounded" />
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
 
-                        <!-- interactions-->
-                        <xs:element name="interactions" minOccurs="0" maxOccurs="1">
-                            <xs:annotation>
-                                <xs:documentation> Interactions for excess modeling of mixing in the quasichemical
-                                    model.</xs:documentation>
-                            </xs:annotation>
-                            <xs:complexType>
-                                <xs:sequence>
-                                    <xs:element name="interaction" minOccurs="0"
-                                        maxOccurs="unbounded">
-                                        <xs:complexType>
-                                            <xs:sequence>
-                                                <xs:element name="ref" type="xs:string" minOccurs="1" maxOccurs="1" />
-                                                <xs:element name="comment" type="xs:string" minOccurs="1" maxOccurs="1" />
-                                                <xs:element name="constituents"
-                                                    type="MQMInteractionConstituentArrayType"
-                                                    minOccurs="1" maxOccurs="1" />
+                    <!-- non-default quadruplets (optional, before interactions) -->
+                    <xs:element name="quadruplets" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Quadruplets with non-default zeta values. As zeta
+                                values within a quadruplet are interdependent, some information is
+                                redundant. Special care should be taken to ensure consistency with
+                                the model constraints.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="quadruplet" minOccurs="1" maxOccurs="unbounded">
+                                    <xs:annotation>
+                                        <xs:documentation>A quadruplet defined by cation pair (A,B)
+                                            and anion pair (X,Y). Since A-B and X-Y zeta values are
+                                            interdependent, defining two automatically determines
+                                            the others.</xs:documentation>
+                                    </xs:annotation>
+                                    <xs:complexType>
+                                        <xs:all>
+                                            <xs:element name="a" type="MQMquadSite">
+                                                <xs:annotation>
+                                                    <xs:documentation>First cation site of the quadruplet.</xs:documentation>
+                                                </xs:annotation>
+                                            </xs:element>
+                                            <xs:element name="b" type="MQMquadSite">
+                                                <xs:annotation>
+                                                    <xs:documentation>Second cation site of the quadruplet.</xs:documentation>
+                                                </xs:annotation>
+                                            </xs:element>
+                                            <xs:element name="x" type="MQMquadSite">
+                                                <xs:annotation>
+                                                    <xs:documentation>First anion site of the quadruplet.</xs:documentation>
+                                                </xs:annotation>
+                                            </xs:element>
+                                            <xs:element name="y" type="MQMquadSite">
+                                                <xs:annotation>
+                                                    <xs:documentation>Second anion site of the quadruplet.</xs:documentation>
+                                                </xs:annotation>
+                                            </xs:element>
+                                        </xs:all>
+                                        <xs:attribute name="name" type="xs:string" />
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
 
-                                                <xs:element name="property"
-                                                    type="MQMInteractionPropertyType"
-                                                    minOccurs="1" maxOccurs="unbounded" />
-                                            </xs:sequence>
-                                        </xs:complexType>
-                                    </xs:element>
-                                </xs:sequence>
-                            </xs:complexType>
-                        </xs:element>
+                    <!-- interactions (optional, after quadruplets) -->
+                    <xs:element name="interactions" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Container for excess energy interaction parameters
+                                in this MQM phase. Interactions describe mixing energies between
+                                species pairs or higher-order interactions.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="interaction" type="MQMInteractionType"
+                                    minOccurs="0" maxOccurs="unbounded" />
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
 
-                        <!-- non default quads -->
-                        <xs:element name="nonDefaultQuads">
-                            <xs:annotation>
-                                <xs:documentation>Quadruplets that have zeta values that are not the default calculated
-                                    zeta values can be entered. As they are interdependent, some of the information is
-                                    superfluous, and special care should be taken that they are complying to the laws of
-                                    the model to avoid problems. The reading program has to check the integrity.</xs:documentation>
-                            </xs:annotation>
-                            <xs:complexType>
-                                <xs:sequence>
-                                    <xs:element name="quad" minOccurs="1" maxOccurs="unbounded">
-                                        <xs:annotation>
-                                            <xs:documentation>The quadruplets are usually named A,B (cations) and X,Y
-                                                (anions). As the zeta values for A-B and X-Y are dependent, defining
-                                                only 2 of them automatically yields the values for the other two.
-                                                Therefore, only one of these values should be set, as the other is
-                                                implied.</xs:documentation>
-                                        </xs:annotation>
-                                        <xs:complexType>
-                                            <xs:all>
-                                                <xs:element name="A" type="MQMquadSite" />
-                                                <xs:element name="B" type="MQMquadSite" />
-                                                <xs:element name="X" type="MQMquadSite" />
-                                                <xs:element name="Y" type="MQMquadSite" />
-                                            </xs:all>
-                                            <xs:attribute name="name" type="xs:string" />
-                                        </xs:complexType>
-                                    </xs:element>
-                                </xs:sequence>
-                            </xs:complexType>
-
-                        </xs:element>
-
-                        <!-- ternary interpolations -->
-                        <xs:element name="ternaryInterpolations">
-                            <xs:annotation>
-                                <xs:documentation>Ternary interpolations as per default are assumed to be Muggiano
-                                    mixing, but other types such as Kohler and Toop are allowed. </xs:documentation>
-                            </xs:annotation>
-                            <xs:complexType>
-                                <xs:sequence>
-                                    <xs:element name="interpolation" type="InterpolationType" />
-                                </xs:sequence>
-                            </xs:complexType>
-                        </xs:element>
-                    </xs:choice>
+                    <!-- ternary interpolations (optional) -->
+                    <xs:element name="ternaryInterpolations" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Ternary interpolation definitions. By default,
+                                Muggianu mixing is assumed. Kohler and Toop interpolations are also
+                                supported.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="interpolation" type="InterpolationType"
+                                    minOccurs="0" maxOccurs="unbounded" />
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
                 </xs:sequence>
-
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-
 
 </xs:schema>
