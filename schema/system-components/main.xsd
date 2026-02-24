@@ -25,7 +25,7 @@
                 <xs:documentation> A symbol used for display purposes. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="molar_mass" type="xs:float" use="optional" default="0.0">
+        <xs:attribute name="molarMass" type="xs:float" use="optional" default="0.0">
             <xs:annotation>
                 <xs:documentation> The molar mass of a system component, in g/mol. </xs:documentation>
             </xs:annotation>

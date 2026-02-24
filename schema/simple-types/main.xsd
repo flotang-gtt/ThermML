@@ -41,8 +41,8 @@
 
     <xs:simpleType name="ConstituentSpeciesType">
         <xs:annotation>
-            <xs:documentation> A string that types a general sublattice constituent. Not many checks imposed, other than
-                disallowing whitespace. </xs:documentation>
+            <xs:documentation>A string that types a general sublattice constituent. Must not
+                contain whitespace.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:pattern value="[^ \t\r\n]+" />
