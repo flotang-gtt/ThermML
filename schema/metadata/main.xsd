@@ -41,9 +41,10 @@
                     <xs:documentation>List of authors who contributed to the database.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="created" type="xs:date" minOccurs="0" maxOccurs="1">
+            <xs:element name="created" type="xs:string" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
-                    <xs:documentation>Date the database was first created (YYYY-MM-DD).</xs:documentation>
+                    <xs:documentation>Date the database was first created. Preferably in YYYY-MM-DD format,
+                        but may be empty for auto-generated databases.</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="revisions" type="RevisionsType" minOccurs="0" maxOccurs="1">
@@ -61,8 +62,12 @@
 
     <!-- Authors -->
     <xs:complexType name="AuthorsType">
+        <xs:annotation>
+            <xs:documentation>List of authors who contributed to the database. May be empty for
+                draft or auto-generated databases where authorship is not yet assigned.</xs:documentation>
+        </xs:annotation>
         <xs:sequence>
-            <xs:element name="author" type="AuthorType" minOccurs="1" maxOccurs="unbounded" />
+            <xs:element name="author" type="AuthorType" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="AuthorType">
@@ -87,8 +92,12 @@
 
     <!-- Revisions -->
     <xs:complexType name="RevisionsType">
+        <xs:annotation>
+            <xs:documentation>Revision history for the database. May be empty for initial or
+                auto-generated databases with no revision history yet.</xs:documentation>
+        </xs:annotation>
         <xs:sequence>
-            <xs:element name="revision" type="RevisionType" minOccurs="1" maxOccurs="unbounded" />
+            <xs:element name="revision" type="RevisionType" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="RevisionType">
@@ -119,8 +128,12 @@
 
     <!-- References -->
     <xs:complexType name="ReferencesType">
+        <xs:annotation>
+            <xs:documentation>Collection of literature references cited in the database. May be
+                empty for auto-generated databases where references are not yet populated.</xs:documentation>
+        </xs:annotation>
         <xs:sequence>
-            <xs:element name="reference" type="ReferenceType" minOccurs="1" maxOccurs="unbounded" />
+            <xs:element name="reference" type="ReferenceType" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="ReferenceType">
