@@ -102,7 +102,9 @@
         <xs:complexContent>
             <xs:extension base="PhasePropertyType">
                 <xs:annotation>
-                    <xs:documentation> Magnetic interaction properties according to IHJ formalism (using RK) </xs:documentation>
+                    <xs:documentation>Redlich-Kister polynomial interaction parameter for excess
+                        Gibbs energy. Each expr element represents one term of the polynomial
+                        expansion, indexed by rank (0, 1, 2, ...).</xs:documentation>
                 </xs:annotation>
                 <xs:sequence>
                     <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
@@ -127,7 +129,10 @@
         <xs:complexContent>
             <xs:extension base="L">
                 <xs:annotation>
-                    <xs:documentation> Magnetic interaction properties according to IHJ formalism (using RK) </xs:documentation>
+                    <xs:documentation>Magnetic contribution to the Redlich-Kister interaction
+                        parameter, following the Inden-Hillert-Jarl formalism. Same structure as L
+                        but applies to the magnetic moment or transition temperature. The
+                        expression can only be of the form A+B*T.</xs:documentation>
                 </xs:annotation>
             </xs:extension>
         </xs:complexContent>
