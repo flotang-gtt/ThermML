@@ -152,24 +152,36 @@
                             <xs:complexType>
                                 <xs:sequence>
                                     <xs:element name="const" minOccurs="1" maxOccurs="unbounded">
+                                        <xs:annotation>
+                                            <xs:documentation>References a species by name via the
+                                                species attribute. Must match a species name defined
+                                                in the &lt;species&gt; block of the same
+                                                phase.</xs:documentation>
+                                        </xs:annotation>
                                         <xs:complexType>
-                                            <xs:annotation>
-                                                <xs:documentation> The name of the species occupying this site. Must
-                                                    match a species name defined in the &lt;species&gt; block of the
-                                                    same phase. </xs:documentation>
-                                            </xs:annotation>
-                                            <xs:simpleContent>
-                                                <xs:extension base="ConstituentSpeciesType">
-
-                                                    <xs:attribute name="site" type="TernarySiteLocatorType"
-                                                        use="optional">
-                                                        <xs:annotation>
-                                                            <xs:documentation>The site of the interpolation, one of "i",
-                                                                "j" or "k".</xs:documentation>
-                                                        </xs:annotation>
-                                                    </xs:attribute>
-                                                </xs:extension>
-                                            </xs:simpleContent>
+                                            <xs:attribute name="species" type="NoWhitespaceString"
+                                                use="required">
+                                                <xs:annotation>
+                                                    <xs:documentation>Name of the species occupying
+                                                        this site.</xs:documentation>
+                                                </xs:annotation>
+                                            </xs:attribute>
+                                            <xs:attribute name="site" type="TernarySiteLocatorType"
+                                                use="optional">
+                                                <xs:annotation>
+                                                    <xs:documentation>Ternary interpolation site
+                                                        locator, one of "i", "j" or
+                                                        "k".</xs:documentation>
+                                                </xs:annotation>
+                                            </xs:attribute>
+                                            <xs:attribute name="siteIndex" type="TernarySiteLocatorType"
+                                                use="optional">
+                                                <xs:annotation>
+                                                    <xs:documentation>Alias for the site attribute.
+                                                        Ternary interpolation site locator, one of
+                                                        "i", "j" or "k".</xs:documentation>
+                                                </xs:annotation>
+                                            </xs:attribute>
                                         </xs:complexType>
                                     </xs:element>
                                 </xs:sequence>
