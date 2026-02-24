@@ -19,11 +19,21 @@ major languages are mature and robust enough.
 The `analysis` directory contains `requirements` and `user-stories` used as basis
 for driving and directing development.
 
-The `examples` directory contains examples of files that validate or qualify to
-be validated against the schema. A proper testing pipeline needs to be
-implemented at a later point in time.
+The `examples` directory contains examples of files that validate against the
+schema.
 
 The `schema` directory contains the schema definition files.
+
+## Validation
+
+All example XML files can be validated against the schema using [lxml](https://lxml.de/):
+
+```bash
+uv run --with lxml python validate_all.py
+```
+
+This parses `schema/thermml-schema.xsd` and validates every `examples/*.xml`
+file, reporting pass/fail status and detailed errors for any failures.
 
 ## How to contribute
 
