@@ -43,13 +43,14 @@
 
     <xs:simpleType name="FunctionIDType">
         <xs:annotation>
-            <xs:documentation> Name to identify a function. Certain vendor specific restrictions may apply. </xs:documentation>
+            <xs:documentation>Name to identify a function. The format is typically
+                "Species#PhaseName" (e.g. "SiO2#quartz", "Fe#BCC_A2"). Function names may
+                contain alphanumerics, parentheses, brackets, colons, dots, slashes, commas,
+                hyphens, underscores, angle brackets, and the hash separator. Names starting
+                with "#" are allowed for internal references.</xs:documentation>
         </xs:annotation>
         <xs:restriction base="xs:string">
-            <!-- This pattern makes sure that if a '#' is used, it has to be "in
-the middle" of the pattern. E.g. SiO2#quartz is ok, MgCl2# is not. TODO there
-may be more characters to consider: -_/. ? -->
-            <xs:pattern value="[A-Z(][A-Za-z0-9_():\[\]+-]*#?[A-Za-z0-9_():]+" />
+            <xs:pattern value="[^ \t\r\n]+" />
         </xs:restriction>
     </xs:simpleType>
 
