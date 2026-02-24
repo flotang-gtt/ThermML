@@ -164,3 +164,6 @@ cython_debug/
 # VSCode settings directory
 .vscode/
 uncommitted/
+
+# Claude Code
+.claude/
