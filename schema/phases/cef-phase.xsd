@@ -278,8 +278,8 @@
             <xs:documentation>Interaction parameter for a CEF phase. Represents an excess energy
                 interaction between two or more constituents mixing on the same sublattice site.
                 Extends AbstractInteractionType with CEF-specific property elements. Use xsi:type
-                on property elements to select L (Redlich-Kister), BML (magnetic), G, M,
-                etc.</xs:documentation>
+                on property elements to select L (Redlich-Kister), BML (magnetic moment),
+                TCL (magnetic temperature), G, M, etc.</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="AbstractInteractionType">
@@ -288,8 +288,9 @@
                         maxOccurs="unbounded">
                         <xs:annotation>
                             <xs:documentation>CEF interaction property. Use xsi:type to select
-                                the concrete type: L (Redlich-Kister), BML (magnetic interaction),
-                                G (Gibbs energy), M (magnetic endmember).</xs:documentation>
+                                the concrete type: L (Redlich-Kister), BML (magnetic moment
+                                interaction), TCL (magnetic temperature interaction), G (Gibbs
+                                energy), M (magnetic endmember).</xs:documentation>
                         </xs:annotation>
                     </xs:element>
                 </xs:sequence>

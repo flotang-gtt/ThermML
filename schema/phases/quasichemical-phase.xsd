@@ -139,10 +139,11 @@
 
     <xs:complexType name="MQMInteractionPropertyType">
         <xs:annotation>
-            <xs:documentation>Base type for MQM interaction properties. Extends
-                AbstractPhasePropertyType to keep MQM interaction types in a separate branch from
-                PhasePropertyType, preventing use of interaction types on endmembers and vice
-                versa.</xs:documentation>
+            <xs:documentation>Base type for excess-interaction parameters of the Modified
+                Quasichemical Model (SUBQ/MQM). These property types describe interaction terms
+                between the species listed in the parent interaction constituents, and remain
+                separate from endmember properties so that interaction-only parameter families
+                cannot be attached to endmembers by mistake.</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="AbstractPhasePropertyType">
@@ -153,18 +154,21 @@
 
     <xs:complexType name="MQM-L-PF">
         <xs:annotation>
-            <xs:documentation>Pair-fraction excess energy interaction parameter for the Modified
-                Quasichemical Model. Coefficients are indexed by i,j exponents of the constituent
-                pair fractions. An optional k index supports ternary pair-fraction
-                interactions.</xs:documentation>
+            <xs:documentation>Pair-fraction expansion parameter for MQM excess energies. Binary
+                terms use i and j as the exponents of the two mixing fractions. For asymmetric
+                ternary pair-fraction terms, k indexes the contribution associated with the
+                designated ternary corner, identified separately by the optional selected element.</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="MQMInteractionPropertyType">
                 <xs:sequence>
                     <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
                         <xs:annotation>
-                            <xs:documentation>Expression term with pair-fraction exponents i and j,
-                                and optional ternary index k.</xs:documentation>
+                            <xs:documentation>One coefficient expression of the pair-fraction
+                                expansion. i and j are the exponents of the two regular mixing
+                                fractions. When selected is present, k is the exponent attached to
+                                the selected ternary-corner species and is expected to be the
+                                asymmetric index of that term.</xs:documentation>
                         </xs:annotation>
                         <xs:complexType>
                             <xs:simpleContent>
@@ -176,6 +180,14 @@
                             </xs:simpleContent>
                         </xs:complexType>
                     </xs:element>
+                    <xs:element name="selected" type="xs:string" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Optional designated corner of an asymmetric ternary
+                                interaction. The value names the species treated as the selected
+                                corner in the ChemSage / Solution Module representation, while the
+                                remaining two species form the regular pair.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -183,16 +195,19 @@
 
     <xs:complexType name="MQM-L-RK">
         <xs:annotation>
-            <xs:documentation>Redlich-Kister excess energy interaction parameter for the Modified
-                Quasichemical Model. Coefficients are indexed by polynomial rank.</xs:documentation>
+            <xs:documentation>Redlich-Kister form of an MQM excess interaction. The polynomial is
+                expanded in rank order. In asymmetric ternary usage, the optional selected element
+                identifies which species is treated as the selected corner while the rank indexes
+                the resulting Redlich-Kister series.</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="MQMInteractionPropertyType">
                 <xs:sequence>
                     <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
                         <xs:annotation>
-                            <xs:documentation>Expression term indexed by Redlich-Kister polynomial
-                                rank (0, 1, 2, ...).</xs:documentation>
+                            <xs:documentation>One Redlich-Kister coefficient expression indexed by
+                                rank. rank 0 is the base term, higher ranks are successive
+                                polynomial orders in the chosen RK representation.</xs:documentation>
                         </xs:annotation>
                         <xs:complexType>
                             <xs:simpleContent>
@@ -202,7 +217,79 @@
                             </xs:simpleContent>
                         </xs:complexType>
                     </xs:element>
+                    <xs:element name="selected" type="xs:string" minOccurs="0" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Optional designated corner of an asymmetric ternary
+                                interaction. The value names the species selected in the ternary
+                                extrapolation, analogous to the selected corner used for pair-
+                                fraction terms.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
                 </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MQM-L-RM">
+        <xs:annotation>
+            <xs:documentation>Reciprocal middle parameter for a reciprocal interaction A,B:X,Y.
+                This is the fully symmetric center term of the reciprocal square, so it is defined
+                only by the four participating constituents and does not carry rank or exponent
+                indices.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="MQMInteractionPropertyType">
+                <xs:sequence>
+                    <xs:element name="expr" type="xs:string" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>The Gibbs-energy expression for the reciprocal-center
+                                term. Because MQM-L-RM identifies the single fully symmetric point
+                                of the reciprocal square, the expression is stored without
+                                additional selector or exponent attributes.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MQM-L-RS">
+        <xs:annotation>
+            <xs:documentation>Reciprocal side parameter for a reciprocal interaction A,B:X,Y.
+                These terms describe one side of the reciprocal square, that is, a parameter tied
+                to one remaining degree of freedom while two adjacent corners contribute
+                asymmetrically. The side is identified by the variant attribute.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="MQMInteractionPropertyType">
+                <xs:sequence>
+                    <xs:element name="expr" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Expression term for the selected reciprocal-side
+                                parameter. The i, j, and k attributes carry the ChemSage exponent
+                                triple for this term. Their physical association to side and
+                                corner exponents depends on the chosen variant.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:simpleContent>
+                                <xs:extension base="xs:string">
+                                    <xs:attribute name="i" type="xs:integer" use="required" />
+                                    <xs:attribute name="j" type="xs:integer" use="required" />
+                                    <xs:attribute name="k" type="xs:integer" use="required" />
+                                </xs:extension>
+                            </xs:simpleContent>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="variant" type="xs:string" use="optional">
+                    <xs:annotation>
+                        <xs:documentation>Reciprocal-side selector. Expected values are the four
+                            side encodings used by the Solution Module and design note:
+                            A-BX-BY, B-AX-AY, X-AY-BY, or Y-AX-BX. The chosen variant determines
+                            how the stored i, j, k triple maps to the side exponent and the two
+                            adjacent corner exponents.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -425,7 +512,8 @@
             <xs:documentation>Interaction parameter type for the Modified Quasichemical Model.
                 Extends AbstractInteractionType with MQM-specific property elements. Use xsi:type
                 on property elements to select concrete interaction models (MQM-L-PF, MQM-L-RK,
-                MQM-L-SP, MQM-L-Reciprocal, MQM-L-Quasichemical).</xs:documentation>
+                MQM-L-RM, MQM-L-RS, MQM-L-SP, MQM-L-Reciprocal,
+                MQM-L-Quasichemical).</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="AbstractInteractionType">
@@ -435,8 +523,9 @@
                         <xs:annotation>
                             <xs:documentation>MQM interaction property. Use xsi:type to select
                                 the concrete model: MQM-L-PF (pair fraction), MQM-L-RK
-                                (Redlich-Kister), MQM-L-SP (simple polynomial), MQM-L-Reciprocal,
-                                or MQM-L-Quasichemical.</xs:documentation>
+                                (Redlich-Kister), MQM-L-RM, MQM-L-RS, MQM-L-SP (simple
+                                polynomial), MQM-L-Reciprocal, or
+                                MQM-L-Quasichemical.</xs:documentation>
                         </xs:annotation>
                     </xs:element>
                 </xs:sequence>

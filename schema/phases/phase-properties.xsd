@@ -138,6 +138,20 @@
         </xs:complexContent>
 
     </xs:complexType>
+    <xs:complexType name="TCL">
+        <xs:complexContent>
+            <xs:extension base="L">
+                <xs:annotation>
+                    <xs:documentation>Magnetic temperature contribution to the Redlich-Kister
+                        interaction parameter, following the Inden-Hillert-Jarl formalism. Same
+                        structure as L but applies to the magnetic transition temperature (Curie or
+                        Neel temperature). The expression can only be of the form
+                        A+B*T.</xs:documentation>
+                </xs:annotation>
+            </xs:extension>
+        </xs:complexContent>
+
+    </xs:complexType>
 
     <xs:complexType name="MolarVolume">
         <xs:annotation>
