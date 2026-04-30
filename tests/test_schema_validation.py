@@ -129,6 +129,26 @@ def test_ordered_phase_must_reference_declared_disordered_phase(
     )
 
 
+def test_phase_function_references_must_exist(
+    schema: etree.XMLSchema, basic_example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    function_ref = basic_example_doc.xpath(
+        './t:phases/t:phase[1]/t:property/t:ref', namespaces=NS
+    )[0]
+    function_ref.attrib['name'] = 'Missing#Function'
+
+    is_valid, errors = validate_tree(
+        schema, basic_example_doc, tmp_path, 'bad-function-reference.xml'
+    )
+
+    assert not is_valid
+    assert_has_error(
+        errors,
+        type_name='SCHEMAV_CVC_IDC',
+        contains='phaseFunctionReferenceMustExist',
+    )
+
+
 @pytest.mark.parametrize(
     ("target_xpath", "constraint_name", "file_name"),
     [

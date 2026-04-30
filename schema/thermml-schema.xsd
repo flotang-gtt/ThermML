@@ -32,6 +32,14 @@
             <xs:selector xpath="tm:phases/tm:phase" />
             <xs:field xpath="@disorderedPhase" />
         </xs:keyref>
+        <xs:key name="globalExpressionKey">
+            <xs:selector xpath="tm:globalExpressions/tm:expression" />
+            <xs:field xpath="@name" />
+        </xs:key>
+        <xs:keyref name="phaseFunctionReferenceMustExist" refer="globalExpressionKey">
+            <xs:selector xpath="tm:phases/tm:phase/tm:property/tm:ref" />
+            <xs:field xpath="@name" />
+        </xs:keyref>
     </xs:element>
 
 </xs:schema>
