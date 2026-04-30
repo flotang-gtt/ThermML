@@ -295,6 +295,22 @@ def test_metadata_created_must_use_iso_date_format(
     ), [f"{error.type_name}: {error.message}" for error in errors]
 
 
+def test_system_component_refstate_must_not_contain_whitespace(
+    schema: etree.XMLSchema, basic_example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    component = basic_example_doc.xpath(
+        './t:systemComponents/t:systemComponent[@symbol="Mo"]', namespaces=NS
+    )[0]
+    component.attrib['refstate'] = 'BCC A2'
+
+    is_valid, errors = validate_tree(schema, basic_example_doc, tmp_path, 'bad-refstate.xml')
+
+    assert not is_valid
+    assert any(
+        error.type_name == 'SCHEMAV_CVC_PATTERN_VALID' for error in errors
+    ), [f"{error.type_name}: {error.message}" for error in errors]
+
+
 @pytest.mark.parametrize(
     ("target_xpath", "constraint_name", "file_name"),
     [

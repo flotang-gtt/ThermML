@@ -30,7 +30,7 @@
                 <xs:documentation> The molar mass of a system component, in g/mol. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="refstate" type="xs:string" use="optional" default="0.0">
+        <xs:attribute name="refstate" type="NoWhitespaceString" use="optional">
             <xs:annotation>
                 <xs:documentation> The component reference state, in the form of the
                     common phase names, e.g. FCC_A1, BCC_A2, HCP_A3, DIAMOND_A4, LIQUID, GAS, etc. </xs:documentation>
