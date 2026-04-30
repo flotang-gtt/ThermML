@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from decimal import Decimal
 import re
 from typing import NamedTuple
 
@@ -203,5 +204,48 @@ def validate_document_semantics(
                     message=f"Invalid {label} expression syntax: {error}",
                 )
             )
+
+    for parent in doc.xpath("//*[t:range[@low and @high]]", namespaces=NS):
+        ranges = [
+            child
+            for child in parent
+            if child.tag == "{http://calphad.org/thermml/0.1}range"
+            and "low" in child.attrib
+            and "high" in child.attrib
+        ]
+        previous_high: Decimal | None = None
+        previous_path: str | None = None
+
+        for range_node in ranges:
+            low = Decimal(range_node.attrib["low"])
+            high = Decimal(range_node.attrib["high"])
+            path = doc.getpath(range_node)
+
+            if low >= high:
+                errors.append(
+                    SemanticValidationError(
+                        path=path,
+                        message=(
+                            f"Invalid range bounds: low={range_node.attrib['low']} must be "
+                            f"less than high={range_node.attrib['high']}"
+                        ),
+                    )
+                )
+
+            if previous_high is not None and low < previous_high:
+                errors.append(
+                    SemanticValidationError(
+                        path=path,
+                        message=(
+                            "Overlapping or out-of-order ranges: "
+                            f"{path} starts at {range_node.attrib['low']} before the previous "
+                            f"range ended at {previous_high}"
+                            + (f" ({previous_path})" if previous_path else "")
+                        ),
+                    )
+                )
+
+            previous_high = high
+            previous_path = path
 
     return errors

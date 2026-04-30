@@ -39,3 +39,32 @@ def test_semantic_validation_rejects_malformed_range_expression() -> None:
     assert len(errors) == 1
     assert 'Invalid range expression syntax' in errors[0].message
     assert 'Unexpected token' in errors[0].message
+
+
+def test_semantic_validation_rejects_inverted_range_bounds() -> None:
+    doc = etree.parse(str(SIMPLE_SOLUTION_PATH))
+    range_node = doc.xpath(
+        './t:globalExpressions/t:expression[@name="Fe#HSER"]/t:range[1]',
+        namespaces=NS,
+    )[0]
+    range_node.attrib['low'] = '1811.0'
+    range_node.attrib['high'] = '298.15'
+
+    errors = validate_document_semantics(doc)
+
+    assert len(errors) == 1
+    assert 'Invalid range bounds' in errors[0].message
+
+
+def test_semantic_validation_rejects_overlapping_ranges() -> None:
+    doc = etree.parse(str(SIMPLE_SOLUTION_PATH))
+    range_node = doc.xpath(
+        './t:globalExpressions/t:expression[@name="Fe#HSER"]/t:range[2]',
+        namespaces=NS,
+    )[0]
+    range_node.attrib['low'] = '1700.0'
+
+    errors = validate_document_semantics(doc)
+
+    assert len(errors) == 1
+    assert 'Overlapping or out-of-order ranges' in errors[0].message
