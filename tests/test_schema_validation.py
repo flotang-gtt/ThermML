@@ -191,6 +191,23 @@ def test_function_of_must_use_known_scalar_variable_set(
     )
 
 
+def test_mqm_species_group_must_use_known_enum_value(
+    schema: etree.XMLSchema, example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    phase = get_mqm_phase(example_doc)
+    specie = phase.xpath('./t:species/t:specie[1]', namespaces=NS)[0]
+    specie.attrib['group'] = '3'
+
+    is_valid, errors = validate_tree(schema, example_doc, tmp_path, 'bad-mqm-group.xml')
+
+    assert not is_valid
+    assert_has_error(
+        errors,
+        type_name='SCHEMAV_CVC_ENUMERATION_VALID',
+        contains='2',
+    )
+
+
 @pytest.mark.parametrize(
     ("target_xpath", "constraint_name", "file_name"),
     [

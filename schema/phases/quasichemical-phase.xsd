@@ -432,6 +432,17 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="MQMSpeciesGroupType">
+        <xs:annotation>
+            <xs:documentation>Allowed MQM species groups. The current model distinguishes only
+                the two serialized groups used for cation and anion partitions.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:int">
+            <xs:enumeration value="1" />
+            <xs:enumeration value="2" />
+        </xs:restriction>
+    </xs:simpleType>
+
     <!-- ================================================================== -->
     <!-- Unified Constituent Array Type (H3)                                -->
     <!-- ================================================================== -->
@@ -611,7 +622,7 @@
                                                     species.</xs:documentation>
                                             </xs:annotation>
                                         </xs:attribute>
-                                        <xs:attribute name="group" type="xs:int" use="required">
+                                        <xs:attribute name="group" type="MQMSpeciesGroupType" use="required">
                                             <xs:annotation>
                                                 <xs:documentation>Group identifier (1 = cation,
                                                     2 = anion).</xs:documentation>
