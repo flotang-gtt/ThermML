@@ -14,6 +14,8 @@ from pathlib import Path
 
 from lxml import etree
 
+from semantic_validation import validate_document_semantics
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -58,6 +60,12 @@ def main() -> int:
         return 1
 
     if schema.validate(doc):
+        semantic_errors = validate_document_semantics(doc)
+        if semantic_errors:
+            print(f"FAIL  {xml_path}")
+            for error in semantic_errors:
+                print(f"  {error.path}: {error.message}")
+            return 1
         print(f"PASS  {xml_path}")
         return 0
 

@@ -178,7 +178,7 @@
         </expression>
         <expression name="Mn#FCC_A1" xsi:type="RangedTemperatureExpr" >
             <range low="298.15" high="1519.0">
-                -3439.3  +  131.884*T  +  -24.5177*T*LN(T)0.006*T**2  +  69600*T**(-1)
+                -3439.3  +  131.884*T  +  -24.5177*T*LN(T) + 0.006*T**2  +  69600*T**(-1)
             </range>
             <range low="1519.0" high="2000.0">
                 +2663.31  +  -2.5984*T  +  Mn#HSER  +  2.205113E+30*T**(-9)

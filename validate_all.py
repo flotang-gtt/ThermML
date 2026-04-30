@@ -8,6 +8,8 @@ import glob
 import sys
 from lxml import etree
 
+from semantic_validation import validate_document_semantics
+
 
 def main():
     schema_path = "schema/thermml-schema.xsd"
@@ -38,6 +40,14 @@ def main():
         try:
             doc = etree.parse(xml_file)
             if schema.validate(doc):
+                semantic_errors = validate_document_semantics(doc)
+                if semantic_errors:
+                    print(f"  FAIL  {xml_file} (semantic validation)")
+                    errors_by_file[xml_file] = [
+                        f"{error.path}: {error.message}" for error in semantic_errors
+                    ]
+                    failed += 1
+                    continue
                 print(f"  PASS  {xml_file}")
                 passed += 1
             else:
