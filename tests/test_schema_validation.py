@@ -208,6 +208,28 @@ def test_mqm_species_group_must_use_known_enum_value(
     )
 
 
+def test_sublattice_multiplicities_must_be_numeric_list(
+    schema: etree.XMLSchema, simple_solution_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    sublattices = simple_solution_doc.xpath(
+        './t:phases/t:phase[1]/t:structure/t:sublattices', namespaces=NS
+    )[0]
+    sublattices.attrib['multiplicities'] = '1.0 two'
+
+    is_valid, errors = validate_tree(
+        schema, simple_solution_doc, tmp_path, 'bad-multiplicities.xml'
+    )
+
+    assert not is_valid
+    assert any(
+        error.type_name == 'SCHEMAV_CVC_DATATYPE_VALID_1_2_1' for error in errors
+    ), [f"{error.type_name}: {error.message}" for error in errors]
+    assert any(
+        'list type' in error.message and 'multiplicities' in error.message
+        for error in errors
+    ), [f"{error.type_name}: {error.message}" for error in errors]
+
+
 @pytest.mark.parametrize(
     ("target_xpath", "constraint_name", "file_name"),
     [

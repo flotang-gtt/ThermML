@@ -19,9 +19,7 @@
                 factors), e.g. "1 3" for a two-sublattice model with multiplicities 1 and
                 3.</xs:documentation>
         </xs:annotation>
-        <xs:restriction base="xs:string">
-            <xs:pattern value="(([0-9\.]*)|(\s*))*" />
-        </xs:restriction>
+        <xs:list itemType="xs:decimal" />
     </xs:simpleType>
 
     <xs:complexType name="SublatticeSiteType">
