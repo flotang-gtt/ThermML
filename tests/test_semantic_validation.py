@@ -68,3 +68,17 @@ def test_semantic_validation_rejects_overlapping_ranges() -> None:
 
     assert len(errors) == 1
     assert 'Overlapping or out-of-order ranges' in errors[0].message
+
+
+def test_semantic_validation_rejects_unknown_symbolic_range_reference() -> None:
+    doc = etree.parse(str(SIMPLE_SOLUTION_PATH))
+    range_node = doc.xpath(
+        './t:globalExpressions/t:expression[@name="Fe#FCC_A1"]/t:range[1]',
+        namespaces=NS,
+    )[0]
+    range_node.text = '-1462.4 + 8.282*T + Missing#HSER'
+
+    errors = validate_document_semantics(doc)
+
+    assert len(errors) == 1
+    assert "Unknown symbolic reference 'Missing#HSER'" in errors[0].message

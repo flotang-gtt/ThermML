@@ -180,6 +180,26 @@ def validate_expression_text(text: str) -> None:
     ExpressionParser(stripped).parse()
 
 
+def collect_symbolic_references(text: str) -> set[str]:
+    tokens = tokenize_expression(text.strip())
+    references: set[str] = set()
+
+    for index, token in enumerate(tokens):
+        if token.kind != "IDENT":
+            continue
+
+        next_kind = tokens[index + 1].kind if index + 1 < len(tokens) else "EOF"
+        if next_kind == "LPAREN":
+            continue
+
+        if token.value in {"T", "P", "i", "j", "k"}:
+            continue
+
+        references.add(token.value)
+
+    return references
+
+
 def iter_expression_nodes(doc: etree._ElementTree):
     for node in doc.xpath("//t:expr", namespaces=NS):
         yield node, "expr"
@@ -192,6 +212,11 @@ def validate_document_semantics(
     doc: etree._ElementTree,
 ) -> list[SemanticValidationError]:
     errors: list[SemanticValidationError] = []
+    declared_global_expressions = {
+        expression.attrib["name"]
+        for expression in doc.xpath('./t:globalExpressions/t:expression', namespaces=NS)
+        if "name" in expression.attrib
+    }
 
     for node, label in iter_expression_nodes(doc):
         text = node.text or ""
@@ -204,6 +229,23 @@ def validate_document_semantics(
                     message=f"Invalid {label} expression syntax: {error}",
                 )
             )
+
+    for range_node in doc.xpath('./t:globalExpressions/t:expression/t:range[not(*)]', namespaces=NS):
+        text = (range_node.text or '').strip()
+        if not text:
+            continue
+
+        for reference in sorted(collect_symbolic_references(text)):
+            if reference not in declared_global_expressions:
+                errors.append(
+                    SemanticValidationError(
+                        path=doc.getpath(range_node),
+                        message=(
+                            f"Unknown symbolic reference {reference!r} in range expression; "
+                            "expected a declared global expression name"
+                        ),
+                    )
+                )
 
     for parent in doc.xpath("//*[t:range[@low and @high]]", namespaces=NS):
         ranges = [
