@@ -315,4 +315,53 @@ def validate_document_semantics(
                 )
             )
 
+    for phase in doc.xpath('.//t:phase[t:structure/t:sublattices]', namespaces=NS):
+        phase_name = phase.attrib.get('name', '<unknown>')
+        sublattices = phase.xpath('./t:structure/t:sublattices', namespaces=NS)[0]
+        multiplicity_count = len(sublattices.attrib.get('multiplicities', '').split())
+        site_count = len(sublattices.xpath('./t:site', namespaces=NS))
+
+        if multiplicity_count != site_count:
+            errors.append(
+                SemanticValidationError(
+                    path=doc.getpath(sublattices),
+                    message=(
+                        f"Phase {phase_name!r} declares {multiplicity_count} multiplicities "
+                        f"for {site_count} sublattice sites"
+                    ),
+                )
+            )
+
+        for endmember in phase.xpath('./t:endmembers/t:endmember', namespaces=NS):
+            constituent_sites = len(
+                endmember.xpath('./t:constituents/t:site', namespaces=NS)
+            )
+            if constituent_sites != site_count:
+                errors.append(
+                    SemanticValidationError(
+                        path=doc.getpath(endmember),
+                        message=(
+                            f"Endmember {endmember.attrib.get('name', '<unknown>')!r} in phase "
+                            f"{phase_name!r} uses {constituent_sites} constituent sites but the "
+                            f"phase structure declares {site_count}"
+                        ),
+                    )
+                )
+
+        for interaction in phase.xpath('./t:interactions/t:interaction', namespaces=NS):
+            constituent_sites = len(
+                interaction.xpath('./t:constituents/t:site', namespaces=NS)
+            )
+            if constituent_sites != site_count:
+                errors.append(
+                    SemanticValidationError(
+                        path=doc.getpath(interaction),
+                        message=(
+                            f"Interaction {interaction.attrib.get('name', '<unknown>')!r} in "
+                            f"phase {phase_name!r} uses {constituent_sites} constituent sites "
+                            f"but the phase structure declares {site_count}"
+                        ),
+                    )
+                )
+
     return errors

@@ -106,3 +106,44 @@ def test_semantic_validation_rejects_mqm_charge_group_mismatch() -> None:
 
     assert len(errors) == 1
     assert "must use group 2" in errors[0].message
+
+
+def test_semantic_validation_rejects_multiplicity_site_count_mismatch() -> None:
+    doc = etree.parse(str(SIMPLE_SOLUTION_PATH))
+    sublattices = doc.xpath(
+        './t:phases/t:phase[1]/t:structure/t:sublattices', namespaces=NS
+    )[0]
+    sublattices.attrib['multiplicities'] = '1.0 1.0 1.0'
+
+    errors = validate_document_semantics(doc)
+
+    assert len(errors) == 1
+    assert 'declares 3 multiplicities for 2 sublattice sites' in errors[0].message
+
+
+def test_semantic_validation_rejects_endmember_site_count_mismatch() -> None:
+    doc = etree.parse(str(SIMPLE_SOLUTION_PATH))
+    endmember_site = doc.xpath(
+        './t:phases/t:phase[1]/t:endmembers/t:endmember[1]/t:constituents/t:site[2]',
+        namespaces=NS,
+    )[0]
+    endmember_site.getparent().remove(endmember_site)
+
+    errors = validate_document_semantics(doc)
+
+    assert len(errors) == 1
+    assert 'uses 1 constituent sites but the phase structure declares 2' in errors[0].message
+
+
+def test_semantic_validation_rejects_interaction_site_count_mismatch() -> None:
+    doc = etree.parse(str(SIMPLE_SOLUTION_PATH))
+    interaction_site = doc.xpath(
+        './t:phases/t:phase[1]/t:interactions/t:interaction[1]/t:constituents/t:site[2]',
+        namespaces=NS,
+    )[0]
+    interaction_site.getparent().remove(interaction_site)
+
+    errors = validate_document_semantics(doc)
+
+    assert len(errors) == 1
+    assert 'uses 1 constituent sites but the phase structure declares 2' in errors[0].message
