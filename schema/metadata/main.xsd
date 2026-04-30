@@ -41,10 +41,10 @@
                     <xs:documentation>List of authors who contributed to the database.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="created" type="xs:string" minOccurs="0" maxOccurs="1">
+            <xs:element name="created" type="xs:date" minOccurs="0" maxOccurs="1">
                 <xs:annotation>
-                    <xs:documentation>Date the database was first created. Preferably in YYYY-MM-DD format,
-                        but may be empty for auto-generated databases.</xs:documentation>
+                    <xs:documentation>Date the database was first created in ISO 8601 calendar
+                        date format (YYYY-MM-DD). Omit the element when the date is unknown.</xs:documentation>
                 </xs:annotation>
             </xs:element>
             <xs:element name="revisions" type="RevisionsType" minOccurs="0" maxOccurs="1">

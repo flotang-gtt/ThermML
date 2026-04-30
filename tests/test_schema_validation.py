@@ -278,6 +278,23 @@ def test_mqm_specie_name_must_not_contain_whitespace(
     ), [f"{error.type_name}: {error.message}" for error in errors]
 
 
+def test_metadata_created_must_use_iso_date_format(
+    schema: etree.XMLSchema, example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    created = example_doc.xpath('./t:metadata/t:created', namespaces=NS)[0]
+    created.text = '2025/04/24'
+
+    is_valid, errors = validate_tree(schema, example_doc, tmp_path, 'bad-created-date.xml')
+
+    assert not is_valid
+    assert any(
+        error.type_name == 'SCHEMAV_CVC_DATATYPE_VALID_1_2_1' for error in errors
+    ), [f"{error.type_name}: {error.message}" for error in errors]
+    assert any(
+        'created' in error.message and '2025/04/24' in error.message for error in errors
+    ), [f"{error.type_name}: {error.message}" for error in errors]
+
+
 @pytest.mark.parametrize(
     ("target_xpath", "constraint_name", "file_name"),
     [
