@@ -149,6 +149,48 @@ def test_phase_function_references_must_exist(
     )
 
 
+def test_ternary_site_locator_must_be_scalar(
+    schema: etree.XMLSchema, example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    phase = get_mqm_phase(example_doc)
+    const = phase.xpath(
+        './t:ternaryInterpolations/t:interpolation[1]/t:constituents/t:site[1]/t:const[1]',
+        namespaces=NS,
+    )[0]
+    const.attrib['site'] = 'i j'
+
+    is_valid, errors = validate_tree(
+        schema, example_doc, tmp_path, 'bad-ternary-site-locator.xml'
+    )
+
+    assert not is_valid
+    assert_has_error(
+        errors,
+        type_name='SCHEMAV_CVC_ENUMERATION_VALID',
+        contains='i',
+    )
+
+
+def test_function_of_must_use_known_scalar_variable_set(
+    schema: etree.XMLSchema, basic_example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    property_element = basic_example_doc.xpath(
+        './t:phases/t:phase[1]/t:property[1]', namespaces=NS
+    )[0]
+    property_element.attrib['function_of'] = 'T P'
+
+    is_valid, errors = validate_tree(
+        schema, basic_example_doc, tmp_path, 'bad-function-of.xml'
+    )
+
+    assert not is_valid
+    assert_has_error(
+        errors,
+        type_name='SCHEMAV_CVC_ENUMERATION_VALID',
+        contains='T,P',
+    )
+
+
 @pytest.mark.parametrize(
     ("target_xpath", "constraint_name", "file_name"),
     [

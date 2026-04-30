@@ -13,31 +13,23 @@
         <xs:annotation>
             <xs:documentation> A fixed list of available site locators </xs:documentation>
         </xs:annotation>
-        <xs:list>
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:enumeration value="i" />
-                    <xs:enumeration value="j" />
-                    <xs:enumeration value="k" />
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:list>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="i" />
+            <xs:enumeration value="j" />
+            <xs:enumeration value="k" />
+        </xs:restriction>
 
     </xs:simpleType>
     <xs:simpleType name="FunctionVariableType">
         <xs:annotation>
             <xs:documentation> A fixed list of available function variables. </xs:documentation>
         </xs:annotation>
-        <xs:list>
-            <xs:simpleType>
-                <xs:restriction base="xs:string">
-                    <xs:enumeration value="T" />
-                    <xs:enumeration value="P" />
-                    <xs:enumeration value="T,P" />
-                    <!-- To be extended -->
-                </xs:restriction>
-            </xs:simpleType>
-        </xs:list>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="T" />
+            <xs:enumeration value="P" />
+            <xs:enumeration value="T,P" />
+            <!-- To be extended -->
+        </xs:restriction>
 
     </xs:simpleType>
 
