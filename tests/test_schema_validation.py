@@ -247,6 +247,37 @@ def test_phase_name_must_not_contain_whitespace(
     ), [f"{error.type_name}: {error.message}" for error in errors]
 
 
+def test_cef_specie_name_must_not_contain_whitespace(
+    schema: etree.XMLSchema, simple_solution_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    specie = simple_solution_doc.xpath(
+        './t:phases/t:phase[1]/t:species/t:specie[1]', namespaces=NS
+    )[0]
+    specie.attrib['name'] = 'Fe metal'
+
+    is_valid, errors = validate_tree(schema, simple_solution_doc, tmp_path, 'bad-cef-specie-name.xml')
+
+    assert not is_valid
+    assert any(
+        error.type_name == 'SCHEMAV_CVC_PATTERN_VALID' for error in errors
+    ), [f"{error.type_name}: {error.message}" for error in errors]
+
+
+def test_mqm_specie_name_must_not_contain_whitespace(
+    schema: etree.XMLSchema, example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    phase = get_mqm_phase(example_doc)
+    specie = phase.xpath('./t:species/t:specie[1]', namespaces=NS)[0]
+    specie.attrib['name'] = 'Cu [1+]'
+
+    is_valid, errors = validate_tree(schema, example_doc, tmp_path, 'bad-mqm-specie-name.xml')
+
+    assert not is_valid
+    assert any(
+        error.type_name == 'SCHEMAV_CVC_PATTERN_VALID' for error in errors
+    ), [f"{error.type_name}: {error.message}" for error in errors]
+
+
 @pytest.mark.parametrize(
     ("target_xpath", "constraint_name", "file_name"),
     [

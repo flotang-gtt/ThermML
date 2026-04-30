@@ -602,7 +602,7 @@
                                             phase.</xs:documentation>
                                     </xs:annotation>
                                     <xs:complexType>
-                                        <xs:attribute name="name" type="xs:string" use="required">
+                                        <xs:attribute name="name" type="NoWhitespaceString" use="required">
                                             <xs:annotation>
                                                 <xs:documentation>Unique name of the species, e.g.
                                                     "Na[+]", "Cl[-]".</xs:documentation>

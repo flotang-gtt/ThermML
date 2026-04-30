@@ -196,7 +196,7 @@
                 is required; composition and charge are optional but recommended for
                 clarity.</xs:documentation>
         </xs:annotation>
-        <xs:attribute name="name" type="xs:string" use="required">
+        <xs:attribute name="name" type="NoWhitespaceString" use="required">
             <xs:annotation>
                 <xs:documentation>Unique identifier for the species, e.g., "Al3[9+]", "O-2",
                     etc.</xs:documentation>
