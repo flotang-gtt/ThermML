@@ -281,7 +281,7 @@
                         </xs:complexType>
                     </xs:element>
                 </xs:sequence>
-                <xs:attribute name="variant" type="xs:string" use="optional">
+                <xs:attribute name="variant" type="MQMReciprocalSideVariantType" use="optional">
                     <xs:annotation>
                         <xs:documentation>Reciprocal-side selector. Expected values are the four
                             side encodings used by the Solution Module and design note:
@@ -415,6 +415,19 @@
         </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:pattern value="0|[+-]?[1-8]" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="MQMReciprocalSideVariantType">
+        <xs:annotation>
+            <xs:documentation>Allowed reciprocal-side encodings for MQM-L-RS parameters. Each
+                value identifies which side of the reciprocal square is being parameterized.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="A-BX-BY" />
+            <xs:enumeration value="B-AX-AY" />
+            <xs:enumeration value="X-AY-BY" />
+            <xs:enumeration value="Y-AX-BX" />
         </xs:restriction>
     </xs:simpleType>
 
