@@ -364,4 +364,37 @@ def validate_document_semantics(
                     )
                 )
 
+    for interpolation in doc.xpath('.//t:ternaryInterpolations/t:interpolation', namespaces=NS):
+        labels: list[str] = []
+
+        for const in interpolation.xpath('.//t:const', namespaces=NS):
+            site = const.attrib.get('site')
+            site_index = const.attrib.get('siteIndex')
+
+            if site and site_index and site != site_index:
+                errors.append(
+                    SemanticValidationError(
+                        path=doc.getpath(const),
+                        message=(
+                            f"Interpolation locator aliases disagree: site={site!r} and "
+                            f"siteIndex={site_index!r}"
+                        ),
+                    )
+                )
+
+            label = site or site_index
+            if label:
+                labels.append(label)
+
+        if labels and sorted(labels) != ['i', 'j', 'k']:
+            errors.append(
+                SemanticValidationError(
+                    path=doc.getpath(interpolation),
+                    message=(
+                        "Interpolation locators must contain each of i, j, and k exactly once; "
+                        f"found {labels}"
+                    ),
+                )
+            )
+
     return errors

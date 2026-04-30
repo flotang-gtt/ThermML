@@ -147,3 +147,37 @@ def test_semantic_validation_rejects_interaction_site_count_mismatch() -> None:
 
     assert len(errors) == 1
     assert 'uses 1 constituent sites but the phase structure declares 2' in errors[0].message
+
+
+def test_semantic_validation_rejects_duplicate_interpolation_locators() -> None:
+    doc = etree.parse(str(QUASICHEMICAL_PATH))
+    const = doc.xpath(
+        './t:phases/t:phase[@xsi:type="ModifiedQuasichemicalPhaseType"]/t:ternaryInterpolations/t:interpolation[1]/t:constituents/t:site[1]/t:const[2]',
+        namespaces={
+            't': 'http://calphad.org/thermml/0.1',
+            'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+        },
+    )[0]
+    const.attrib['site'] = 'i'
+
+    errors = validate_document_semantics(doc)
+
+    assert len(errors) == 1
+    assert 'must contain each of i, j, and k exactly once' in errors[0].message
+
+
+def test_semantic_validation_rejects_conflicting_interpolation_locator_aliases() -> None:
+    doc = etree.parse(str(QUASICHEMICAL_PATH))
+    const = doc.xpath(
+        './t:phases/t:phase[@xsi:type="ModifiedQuasichemicalPhaseType"]/t:ternaryInterpolations/t:interpolation[1]/t:constituents/t:site[1]/t:const[1]',
+        namespaces={
+            't': 'http://calphad.org/thermml/0.1',
+            'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+        },
+    )[0]
+    const.attrib['siteIndex'] = 'j'
+
+    errors = validate_document_semantics(doc)
+
+    assert len(errors) == 1
+    assert 'Interpolation locator aliases disagree' in errors[0].message
