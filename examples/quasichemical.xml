@@ -57,8 +57,8 @@
                 <specie name="Cu[2+]" composition="Cu1" charge="+2" group="1"/>
                 <specie name="Fe[2+]" composition="Fe1" charge="+2" group="1"/>
                 <specie name="Pb[2+]" composition="Pb1" charge="+2" group="1"/>
-                <specie name="Cl[1-]" composition="Cl1" charge="-1" group="1"/>
-                <specie name="O[2-]" composition="O1" charge="-2" group="1"/>
+                <specie name="Cl[1-]" composition="Cl1" charge="-1" group="2"/>
+                <specie name="O[2-]" composition="O1" charge="-2" group="2"/>
             </species>
 
             <endmembers>

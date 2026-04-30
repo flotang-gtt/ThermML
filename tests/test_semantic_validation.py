@@ -10,6 +10,7 @@ from semantic_validation import validate_document_semantics
 NS = {"t": "http://calphad.org/thermml/0.1"}
 SIMPLE_SOLUTION_PATH = Path(__file__).resolve().parents[1] / "examples" / "simple_solution.xml"
 BASIC_EXAMPLE_PATH = Path(__file__).resolve().parents[1] / "examples" / "basic-example.xml"
+QUASICHEMICAL_PATH = Path(__file__).resolve().parents[1] / "examples" / "quasichemical.xml"
 
 
 def test_simple_solution_example_is_semantically_valid() -> None:
@@ -20,6 +21,12 @@ def test_simple_solution_example_is_semantically_valid() -> None:
 
 def test_basic_example_is_semantically_valid() -> None:
     doc = etree.parse(str(BASIC_EXAMPLE_PATH))
+
+    assert validate_document_semantics(doc) == []
+
+
+def test_quasichemical_example_is_semantically_valid() -> None:
+    doc = etree.parse(str(QUASICHEMICAL_PATH))
 
     assert validate_document_semantics(doc) == []
 
@@ -82,3 +89,20 @@ def test_semantic_validation_rejects_unknown_symbolic_range_reference() -> None:
 
     assert len(errors) == 1
     assert "Unknown symbolic reference 'Missing#HSER'" in errors[0].message
+
+
+def test_semantic_validation_rejects_mqm_charge_group_mismatch() -> None:
+    doc = etree.parse(str(QUASICHEMICAL_PATH))
+    specie = doc.xpath(
+        './t:phases/t:phase[@xsi:type="ModifiedQuasichemicalPhaseType"]/t:species/t:specie[@name="Cl[1-]"]',
+        namespaces={
+            't': 'http://calphad.org/thermml/0.1',
+            'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
+        },
+    )[0]
+    specie.attrib['group'] = '1'
+
+    errors = validate_document_semantics(doc)
+
+    assert len(errors) == 1
+    assert "must use group 2" in errors[0].message

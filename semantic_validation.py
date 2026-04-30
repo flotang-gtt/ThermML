@@ -8,7 +8,10 @@ from typing import NamedTuple
 from lxml import etree
 
 
-NS = {"t": "http://calphad.org/thermml/0.1"}
+NS = {
+    "t": "http://calphad.org/thermml/0.1",
+    "xsi": "http://www.w3.org/2001/XMLSchema-instance",
+}
 
 
 @dataclass(frozen=True)
@@ -289,5 +292,27 @@ def validate_document_semantics(
 
             previous_high = high
             previous_path = path
+
+    for specie in doc.xpath(
+        './/t:phase[@xsi:type="ModifiedQuasichemicalPhaseType"]/t:species/t:specie',
+        namespaces=NS,
+    ):
+        charge = specie.attrib.get('charge', '')
+        group = specie.attrib.get('group')
+
+        if charge in {'', '0'} or group is None:
+            continue
+
+        expected_group = '2' if charge.startswith('-') else '1'
+        if group != expected_group:
+            errors.append(
+                SemanticValidationError(
+                    path=doc.getpath(specie),
+                    message=(
+                        f"MQM species {specie.attrib.get('name', '<unknown>')!r} with charge "
+                        f"{charge!r} must use group {expected_group}, not {group}"
+                    ),
+                )
+            )
 
     return errors
