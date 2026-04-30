@@ -250,6 +250,11 @@ def validate_document_semantics(
                     )
                 )
 
+    phase_by_name = {
+        phase.attrib['name']: phase
+        for phase in doc.xpath('.//t:phase[@name]', namespaces=NS)
+    }
+
     for parent in doc.xpath("//*[t:range[@low and @high]]", namespaces=NS):
         ranges = [
             child
@@ -393,6 +398,28 @@ def validate_document_semantics(
                     message=(
                         "Interpolation locators must contain each of i, j, and k exactly once; "
                         f"found {labels}"
+                    ),
+                )
+            )
+
+    for phase in doc.xpath('.//t:phase[@disorderedPhase]', namespaces=NS):
+        disordered_name = phase.attrib['disorderedPhase']
+        disordered_phase = phase_by_name.get(disordered_name)
+        if disordered_phase is None:
+            continue
+
+        ordered_sites = phase.xpath('./t:structure/t:sublattices/t:site', namespaces=NS)
+        disordered_sites = disordered_phase.xpath(
+            './t:structure/t:sublattices/t:site', namespaces=NS
+        )
+        if ordered_sites and disordered_sites and len(ordered_sites) != len(disordered_sites):
+            errors.append(
+                SemanticValidationError(
+                    path=doc.getpath(phase),
+                    message=(
+                        f"Ordered phase {phase.attrib.get('name', '<unknown>')!r} uses "
+                        f"{len(ordered_sites)} sublattice sites but its disordered phase "
+                        f"{disordered_name!r} uses {len(disordered_sites)}"
                     ),
                 )
             )

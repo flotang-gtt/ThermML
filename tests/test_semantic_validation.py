@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from copy import deepcopy
 from pathlib import Path
 
 from lxml import etree
@@ -181,3 +182,26 @@ def test_semantic_validation_rejects_conflicting_interpolation_locator_aliases()
 
     assert len(errors) == 1
     assert 'Interpolation locator aliases disagree' in errors[0].message
+
+
+def test_semantic_validation_rejects_incompatible_ordered_phase_structure() -> None:
+    doc = etree.parse(str(SIMPLE_SOLUTION_PATH))
+    phases = doc.xpath('./t:phases', namespaces=NS)[0]
+    ordered_phase = deepcopy(doc.xpath('./t:phases/t:phase[1]', namespaces=NS)[0])
+    ordered_phase.attrib['{http://www.w3.org/2001/XMLSchema-instance}type'] = 'CEFOrderedPhaseType'
+    ordered_phase.attrib['name'] = 'FCC_A1_ORDERED'
+    ordered_phase.attrib['disorderedPhase'] = 'FCC_A1'
+
+    ordered_sublattices = ordered_phase.xpath('./t:structure/t:sublattices', namespaces=NS)[0]
+    ordered_site = ordered_sublattices.xpath('./t:site[2]', namespaces=NS)[0]
+    ordered_sublattices.remove(ordered_site)
+    ordered_sublattices.attrib['multiplicities'] = '1.0'
+
+    phases.append(ordered_phase)
+
+    errors = validate_document_semantics(doc)
+
+    assert any(
+        'Ordered phase' in error.message and 'disordered phase' in error.message
+        for error in errors
+    ), [error.message for error in errors]
