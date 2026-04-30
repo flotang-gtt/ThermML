@@ -8,6 +8,7 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
 from pathlib import Path
 import sys
 
@@ -22,6 +23,7 @@ NS = {
 SCHEMA_PATH = Path(__file__).resolve().parents[1] / "schema" / "thermml-schema.xsd"
 EXAMPLE_PATH = Path(__file__).resolve().parents[1] / "examples" / "quasichemical.xml"
 BASIC_EXAMPLE_PATH = Path(__file__).resolve().parents[1] / "examples" / "basic-example.xml"
+SIMPLE_SOLUTION_PATH = Path(__file__).resolve().parents[1] / "examples" / "simple_solution.xml"
 
 
 @pytest.fixture
@@ -37,6 +39,11 @@ def example_doc() -> etree._ElementTree:
 @pytest.fixture
 def basic_example_doc() -> etree._ElementTree:
     return etree.parse(str(BASIC_EXAMPLE_PATH))
+
+
+@pytest.fixture
+def simple_solution_doc() -> etree._ElementTree:
+    return etree.parse(str(SIMPLE_SOLUTION_PATH))
 
 
 def validate_tree(
@@ -97,6 +104,28 @@ def test_phase_stoichiometry_components_must_exist(
         errors,
         type_name="SCHEMAV_CVC_IDC",
         contains="phaseStoichiometryComponentMustExist",
+    )
+
+
+def test_ordered_phase_must_reference_declared_disordered_phase(
+    schema: etree.XMLSchema, simple_solution_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    phases = simple_solution_doc.xpath('./t:phases', namespaces=NS)[0]
+    ordered_phase = deepcopy(simple_solution_doc.xpath('./t:phases/t:phase[1]', namespaces=NS)[0])
+    ordered_phase.attrib['{http://www.w3.org/2001/XMLSchema-instance}type'] = 'CEFOrderedPhaseType'
+    ordered_phase.attrib['name'] = 'FCC_A1_ORDERED'
+    ordered_phase.attrib['disorderedPhase'] = 'MISSING_PHASE'
+    phases.append(ordered_phase)
+
+    is_valid, errors = validate_tree(
+        schema, simple_solution_doc, tmp_path, 'bad-ordered-phase.xml'
+    )
+
+    assert not is_valid
+    assert_has_error(
+        errors,
+        type_name='SCHEMAV_CVC_IDC',
+        contains='orderedPhaseMustReferenceDeclaredDisorderedPhase',
     )
 
 

@@ -24,6 +24,14 @@
             <xs:selector xpath="tm:phases/tm:phase/tm:stoichiometry/tm:stoich" />
             <xs:field xpath="@component" />
         </xs:keyref>
+        <xs:key name="phaseNameKey">
+            <xs:selector xpath="tm:phases/tm:phase" />
+            <xs:field xpath="@name" />
+        </xs:key>
+        <xs:keyref name="orderedPhaseMustReferenceDeclaredDisorderedPhase" refer="phaseNameKey">
+            <xs:selector xpath="tm:phases/tm:phase" />
+            <xs:field xpath="@disorderedPhase" />
+        </xs:keyref>
     </xs:element>
 
 </xs:schema>
