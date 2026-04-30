@@ -191,6 +191,53 @@ def test_phase_constituent_species_references_must_exist(
     )
 
 
+@pytest.mark.parametrize(
+    ("target_xpath", "constraint_name", "file_name"),
+    [
+        (
+            './t:quadruplets/t:quadruplet[1]/t:a',
+            'phaseQuadrupletASpeciesMustExist',
+            'bad-quadruplet-a.xml',
+        ),
+        (
+            './t:quadruplets/t:quadruplet[1]/t:b',
+            'phaseQuadrupletBSpeciesMustExist',
+            'bad-quadruplet-b.xml',
+        ),
+        (
+            './t:quadruplets/t:quadruplet[1]/t:x',
+            'phaseQuadrupletXSpeciesMustExist',
+            'bad-quadruplet-x.xml',
+        ),
+        (
+            './t:quadruplets/t:quadruplet[1]/t:y',
+            'phaseQuadrupletYSpeciesMustExist',
+            'bad-quadruplet-y.xml',
+        ),
+    ],
+)
+def test_phase_quadruplet_species_references_must_exist(
+    schema: etree.XMLSchema,
+    example_doc: etree._ElementTree,
+    tmp_path: Path,
+    target_xpath: str,
+    constraint_name: str,
+    file_name: str,
+) -> None:
+    phase = get_mqm_phase(example_doc)
+    site = phase.xpath(target_xpath, namespaces=NS)[0]
+    site.attrib['species'] = 'P'
+
+    is_valid, errors = validate_tree(schema, example_doc, tmp_path, file_name)
+
+    assert not is_valid
+    assert_has_error(
+        errors,
+        type_name='SCHEMAV_CVC_IDC',
+        contains=constraint_name,
+    )
+
+
 def test_selected_must_reference_current_interaction_constituent(
     schema: etree.XMLSchema, example_doc: etree._ElementTree, tmp_path: Path
 ) -> None:

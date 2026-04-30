@@ -65,6 +65,26 @@
                                 <xs:selector xpath="tm:ternaryInterpolations/tm:interpolation/tm:constituents/tm:site/tm:const" />
                                 <xs:field xpath="@species" />
                             </xs:keyref>
+                            <xs:keyref name="phaseQuadrupletASpeciesMustExist"
+                                refer="phaseSpeciesKey">
+                                <xs:selector xpath="tm:quadruplets/tm:quadruplet/tm:a" />
+                                <xs:field xpath="@species" />
+                            </xs:keyref>
+                            <xs:keyref name="phaseQuadrupletBSpeciesMustExist"
+                                refer="phaseSpeciesKey">
+                                <xs:selector xpath="tm:quadruplets/tm:quadruplet/tm:b" />
+                                <xs:field xpath="@species" />
+                            </xs:keyref>
+                            <xs:keyref name="phaseQuadrupletXSpeciesMustExist"
+                                refer="phaseSpeciesKey">
+                                <xs:selector xpath="tm:quadruplets/tm:quadruplet/tm:x" />
+                                <xs:field xpath="@species" />
+                            </xs:keyref>
+                            <xs:keyref name="phaseQuadrupletYSpeciesMustExist"
+                                refer="phaseSpeciesKey">
+                                <xs:selector xpath="tm:quadruplets/tm:quadruplet/tm:y" />
+                                <xs:field xpath="@species" />
+                            </xs:keyref>
                         </xs:element>
                     </xs:sequence>
                 </xs:complexType>
