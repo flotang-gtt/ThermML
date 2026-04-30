@@ -17,9 +17,11 @@
             <xs:documentation> A collection of matter in a single physical state,
                 immiscible with other phases. </xs:documentation>
         </xs:annotation>
-        <xs:attribute name="name" type="xs:string" use="required">
+        <xs:attribute name="name" type="NoWhitespaceString" use="required">
             <xs:annotation>
-                <xs:documentation> A name used for display purposes. </xs:documentation>
+                <xs:documentation> A phase identifier used in references and external naming.
+                    Use alias or descriptions for display-oriented labels that may contain
+                    whitespace. </xs:documentation>
             </xs:annotation>
         </xs:attribute>
         <xs:attribute name="alias" type="xs:string" use="optional">

@@ -21,7 +21,7 @@
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="CEFPhaseType">
-                <xs:attribute name="disorderedPhase" type="xs:string" use="required">
+                <xs:attribute name="disorderedPhase" type="NoWhitespaceString" use="required">
                     <xs:annotation>
                         <xs:documentation>Name of the parent disordered phase from which this
                             ordered phase derives. Must match the name attribute of another phase

@@ -230,6 +230,23 @@ def test_sublattice_multiplicities_must_be_numeric_list(
     ), [f"{error.type_name}: {error.message}" for error in errors]
 
 
+def test_phase_name_must_not_contain_whitespace(
+    schema: etree.XMLSchema, basic_example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    phase = basic_example_doc.xpath('./t:phases/t:phase[1]', namespaces=NS)[0]
+    phase.attrib['name'] = 'SiO2 quartz'
+
+    is_valid, errors = validate_tree(schema, basic_example_doc, tmp_path, 'bad-phase-name.xml')
+
+    assert not is_valid
+    assert any(
+        error.type_name == 'SCHEMAV_CVC_PATTERN_VALID' for error in errors
+    ), [f"{error.type_name}: {error.message}" for error in errors]
+    assert any(
+        'name' in error.message and 'value' in error.message for error in errors
+    ), [f"{error.type_name}: {error.message}" for error in errors]
+
+
 @pytest.mark.parametrize(
     ("target_xpath", "constraint_name", "file_name"),
     [
