@@ -3,6 +3,7 @@
     elementFormDefault="qualified"
     version="0.1"
     xmlns="http://calphad.org/thermml/0.1"
+    xmlns:tm="http://calphad.org/thermml/0.1"
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:include schemaLocation="core.xsd" />
@@ -180,7 +181,7 @@
                             </xs:simpleContent>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="selected" type="xs:string" minOccurs="0" maxOccurs="1">
+                    <xs:element name="selected" type="NoWhitespaceString" minOccurs="0" maxOccurs="1">
                         <xs:annotation>
                             <xs:documentation>Optional designated corner of an asymmetric ternary
                                 interaction. The value names the species treated as the selected
@@ -217,7 +218,7 @@
                             </xs:simpleContent>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="selected" type="xs:string" minOccurs="0" maxOccurs="1">
+                    <xs:element name="selected" type="NoWhitespaceString" minOccurs="0" maxOccurs="1">
                         <xs:annotation>
                             <xs:documentation>Optional designated corner of an asymmetric ternary
                                 interaction. The value names the species selected in the ternary
@@ -694,7 +695,17 @@
                         <xs:complexType>
                             <xs:sequence>
                                 <xs:element name="interaction" type="MQMInteractionType"
-                                    minOccurs="0" maxOccurs="unbounded" />
+                                    minOccurs="0" maxOccurs="unbounded">
+                                    <xs:key name="mqmInteractionSpeciesKey">
+                                        <xs:selector xpath="tm:constituents/tm:site/tm:const" />
+                                        <xs:field xpath="@species" />
+                                    </xs:key>
+                                    <xs:keyref name="mqmInteractionSelectedMustReferenceConstituent"
+                                        refer="mqmInteractionSpeciesKey">
+                                        <xs:selector xpath="tm:property/tm:selected" />
+                                        <xs:field xpath="." />
+                                    </xs:keyref>
+                                </xs:element>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>

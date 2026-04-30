@@ -3,6 +3,7 @@
     elementFormDefault="qualified"
     version="0.1"
     xmlns="http://calphad.org/thermml/0.1"
+    xmlns:tm="http://calphad.org/thermml/0.1"
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:include schemaLocation="../potentials/main.xsd" />
@@ -44,7 +45,27 @@
                 </xs:annotation>
                 <xs:complexType>
                     <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                        <xs:element name="phase" type="PhaseType" />
+                        <xs:element name="phase" type="PhaseType">
+                            <xs:key name="phaseSpeciesKey">
+                                <xs:selector xpath="tm:species/tm:specie" />
+                                <xs:field xpath="@name" />
+                            </xs:key>
+                            <xs:keyref name="phaseEndmemberConstituentSpeciesMustExist"
+                                refer="phaseSpeciesKey">
+                                <xs:selector xpath="tm:endmembers/tm:endmember/tm:constituents/tm:site/tm:const" />
+                                <xs:field xpath="@species" />
+                            </xs:keyref>
+                            <xs:keyref name="phaseInteractionConstituentSpeciesMustExist"
+                                refer="phaseSpeciesKey">
+                                <xs:selector xpath="tm:interactions/tm:interaction/tm:constituents/tm:site/tm:const" />
+                                <xs:field xpath="@species" />
+                            </xs:keyref>
+                            <xs:keyref name="phaseTernaryInterpolationConstituentSpeciesMustExist"
+                                refer="phaseSpeciesKey">
+                                <xs:selector xpath="tm:ternaryInterpolations/tm:interpolation/tm:constituents/tm:site/tm:const" />
+                                <xs:field xpath="@species" />
+                            </xs:keyref>
+                        </xs:element>
                     </xs:sequence>
                 </xs:complexType>
             </xs:element>
