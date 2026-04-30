@@ -4,6 +4,7 @@
     elementFormDefault="qualified"
     version="0.1"
     xmlns="http://calphad.org/thermml/0.1"
+    xmlns:tm="http://calphad.org/thermml/0.1"
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:include schemaLocation="simple-types/main.xsd" />
@@ -14,6 +15,15 @@
     <xs:include schemaLocation="phases/quasichemical-phase.xsd" />
     <xs:include schemaLocation="databases/main.xsd" />
 
-    <xs:element name="database" type="DatabaseType" />
+    <xs:element name="database" type="DatabaseType">
+        <xs:key name="systemComponentKey">
+            <xs:selector xpath="tm:systemComponents/tm:systemComponent" />
+            <xs:field xpath="@symbol" />
+        </xs:key>
+        <xs:keyref name="phaseStoichiometryComponentMustExist" refer="systemComponentKey">
+            <xs:selector xpath="tm:phases/tm:phase/tm:stoichiometry/tm:stoich" />
+            <xs:field xpath="@component" />
+        </xs:keyref>
+    </xs:element>
 
 </xs:schema>

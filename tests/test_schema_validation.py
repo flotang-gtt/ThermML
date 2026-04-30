@@ -21,6 +21,7 @@ NS = {
 }
 SCHEMA_PATH = Path(__file__).resolve().parents[1] / "schema" / "thermml-schema.xsd"
 EXAMPLE_PATH = Path(__file__).resolve().parents[1] / "examples" / "quasichemical.xml"
+BASIC_EXAMPLE_PATH = Path(__file__).resolve().parents[1] / "examples" / "basic-example.xml"
 
 
 @pytest.fixture
@@ -31,6 +32,11 @@ def schema() -> etree.XMLSchema:
 @pytest.fixture
 def example_doc() -> etree._ElementTree:
     return etree.parse(str(EXAMPLE_PATH))
+
+
+@pytest.fixture
+def basic_example_doc() -> etree._ElementTree:
+    return etree.parse(str(BASIC_EXAMPLE_PATH))
 
 
 def validate_tree(
@@ -72,6 +78,26 @@ def test_quasichemical_example_is_valid(
     is_valid, errors = validate_tree(schema, example_doc, tmp_path, "valid.xml")
 
     assert is_valid, [f"{error.type_name}: {error.message}" for error in errors]
+
+
+def test_phase_stoichiometry_components_must_exist(
+    schema: etree.XMLSchema, basic_example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    stoich = basic_example_doc.xpath(
+        './t:phases/t:phase[1]/t:stoichiometry/t:stoich[1]', namespaces=NS
+    )[0]
+    stoich.attrib["component"] = "Xx"
+
+    is_valid, errors = validate_tree(
+        schema, basic_example_doc, tmp_path, "bad-stoichiometry-component.xml"
+    )
+
+    assert not is_valid
+    assert_has_error(
+        errors,
+        type_name="SCHEMAV_CVC_IDC",
+        contains="phaseStoichiometryComponentMustExist",
+    )
 
 
 @pytest.mark.parametrize(
