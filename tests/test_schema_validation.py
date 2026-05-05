@@ -191,20 +191,32 @@ def test_function_of_must_use_known_scalar_variable_set(
     )
 
 
-def test_mqm_species_group_must_use_known_enum_value(
+def test_mqm_species_group_may_use_any_positive_integer(
     schema: etree.XMLSchema, example_doc: etree._ElementTree, tmp_path: Path
 ) -> None:
     phase = get_mqm_phase(example_doc)
     specie = phase.xpath('./t:species/t:specie[1]', namespaces=NS)[0]
     specie.attrib['group'] = '3'
 
+    is_valid, errors = validate_tree(schema, example_doc, tmp_path, 'mqm-group-3.xml')
+
+    assert is_valid, [f"{error.type_name}: {error.message}" for error in errors]
+
+
+def test_mqm_species_group_must_be_positive_integer(
+    schema: etree.XMLSchema, example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    phase = get_mqm_phase(example_doc)
+    specie = phase.xpath('./t:species/t:specie[1]', namespaces=NS)[0]
+    specie.attrib['group'] = '0'
+
     is_valid, errors = validate_tree(schema, example_doc, tmp_path, 'bad-mqm-group.xml')
 
     assert not is_valid
     assert_has_error(
         errors,
-        type_name='SCHEMAV_CVC_ENUMERATION_VALID',
-        contains='2',
+        type_name='SCHEMAV_CVC_DATATYPE_VALID_1_2_1',
+        contains='MQMSpeciesGroupType',
     )
 
 
@@ -307,8 +319,49 @@ def test_system_component_refstate_must_not_contain_whitespace(
 
     assert not is_valid
     assert any(
-        error.type_name == 'SCHEMAV_CVC_PATTERN_VALID' for error in errors
+        error.type_name == 'SCHEMAV_CVC_DATATYPE_VALID_1_2_3' for error in errors
     ), [f"{error.type_name}: {error.message}" for error in errors]
+    assert any(
+        'refstate' in error.message and 'OptionalNoWhitespaceString' in error.message
+        for error in errors
+    ), [f"{error.type_name}: {error.message}" for error in errors]
+
+
+def test_system_component_refstate_may_be_empty(
+    schema: etree.XMLSchema, basic_example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    component = basic_example_doc.xpath(
+        './t:systemComponents/t:systemComponent[@symbol="Mo"]', namespaces=NS
+    )[0]
+    component.attrib['refstate'] = ''
+
+    is_valid, errors = validate_tree(
+        schema, basic_example_doc, tmp_path, 'empty-refstate.xml'
+    )
+
+    assert is_valid, [f"{error.type_name}: {error.message}" for error in errors]
+
+
+def test_revision_version_element_may_precede_date(
+    schema: etree.XMLSchema, basic_example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    metadata = basic_example_doc.xpath('./t:metadata', namespaces=NS)[0]
+    revisions = metadata.xpath('./t:revisions', namespaces=NS)[0]
+    revision = etree.SubElement(revisions, '{http://calphad.org/thermml/0.1}revision')
+    version = etree.SubElement(revision, '{http://calphad.org/thermml/0.1}version')
+    version.text = '1.0'
+    date = etree.SubElement(revision, '{http://calphad.org/thermml/0.1}date')
+    date.text = '2025-04-01'
+    author = etree.SubElement(revision, '{http://calphad.org/thermml/0.1}author')
+    author.text = 'Test Author'
+    description = etree.SubElement(revision, '{http://calphad.org/thermml/0.1}description')
+    description.text = 'Schema regression test.'
+
+    is_valid, errors = validate_tree(
+        schema, basic_example_doc, tmp_path, 'revision-version-first.xml'
+    )
+
+    assert is_valid, [f"{error.type_name}: {error.message}" for error in errors]
 
 
 @pytest.mark.parametrize(

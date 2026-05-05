@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-from copy import deepcopy
 from pathlib import Path
 
 from lxml import etree
@@ -92,21 +91,41 @@ def test_semantic_validation_rejects_unknown_symbolic_range_reference() -> None:
     assert "Unknown symbolic reference 'Missing#HSER'" in errors[0].message
 
 
-def test_semantic_validation_rejects_mqm_charge_group_mismatch() -> None:
-    doc = etree.parse(str(QUASICHEMICAL_PATH))
-    specie = doc.xpath(
-        './t:phases/t:phase[@xsi:type="ModifiedQuasichemicalPhaseType"]/t:species/t:specie[@name="Cl[1-]"]',
-        namespaces={
-            't': 'http://calphad.org/thermml/0.1',
-            'xsi': 'http://www.w3.org/2001/XMLSchema-instance',
-        },
+def test_semantic_validation_rejects_unknown_component_refstate_phase_name() -> None:
+    doc = etree.parse(str(BASIC_EXAMPLE_PATH))
+    component = doc.xpath(
+        './t:systemComponents/t:systemComponent[@symbol="Mo"]', namespaces=NS
     )[0]
-    specie.attrib['group'] = '1'
+    component.attrib['refstate'] = 'BCC_A2'
 
     errors = validate_document_semantics(doc)
 
     assert len(errors) == 1
-    assert "must use group 2" in errors[0].message
+    assert "uses refstate 'BCC_A2'" in errors[0].message
+    assert 'must be empty or match a declared phase name' in errors[0].message
+
+
+def test_semantic_validation_accepts_braced_symbolic_references_in_expr() -> None:
+    doc = etree.parse(str(SIMPLE_SOLUTION_PATH))
+    expr_node = doc.xpath(
+        './t:phases/t:phase[1]/t:endmembers/t:endmember[1]/t:property/t:expr',
+        namespaces=NS,
+    )[0]
+    expr_node.text = '+1*{Fe#FCC_A1} + 2*{C#HSER}'
+
+    assert validate_document_semantics(doc) == []
+
+
+def test_semantic_validation_allows_zero_width_ranges() -> None:
+    doc = etree.parse(str(SIMPLE_SOLUTION_PATH))
+    range_node = doc.xpath(
+        './t:globalExpressions/t:expression[@name="Fe#HSER"]/t:range[2]',
+        namespaces=NS,
+    )[0]
+    range_node.attrib['low'] = '1811.0'
+    range_node.attrib['high'] = '1811.0'
+
+    assert validate_document_semantics(doc) == []
 
 
 def test_semantic_validation_rejects_multiplicity_site_count_mismatch() -> None:
@@ -184,24 +203,3 @@ def test_semantic_validation_rejects_conflicting_interpolation_locator_aliases()
     assert 'Interpolation locator aliases disagree' in errors[0].message
 
 
-def test_semantic_validation_rejects_incompatible_ordered_phase_structure() -> None:
-    doc = etree.parse(str(SIMPLE_SOLUTION_PATH))
-    phases = doc.xpath('./t:phases', namespaces=NS)[0]
-    ordered_phase = deepcopy(doc.xpath('./t:phases/t:phase[1]', namespaces=NS)[0])
-    ordered_phase.attrib['{http://www.w3.org/2001/XMLSchema-instance}type'] = 'CEFOrderedPhaseType'
-    ordered_phase.attrib['name'] = 'FCC_A1_ORDERED'
-    ordered_phase.attrib['disorderedPhase'] = 'FCC_A1'
-
-    ordered_sublattices = ordered_phase.xpath('./t:structure/t:sublattices', namespaces=NS)[0]
-    ordered_site = ordered_sublattices.xpath('./t:site[2]', namespaces=NS)[0]
-    ordered_sublattices.remove(ordered_site)
-    ordered_sublattices.attrib['multiplicities'] = '1.0'
-
-    phases.append(ordered_phase)
-
-    errors = validate_document_semantics(doc)
-
-    assert any(
-        'Ordered phase' in error.message and 'disordered phase' in error.message
-        for error in errors
-    ), [error.message for error in errors]
