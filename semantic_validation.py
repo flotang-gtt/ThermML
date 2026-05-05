@@ -69,6 +69,23 @@ def tokenize_expression(text: str) -> list[Token]:
             position += 1
             continue
 
+        if char == "{":
+            end = text.find("}", position + 1)
+            if end == -1:
+                raise ExpressionSyntaxError(
+                    f"Unterminated braced reference starting at position {position}"
+                )
+
+            value = text[position + 1 : end]
+            if not value:
+                raise ExpressionSyntaxError(
+                    f"Empty braced reference at position {position}"
+                )
+
+            tokens.append(Token("IDENT", value, position))
+            position = end + 1
+            continue
+
         number_match = NUMBER_RE.match(text, position)
         if number_match is not None:
             value = number_match.group(0)
@@ -255,6 +272,23 @@ def validate_document_semantics(
         for phase in doc.xpath('.//t:phase[@name]', namespaces=NS)
     }
 
+    for component in doc.xpath('./t:systemComponents/t:systemComponent[@refstate]', namespaces=NS):
+        refstate = component.attrib.get('refstate', '')
+        if not refstate:
+            continue
+
+        if refstate not in phase_by_name:
+            errors.append(
+                SemanticValidationError(
+                    path=doc.getpath(component),
+                    message=(
+                        f"System component {component.attrib.get('symbol', '<unknown>')!r} "
+                        f"uses refstate {refstate!r}, which must be empty or match a "
+                        "declared phase name"
+                    ),
+                )
+            )
+
     for parent in doc.xpath("//*[t:range[@low and @high]]", namespaces=NS):
         ranges = [
             child
@@ -271,13 +305,13 @@ def validate_document_semantics(
             high = Decimal(range_node.attrib["high"])
             path = doc.getpath(range_node)
 
-            if low >= high:
+            if low > high:
                 errors.append(
                     SemanticValidationError(
                         path=path,
                         message=(
                             f"Invalid range bounds: low={range_node.attrib['low']} must be "
-                            f"less than high={range_node.attrib['high']}"
+                            f"less than or equal to high={range_node.attrib['high']}"
                         ),
                     )
                 )
@@ -297,28 +331,6 @@ def validate_document_semantics(
 
             previous_high = high
             previous_path = path
-
-    for specie in doc.xpath(
-        './/t:phase[@xsi:type="ModifiedQuasichemicalPhaseType"]/t:species/t:specie',
-        namespaces=NS,
-    ):
-        charge = specie.attrib.get('charge', '')
-        group = specie.attrib.get('group')
-
-        if charge in {'', '0'} or group is None:
-            continue
-
-        expected_group = '2' if charge.startswith('-') else '1'
-        if group != expected_group:
-            errors.append(
-                SemanticValidationError(
-                    path=doc.getpath(specie),
-                    message=(
-                        f"MQM species {specie.attrib.get('name', '<unknown>')!r} with charge "
-                        f"{charge!r} must use group {expected_group}, not {group}"
-                    ),
-                )
-            )
 
     for phase in doc.xpath('.//t:phase[t:structure/t:sublattices]', namespaces=NS):
         phase_name = phase.attrib.get('name', '<unknown>')
@@ -398,28 +410,6 @@ def validate_document_semantics(
                     message=(
                         "Interpolation locators must contain each of i, j, and k exactly once; "
                         f"found {labels}"
-                    ),
-                )
-            )
-
-    for phase in doc.xpath('.//t:phase[@disorderedPhase]', namespaces=NS):
-        disordered_name = phase.attrib['disorderedPhase']
-        disordered_phase = phase_by_name.get(disordered_name)
-        if disordered_phase is None:
-            continue
-
-        ordered_sites = phase.xpath('./t:structure/t:sublattices/t:site', namespaces=NS)
-        disordered_sites = disordered_phase.xpath(
-            './t:structure/t:sublattices/t:site', namespaces=NS
-        )
-        if ordered_sites and disordered_sites and len(ordered_sites) != len(disordered_sites):
-            errors.append(
-                SemanticValidationError(
-                    path=doc.getpath(phase),
-                    message=(
-                        f"Ordered phase {phase.attrib.get('name', '<unknown>')!r} uses "
-                        f"{len(ordered_sites)} sublattice sites but its disordered phase "
-                        f"{disordered_name!r} uses {len(disordered_sites)}"
                     ),
                 )
             )
