@@ -434,12 +434,10 @@
 
     <xs:simpleType name="MQMSpeciesGroupType">
         <xs:annotation>
-            <xs:documentation>Allowed MQM species groups. The current model distinguishes only
-                the two serialized groups used for cation and anion partitions.</xs:documentation>
+            <xs:documentation>Allowed MQM species groups. The serialized group identifier must
+                be a positive integer.</xs:documentation>
         </xs:annotation>
-        <xs:restriction base="xs:int">
-            <xs:enumeration value="1" />
-            <xs:enumeration value="2" />
+        <xs:restriction base="xs:positiveInteger">
         </xs:restriction>
     </xs:simpleType>
 
@@ -624,8 +622,9 @@
                                         </xs:attribute>
                                         <xs:attribute name="group" type="MQMSpeciesGroupType" use="required">
                                             <xs:annotation>
-                                                <xs:documentation>Group identifier (1 = cation,
-                                                    2 = anion).</xs:documentation>
+                                                <xs:documentation>Positive integer group
+                                                    identifier used by the serialized MQM data
+                                                    model.</xs:documentation>
                                             </xs:annotation>
                                         </xs:attribute>
                                     </xs:complexType>

@@ -102,6 +102,11 @@
     </xs:complexType>
     <xs:complexType name="RevisionType">
         <xs:sequence>
+            <xs:element name="version" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Optional version identifier for this revision.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <xs:element name="date" type="xs:date">
                 <xs:annotation>
                     <xs:documentation>Date of the revision (YYYY-MM-DD).</xs:documentation>
@@ -118,12 +123,6 @@
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
-        <xs:attribute name="version" type="xs:string" use="optional">
-            <xs:annotation>
-                <xs:documentation>Optional version identifier for this revision. It is strongly encouraged to use
-                    Semver.</xs:documentation>
-            </xs:annotation>
-        </xs:attribute>
     </xs:complexType>
 
     <!-- References -->

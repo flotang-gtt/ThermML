@@ -23,9 +23,9 @@
 
     <systemComponents>
         <systemComponent symbol="Va" />
-        <systemComponent symbol="C"  refstate="GRAPHITE" molarMass="12.011"  h298="1054.0"   s298="5.7423"  />
-        <systemComponent symbol="Fe" refstate="BCC_A2"   molarMass="55.847"  h298="4489.0"   s298="27.2797" />
-        <systemComponent symbol="Mn" refstate="CBCC_A12" molarMass="54.9380" h298="4995.696" s298="32.2206" />
+        <systemComponent symbol="C"  molarMass="12.011"  h298="1054.0"   s298="5.7423"  />
+        <systemComponent symbol="Fe" molarMass="55.847"  h298="4489.0"   s298="27.2797" />
+        <systemComponent symbol="Mn" molarMass="54.9380" h298="4995.696" s298="32.2206" />
     </systemComponents>
 
     <phases>

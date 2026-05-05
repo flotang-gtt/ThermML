@@ -23,12 +23,12 @@
 
     <systemComponents>
         <systemComponent symbol="Va" />
-        <systemComponent symbol="Mo" refstate="BCC_A2" molarMass="95.940"  h298="4589.0" s298="28.560" />
-        <systemComponent symbol="Re" refstate="HCP_A3" molarMass="186.21"  h298="5355.5" s298="36.526" />
-        <systemComponent symbol="Cr" refstate="BCC_A2" molarMass="51.996"  h298="4050.0" s298="23.5429" />
-        <systemComponent symbol="Ni" refstate="FCC_A1" molarMass="58.69"   h298="4787.0" s298="29.7955" />
-        <systemComponent symbol="Si" refstate="???"    molarMass="28.0855" h298="0.0"    s298="1.234" />
-        <systemComponent symbol="O"  refstate="???"    molarMass="15.9994" h298="0.0"    s298="2.345" />
+        <systemComponent symbol="Mo" molarMass="95.940"  h298="4589.0" s298="28.560" />
+        <systemComponent symbol="Re" molarMass="186.21"  h298="5355.5" s298="36.526" />
+        <systemComponent symbol="Cr" molarMass="51.996"  h298="4050.0" s298="23.5429" />
+        <systemComponent symbol="Ni" refstate="Ni(FCC_A1)" molarMass="58.69"   h298="4787.0" s298="29.7955" />
+        <systemComponent symbol="Si" molarMass="28.0855" h298="0.0"    s298="1.234" />
+        <systemComponent symbol="O"  molarMass="15.9994" h298="0.0"    s298="2.345" />
     </systemComponents>
 
     <phases>

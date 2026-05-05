@@ -39,6 +39,22 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="EmptyString">
+        <xs:annotation>
+            <xs:documentation> An explicitly empty string value. </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:length value="0" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="OptionalNoWhitespaceString">
+        <xs:annotation>
+            <xs:documentation> Either an empty string or a string without whitespace. </xs:documentation>
+        </xs:annotation>
+        <xs:union memberTypes="EmptyString NoWhitespaceString" />
+    </xs:simpleType>
+
     <xs:simpleType name="ConstituentSpeciesType">
         <xs:annotation>
             <xs:documentation>A string that types a general sublattice constituent. Must not

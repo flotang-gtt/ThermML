@@ -23,11 +23,11 @@
     <systemComponents>
         <systemComponent symbol="Va"/>
 
-        <systemComponent symbol="Cl" refstate="BLANK" molarMass="35.453" h298="0.0" s298="0.0"/>
-        <systemComponent symbol="Cu" refstate="BLANK" molarMass="63.546" h298="0.0" s298="0.0"/>
-        <systemComponent symbol="Fe" refstate="BLANK" molarMass="55.845" h298="0.0" s298="0.0"/>
-        <systemComponent symbol="Pb" refstate="BLANK" molarMass="207.2" h298="0.0" s298="0.0"/>
-        <systemComponent symbol="Zn" refstate="BLANK" molarMass="65.38" h298="0.0" s298="0.0"/>
+        <systemComponent symbol="Cl" molarMass="35.453" h298="0.0" s298="0.0"/>
+        <systemComponent symbol="Cu" molarMass="63.546" h298="0.0" s298="0.0"/>
+        <systemComponent symbol="Fe" molarMass="55.845" h298="0.0" s298="0.0"/>
+        <systemComponent symbol="Pb" molarMass="207.2" h298="0.0" s298="0.0"/>
+        <systemComponent symbol="Zn" molarMass="65.38" h298="0.0" s298="0.0"/>
     </systemComponents>
 
     <phases>
