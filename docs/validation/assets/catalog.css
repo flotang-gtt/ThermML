@@ -1,0 +1,45 @@
+body {
+  margin: 2rem auto;
+  max-width: 1100px;
+  padding: 0 1rem 3rem;
+  font-family: Georgia, "Times New Roman", serif;
+  line-height: 1.5;
+  color: #202020;
+  background: #ffffff;
+}
+
+h1,
+h2 {
+  line-height: 1.2;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0 1.5rem;
+}
+
+th,
+td {
+  padding: 0.7rem 0.8rem;
+  border: 1px solid #cfcfcf;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: #f4f4f4;
+}
+
+code {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 0.95em;
+}
+
+ul {
+  padding-left: 1.2rem;
+}
+
+a {
+  color: #1f4f8f;
+}

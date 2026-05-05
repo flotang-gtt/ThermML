@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/0.1"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <phases>
+    <phase xsi:type="CEFPhaseType" name="FCC_A1" state="solid">
+      <structure>
+        <sublattices multiplicities="1 1">
+          <site constituents="Fe Mn"/>
+          <site constituents="C Va"/>
+        </sublattices>
+      </structure>
+      <endmembers>
+        <endmember name="FE:C"/>
+        <endmember name="FE:VA"/>
+        <endmember name="MN:C"/>
+        <endmember name="MN:VA"/>
+      </endmembers>
+    </phase>
+  </phases>
+</database>

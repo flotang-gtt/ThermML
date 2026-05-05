@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>XSD Validation Catalog</title>
+  <link rel="stylesheet" href="assets/catalog.css">
+</head>
+<body>
+  <h1>XSD Validation Catalog</h1>
+
+  <p>This catalog keeps the published XSD-backed rules in one place.</p>
+
+  <p>Only rules that are worth naming as public constraints are listed here. Ordinary element sequencing and cardinality that are already obvious from the schema tree are intentionally omitted.</p>
+
+  <h2>LEX Rules</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Rule ID</th>
+        <th>Applies To</th>
+        <th>Rule</th>
+        <th>Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>VAL-LEX-SYSTEM-COMPONENT-SYMBOL</code></td>
+        <td><code>systemComponent/@symbol</code></td>
+        <td>Symbols must match <code>[A-Z][a-z]?</code>.</td>
+        <td><code>SystemComponentIdType</code> in <code><a href="../../schema/system-components/main.xsd">schema/system-components/main.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-LEX-CONSTITUENT-SPECIES-TOKEN</code></td>
+        <td><code>ConstituentSpeciesType</code> users</td>
+        <td>Tokens must not contain whitespace.</td>
+        <td><code>ConstituentSpeciesType</code> in <code><a href="../../schema/simple-types/main.xsd">schema/simple-types/main.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-LEX-FUNCTION-ID</code></td>
+        <td><code>FunctionIDType</code> users</td>
+        <td>Function identifiers must be non-whitespace tokens.</td>
+        <td><code>FunctionIDType</code> in <code><a href="../../schema/expressions/core.xsd">schema/expressions/core.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-LEX-NONCHEMICAL-POTENTIAL-ID</code></td>
+        <td><code>nonChemicalPotential/@id</code></td>
+        <td>IDs must match <code>pot[A-Z]</code> and satisfy <code>xs:ID</code>.</td>
+        <td><code>NonChemicalPotentialIdType</code> in <code><a href="../../schema/potentials/main.xsd">schema/potentials/main.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-LEX-NONCHEMICAL-POTENTIAL-REF</code></td>
+        <td><code>NonChemicalPotentialIdRefType</code> users</td>
+        <td>References must match <code>pot[A-Z]</code> and satisfy <code>xs:IDREF</code>.</td>
+        <td><code>NonChemicalPotentialIdRefType</code> in <code><a href="../../schema/potentials/main.xsd">schema/potentials/main.xsd</a></code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>DOM Rules</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Rule ID</th>
+        <th>Applies To</th>
+        <th>Rule</th>
+        <th>Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>VAL-DOM-PHASE-STATE</code></td>
+        <td><code>phase/@state</code></td>
+        <td>State must be one of <code>solid</code>, <code>liquid</code>, <code>gas</code>, <code>plasma</code>.</td>
+        <td><code>MatterStateType</code> in <code><a href="../../schema/simple-types/main.xsd">schema/simple-types/main.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-DOM-TERNARY-LOCATOR</code></td>
+        <td>Ternary interpolation locator attributes</td>
+        <td>Locator must be one of <code>i</code>, <code>j</code>, <code>k</code>.</td>
+        <td><code>TernarySiteLocatorType</code> in <code><a href="../../schema/expressions/core.xsd">schema/expressions/core.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-DOM-FUNCTION-VARIABLE</code></td>
+        <td><code>FunctionVariableType</code> users</td>
+        <td>Allowed values are <code>T</code>, <code>P</code>, <code>T,P</code>.</td>
+        <td><code>FunctionVariableType</code> in <code><a href="../../schema/expressions/core.xsd">schema/expressions/core.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-DOM-FUNCTION-TYPE</code></td>
+        <td><code>FunctionType</code> users</td>
+        <td>Function type must be one of <code>expr</code>, <code>h-s-cp</code>, <code>tdb</code>, <code>CSdat</code>, <code>gibbs</code>.</td>
+        <td><code>FunctionType</code> in <code><a href="../../schema/expressions/main.xsd">schema/expressions/main.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-DOM-PHASE-PROPERTY-NAME</code></td>
+        <td><code>PhasePropertyAttributeType</code> users</td>
+        <td>Allowed names are <code>G</code>, <code>BMAG</code>, <code>TC</code>, <code>TN</code>.</td>
+        <td><code>PhasePropertyAttributeType</code> in <code><a href="../../schema/phases/core.xsd">schema/phases/core.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-DOM-HSCP-TERM</code></td>
+        <td><code>term/@fun</code></td>
+        <td>Value must match the H-S-CP exponent syntax.</td>
+        <td><code>HSCPTemperatureExprTermType</code> in <code><a href="../../schema/expressions/main.xsd">schema/expressions/main.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-DOM-SUBLATTICE-MULTIPLICITIES</code></td>
+        <td><code>sublattices/@multiplicities</code></td>
+        <td>Multiplicities must be a space-separated list of decimals.</td>
+        <td><code>MultiplicitiesStringType</code> in <code><a href="../../schema/phases/cef-phase.xsd">schema/phases/cef-phase.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-DOM-MQM-CHARGE</code></td>
+        <td>MQM <code>specie/@charge</code></td>
+        <td>Charge must be <code>0</code> or a signed or unsigned integer from <code>1</code> to <code>8</code>.</td>
+        <td><code>chargeValues</code> in <code><a href="../../schema/phases/quasichemical-phase.xsd">schema/phases/quasichemical-phase.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-DOM-MQM-RECIPROCAL-SIDE-VARIANT</code></td>
+        <td><code>MQMReciprocalSideVariantType</code> users</td>
+        <td>Value must be one of <code>A-BX-BY</code>, <code>B-AX-AY</code>, <code>X-AY-BY</code>, <code>Y-AX-BX</code>.</td>
+        <td><code>MQMReciprocalSideVariantType</code> in <code><a href="../../schema/phases/quasichemical-phase.xsd">schema/phases/quasichemical-phase.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-DOM-MQM-GROUP</code></td>
+        <td>MQM <code>specie/@group</code></td>
+        <td>Group identifiers must be positive integers.</td>
+        <td><code>MQMSpeciesGroupType</code> in <code><a href="../../schema/phases/quasichemical-phase.xsd">schema/phases/quasichemical-phase.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-DOM-RK-RANK</code></td>
+        <td><code>L/expr/@rank</code></td>
+        <td>Rank must be an integer greater than or equal to <code>0</code>.</td>
+        <td><code>rankType</code> in <code><a href="../../schema/phases/phase-properties.xsd">schema/phases/phase-properties.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-DOM-METADATA-CREATED-DATE</code></td>
+        <td><code>metadata/created</code></td>
+        <td>If present, the date must be a valid <code>xs:date</code>.</td>
+        <td>local declaration in <code><a href="../../schema/metadata/main.xsd">schema/metadata/main.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-DOM-REVISION-VERSION-PLACEMENT</code></td>
+        <td><code>metadata/revisions/revision</code></td>
+        <td><code>revision/version</code> may appear as an optional child before <code>date</code>.</td>
+        <td><code>RevisionType</code> in <code><a href="../../schema/metadata/main.xsd">schema/metadata/main.xsd</a></code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>REF Rules</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Rule ID</th>
+        <th>Applies To</th>
+        <th>Rule</th>
+        <th>Source</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>VAL-REF-SYSTEM-COMPONENT-UNIQUE</code></td>
+        <td><code>systemComponents/systemComponent/@symbol</code></td>
+        <td>Symbols must be unique within one <code>database</code>.</td>
+        <td><code>systemComponentKey</code> in <code><a href="../../schema/thermml-schema.xsd">schema/thermml-schema.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-REF-STOICHIOMETRY-COMPONENT-RESOLVES</code></td>
+        <td><code>phases/phase/stoichiometry/stoich/@component</code></td>
+        <td>Each component reference must match a declared system component.</td>
+        <td><code>phaseStoichiometryComponentMustExist</code> in <code><a href="../../schema/thermml-schema.xsd">schema/thermml-schema.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-REF-PHASE-NAME-UNIQUE</code></td>
+        <td><code>phases/phase/@name</code></td>
+        <td>Phase names must be unique within one <code>database</code>.</td>
+        <td><code>phaseNameKey</code> in <code><a href="../../schema/thermml-schema.xsd">schema/thermml-schema.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-REF-ORDERED-PHASE-REFERENCE-RESOLVES</code></td>
+        <td><code>CEFOrderedPhaseType/@disorderedPhase</code></td>
+        <td><code>disorderedPhase</code> must match a declared phase name in the same database.</td>
+        <td><code>orderedPhaseMustReferenceDeclaredDisorderedPhase</code> in <code><a href="../../schema/thermml-schema.xsd">schema/thermml-schema.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-REF-GLOBAL-EXPRESSION-UNIQUE</code></td>
+        <td><code>globalExpressions/expression/@name</code></td>
+        <td>Global expression names must be unique within one <code>database</code>.</td>
+        <td><code>globalExpressionKey</code> in <code><a href="../../schema/thermml-schema.xsd">schema/thermml-schema.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-REF-FUNCTION-REFERENCE-RESOLVES</code></td>
+        <td>phase-property <code>ref/@name</code></td>
+        <td>Named references must resolve to a declared global expression.</td>
+        <td><code>phaseFunctionReferenceMustExist</code> in <code><a href="../../schema/thermml-schema.xsd">schema/thermml-schema.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-REF-MQM-QUADRUPLET-SPECIES-RESOLVE</code></td>
+        <td>MQM quadruplet species references</td>
+        <td>Each reference must match a species declared in the same phase.</td>
+        <td>phase-local MQM keyrefs in <code><a href="../../schema/databases/main.xsd">schema/databases/main.xsd</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-REF-MQM-SELECTED-SPECIES-RESOLVES</code></td>
+        <td>MQM interaction <code>property/selected</code></td>
+        <td><code>selected</code> must match one of the constituent species in the same interaction.</td>
+        <td><code>mqmInteractionSelectedMustReferenceConstituent</code> in <code><a href="../../schema/phases/quasichemical-phase.xsd">schema/phases/quasichemical-phase.xsd</a></code></td>
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

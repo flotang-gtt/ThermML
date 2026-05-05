@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/0.1"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <phases>
+    <phase name="MQM_SAMPLE" xsi:type="ModifiedQuasichemicalPhaseType">
+      <ternaryInterpolations>
+        <interpolation>
+          <constituents>
+            <site>
+              <const name="A" site="i" siteIndex="i"/>
+              <const name="B" site="j" siteIndex="j"/>
+              <const name="C" site="k" siteIndex="k"/>
+            </site>
+          </constituents>
+        </interpolation>
+      </ternaryInterpolations>
+    </phase>
+  </phases>
+</database>

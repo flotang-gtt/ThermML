@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Schematron Validation Catalog</title>
+  <link rel="stylesheet" href="assets/catalog.css">
+</head>
+<body>
+  <h1>Schematron Validation Catalog</h1>
+
+  <p>This catalog lists the Schematron rules that are currently published and kept with runnable fixtures.</p>
+
+  <p>Rules that still exist only in <code>semantic_validation.py</code> are intentionally excluded from this catalog until they are promoted into Schematron or explicitly retired from the published rule surface.</p>
+
+  <h2>Rule Families</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Rule Family</th>
+        <th>Rule ID</th>
+        <th>Purpose</th>
+        <th>Level</th>
+        <th>Source</th>
+        <th>Examples</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Ternary interpolation locator aliases</td>
+        <td><code>VAL-SEM-INTERPOLATION-ALIASES-AGREE</code></td>
+        <td>Checks that the two serialized locator aliases on a ternary interpolation constituent do not disagree.</td>
+        <td>error</td>
+        <td><code><a href="../../schematron/rules/ternary-interpolation-locator-aliases/rule.sch">schematron/rules/ternary-interpolation-locator-aliases/rule.sch</a></code></td>
+        <td><code><a href="../../schematron/rules/ternary-interpolation-locator-aliases/valid.xml">valid.xml</a></code>, <code><a href="../../schematron/rules/ternary-interpolation-locator-aliases/invalid.xml">invalid.xml</a></code></td>
+      </tr>
+      <tr>
+        <td rowspan="3">Redlich-Kister rank</td>
+        <td><code>VAL-DOM-RK-RANK</code></td>
+        <td>Rejects Redlich-Kister rank values that are not non-negative integers.</td>
+        <td>error</td>
+        <td rowspan="3"><code><a href="../../schematron/rules/redlich-kister-rank/rule.sch">schematron/rules/redlich-kister-rank/rule.sch</a></code></td>
+        <td><code><a href="../../schematron/rules/redlich-kister-rank/invalid.xml">invalid.xml</a></code>, <code><a href="../../schematron/rules/redlich-kister-rank/warning.xml">warning.xml</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-SEM-RK-HIGH-RANK-SUSPICIOUS</code></td>
+        <td>Flags Redlich-Kister ranks above <code>2</code> for review.</td>
+        <td>warning</td>
+        <td><code><a href="../../schematron/rules/redlich-kister-rank/warning.xml">warning.xml</a></code></td>
+      </tr>
+      <tr>
+        <td><code>VAL-SEM-RK-RANK-GAPS-SUSPICIOUS</code></td>
+        <td>Flags missing lower ranks in an otherwise higher-rank Redlich-Kister series.</td>
+        <td>warning</td>
+        <td><code><a href="../../schematron/rules/redlich-kister-rank/warning.xml">warning.xml</a></code></td>
+      </tr>
+      <tr>
+        <td>CEF endmember cartesian count</td>
+        <td><code>VAL-SEM-CEF-ENDMEMBER-CARTESIAN-COUNT</code></td>
+        <td>Checks that the declared CEF endmember list matches the cartesian product implied by the sublattice constituent lists.</td>
+        <td>error</td>
+        <td><code><a href="../../schematron/rules/cef-endmember-cartesian-count/rule.sch">schematron/rules/cef-endmember-cartesian-count/rule.sch</a></code></td>
+        <td><code><a href="../../schematron/rules/cef-endmember-cartesian-count/valid.xml">valid.xml</a></code>, <code><a href="../../schematron/rules/cef-endmember-cartesian-count/invalid.xml">invalid.xml</a></code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Combined Entrypoint</h2>
+
+  <p>The runnable combined entrypoint is <code>schematron/thermml.sch</code>. That file mirrors the currently published rule families so that a single validator command can still be used against arbitrary XML inputs.</p>
+
+  <h2>Layout Note</h2>
+
+  <p>Each rule family currently has two Schematron files with different roles.</p>
+
+  <ul>
+    <li><code>module.sch</code> is the shared include fragment that contains the actual rule-family body.</li>
+    <li><code>rule.sch</code> is a thin standalone wrapper that includes <code>module.sch</code> so the family can still be executed by itself.</li>
+  </ul>
+
+  <p>This split exists because the current <code>lxml.isoschematron</code> workflow supports include-based composition cleanly when the included file is a Schematron fragment such as a top-level <code>pattern</code>, not a full independent schema used as an include target.</p>
+
+  <h2>Fixture Convention</h2>
+
+  <ul>
+    <li><code>valid.xml</code>: passes without errors</li>
+    <li><code>invalid.xml</code>: fails at least one assert</li>
+    <li><code>warning.xml</code>: passes but emits one or more <code>report</code> diagnostics when the rule family uses warnings</li>
+  </ul>
+</body>
+</html>

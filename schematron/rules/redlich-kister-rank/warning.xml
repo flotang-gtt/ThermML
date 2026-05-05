@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/0.1"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <phases>
+    <phase name="FCC_A1">
+      <interactions>
+        <interaction name="Fe,Mn:Va">
+          <property xsi:type="L">
+            <expr rank="0">4000.0</expr>
+            <expr rank="2">22*T</expr>
+            <expr rank="3">5*T</expr>
+          </property>
+        </interaction>
+      </interactions>
+    </phase>
+  </phases>
+</database>
