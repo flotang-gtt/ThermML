@@ -8,6 +8,7 @@
 from __future__ import annotations
 
 import argparse
+from dataclasses import dataclass
 import sys
 from pathlib import Path
 
@@ -16,16 +17,25 @@ from lxml.isoschematron import Schematron
 
 
 SVRL_NS = {"svrl": "http://purl.oclc.org/dsdl/svrl"}
+DEFAULT_SCHEMATRON_PATH = Path(__file__).with_name("thermml.sch")
+
+
+@dataclass(frozen=True)
+class SchematronFinding:
+    level: str
+    rule_id: str
+    message: str
+    location: str
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Validate one XML file against the bundled Schematron sample."
+        description="Validate one XML file against the bundled ThermML Schematron rules."
     )
     parser.add_argument("xml_file", help="Path to the XML file to validate.")
     parser.add_argument(
         "--schematron",
-        default=str(Path(__file__).with_name("thermml.sch")),
+        default=str(DEFAULT_SCHEMATRON_PATH),
         help="Path to the Schematron .sch file.",
     )
     return parser.parse_args()
@@ -88,13 +98,59 @@ def render_location(doc: etree._ElementTree, location: str) -> str:
     return ", ".join(parts)
 
 
-def print_finding(level: str, entry: etree._Element, doc: etree._ElementTree) -> None:
+def build_finding(
+    entry: etree._Element,
+    doc: etree._ElementTree,
+    *,
+    default_level: str,
+) -> SchematronFinding:
     rule_id = entry.get("id", "<unlabeled-rule>")
     location = entry.get("location", "<unknown-location>")
-    text = render_message(entry)
-    print(f"  {level} {rule_id}")
-    print(f"    {text}")
-    print(f"    Location: {render_location(doc, location)}")
+    return SchematronFinding(
+        level=entry.get("role", default_level).upper(),
+        rule_id=rule_id,
+        message=render_message(entry),
+        location=render_location(doc, location),
+    )
+
+
+def validate_document(
+    doc: etree._ElementTree,
+    schematron: Schematron,
+) -> tuple[bool, list[SchematronFinding], list[SchematronFinding]]:
+    is_valid = schematron.validate(doc)
+    report = schematron.validation_report
+    if report is None:
+        if is_valid:
+            return True, [], []
+        return (
+            False,
+            [
+                SchematronFinding(
+                    level="ERROR",
+                    rule_id="<unlabeled-rule>",
+                    message="Schematron validation failed, but no SVRL report was produced.",
+                    location="<unknown-location>",
+                )
+            ],
+            [],
+        )
+
+    failed_asserts = [
+        build_finding(entry, doc, default_level="ERROR")
+        for entry in iter_failed_asserts(report)
+    ]
+    successful_reports = [
+        build_finding(entry, doc, default_level="WARNING")
+        for entry in iter_successful_reports(report)
+    ]
+    return not failed_asserts, failed_asserts, successful_reports
+
+
+def print_finding(finding: SchematronFinding) -> None:
+    print(f"  {finding.level} {finding.rule_id}")
+    print(f"    {finding.message}")
+    print(f"    Location: {finding.location}")
 
 
 def main() -> int:
@@ -128,42 +184,22 @@ def main() -> int:
         print(f"  {error}")
         return 1
 
-    is_valid = schematron.validate(doc)
-    report = schematron.validation_report
-    if report is None:
-        if is_valid:
-            print(f"PASS  {xml_path}")
-            return 0
-
-        print(f"FAIL  {xml_path}")
-        print("  Schematron validation failed, but no SVRL report was produced.")
-        return 1
-
-    failed_asserts = list(iter_failed_asserts(report))
-    successful_reports = list(iter_successful_reports(report))
+    is_valid, failed_asserts, successful_reports = validate_document(doc, schematron)
 
     if failed_asserts:
         print(f"FAIL  {xml_path}")
         for failed_assert in failed_asserts:
-            print_finding("ERROR", failed_assert, doc)
+            print_finding(failed_assert)
 
         if successful_reports:
             for successful_report in successful_reports:
-                print_finding(
-                    successful_report.get("role", "WARNING").upper(),
-                    successful_report,
-                    doc,
-                )
+                print_finding(successful_report)
         return 1
 
     if successful_reports:
         print(f"PASS WITH WARNINGS  {xml_path}")
         for successful_report in successful_reports:
-            print_finding(
-                successful_report.get("role", "WARNING").upper(),
-                successful_report,
-                doc,
-            )
+            print_finding(successful_report)
         return 0
 
     print(f"PASS  {xml_path}")
