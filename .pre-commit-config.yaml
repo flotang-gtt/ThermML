@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: schematron-catalog-json
+        name: Refresh schematron catalog data
+        entry: python schematron/generate_catalog.py --fail-on-change
+        language: python
+        pass_filenames: false
+        files: ^(schematron/generate_catalog\.py|schematron/rules/[^/]+/(catalog\.json|README\.md|rule\.sch|module\.sch|valid\.xml|invalid\.xml|warning\.xml))$
