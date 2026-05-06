@@ -1,0 +1,15 @@
+{
+  "family_name": "CEF endmember cartesian count",
+  "family_summary": "Checks that declared CEF endmember lists match the cartesian product implied by the sublattice constituent arrays.",
+  "rules": [
+    {
+      "id": "VAL-SEM-CEF-ENDMEMBER-CARTESIAN-COUNT",
+      "purpose": "Checks that the declared CEF endmember list matches the cartesian product implied by the sublattice constituent lists.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    }
+  ]
+}

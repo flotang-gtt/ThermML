@@ -1,0 +1,107 @@
+{
+  "generatedFrom": "schematron/rules/*/catalog.json",
+  "rows": [
+    {
+      "familyName": "CEF endmember cartesian count",
+      "familySlug": "cef-endmember-cartesian-count",
+      "familySummary": "Checks that declared CEF endmember lists match the cartesian product implied by the sublattice constituent arrays.",
+      "ruleId": "VAL-SEM-CEF-ENDMEMBER-CARTESIAN-COUNT",
+      "purpose": "Checks that the declared CEF endmember list matches the cartesian product implied by the sublattice constituent lists.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/cef-endmember-cartesian-count/rule.sch",
+        "label": "schematron/rules/cef-endmember-cartesian-count/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/cef-endmember-cartesian-count/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/cef-endmember-cartesian-count/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Redlich-Kister rank",
+      "familySlug": "redlich-kister-rank",
+      "familySummary": "Checks Redlich-Kister rank values and flags suspicious high-rank or gap-filled series for review.",
+      "ruleId": "VAL-DOM-RK-RANK",
+      "purpose": "Rejects Redlich-Kister rank values that are not non-negative integers.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/redlich-kister-rank/rule.sch",
+        "label": "schematron/rules/redlich-kister-rank/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/redlich-kister-rank/invalid.xml"
+        },
+        {
+          "name": "warning.xml",
+          "href": "../../schematron/rules/redlich-kister-rank/warning.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Redlich-Kister rank",
+      "familySlug": "redlich-kister-rank",
+      "familySummary": "Checks Redlich-Kister rank values and flags suspicious high-rank or gap-filled series for review.",
+      "ruleId": "VAL-SEM-RK-HIGH-RANK-SUSPICIOUS",
+      "purpose": "Flags Redlich-Kister ranks above 2 for review.",
+      "level": "warning",
+      "source": {
+        "href": "../../schematron/rules/redlich-kister-rank/rule.sch",
+        "label": "schematron/rules/redlich-kister-rank/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "warning.xml",
+          "href": "../../schematron/rules/redlich-kister-rank/warning.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Redlich-Kister rank",
+      "familySlug": "redlich-kister-rank",
+      "familySummary": "Checks Redlich-Kister rank values and flags suspicious high-rank or gap-filled series for review.",
+      "ruleId": "VAL-SEM-RK-RANK-GAPS-SUSPICIOUS",
+      "purpose": "Flags missing lower ranks in an otherwise higher-rank Redlich-Kister series.",
+      "level": "warning",
+      "source": {
+        "href": "../../schematron/rules/redlich-kister-rank/rule.sch",
+        "label": "schematron/rules/redlich-kister-rank/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "warning.xml",
+          "href": "../../schematron/rules/redlich-kister-rank/warning.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Ternary interpolation locator aliases",
+      "familySlug": "ternary-interpolation-locator-aliases",
+      "familySummary": "Checks that duplicated ternary locator aliases stay internally consistent when both serialized forms are present.",
+      "ruleId": "VAL-SEM-INTERPOLATION-ALIASES-AGREE",
+      "purpose": "Checks that the two serialized locator aliases on a ternary interpolation constituent do not disagree.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/ternary-interpolation-locator-aliases/rule.sch",
+        "label": "schematron/rules/ternary-interpolation-locator-aliases/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/ternary-interpolation-locator-aliases/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/ternary-interpolation-locator-aliases/invalid.xml"
+        }
+      ]
+    }
+  ]
+}

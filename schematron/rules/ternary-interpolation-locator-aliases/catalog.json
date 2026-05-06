@@ -1,0 +1,15 @@
+{
+  "family_name": "Ternary interpolation locator aliases",
+  "family_summary": "Checks that duplicated ternary locator aliases stay internally consistent when both serialized forms are present.",
+  "rules": [
+    {
+      "id": "VAL-SEM-INTERPOLATION-ALIASES-AGREE",
+      "purpose": "Checks that the two serialized locator aliases on a ternary interpolation constituent do not disagree.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    }
+  ]
+}

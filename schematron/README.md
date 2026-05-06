@@ -62,14 +62,39 @@ the rule id, message, and location extracted from the SVRL report.
 The current implementation purposefully only uses XSLT 1.0-style Schematron
 bindings, for better support across libraries and platforms.
 
+## Catalog generation
+
+The published catalog page at `docs/validation/schematron-catalog.html` is a
+static renderer for the generated `docs/validation/schematron-catalog.json`
+payload, which is built from per-rule metadata files stored next to each rule
+family.
+
+Each rule-family directory must provide `catalog.json` with:
+
+- `family_name`: human-readable rule-family name shown in the catalog
+- `family_summary`: one-sentence summary used in the family column and search
+- `rules`: array of rule entries with `id`, `purpose`, `level`, and `examples`
+
+Regenerate the published catalog data after changing metadata with:
+
+```powershell
+uv run .\schematron\generate_catalog.py
+```
+
+The repository also ships a `.pre-commit-config.yaml` hook that runs the same
+generator with `--fail-on-change`. That hook writes the JSON file and fails the
+commit if the output changed, so the generated diff must be reviewed and staged
+explicitly.
+
 ## Adding a new rule
 
 To add a new rule, make sure to
 
 - Create a new rule-name based directory under `rules/`
 - provide a `README.md` with a reasonable, human-centric explanation
+- provide `catalog.json` with the catalog-facing metadata for the family
 - `rule.sch` can be copied from any other rule
 - `module.sch` needs to implement the actual Schematron rule
 - If possible or needed, add examples for invalid and warning cases
 - Add the rule name to the `thermml.sch` aggregate file
-- Add the rule to the `docs/validation/schematron-catalog.html` overview of rules.
+- Regenerate `docs/validation/schematron-catalog.json` with `uv run .\schematron\generate_catalog.py`.

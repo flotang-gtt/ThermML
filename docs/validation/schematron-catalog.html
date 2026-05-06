@@ -6,85 +6,386 @@
   <title>Schematron Validation Catalog</title>
   <link rel="stylesheet" href="assets/catalog.css">
 </head>
-<body>
-  <h1>Schematron Validation Catalog</h1>
+<body class="catalog-page">
+  <main class="catalog-shell">
+    <header class="hero">
+      <p class="eyebrow">Runtime renderer for <code>schematron-catalog.json</code></p>
+      <h1>Schematron Validation Catalog</h1>
+      <p class="hero-copy">This page renders the generated <code>schematron-catalog.json</code> payload in the browser. Add or update a rule-family <code>catalog.json</code> file, then rerun <code>uv run .\schematron\generate_catalog.py</code> to refresh the data.</p>
+    </header>
 
-  <p>This catalog lists the Schematron rules that are currently published and kept with runnable fixtures.</p>
+    <section class="stat-grid" aria-label="Catalog summary">
+      <article class="stat-card">
+        <div id="catalog-family-count" class="stat-value">-</div>
+        <div class="stat-label">Rule families</div>
+      </article>
+      <article class="stat-card">
+        <div id="catalog-rule-count" class="stat-value">-</div>
+        <div class="stat-label">Published rules</div>
+      </article>
+      <article class="stat-card">
+        <div id="catalog-error-count" class="stat-value">-</div>
+        <div class="stat-label">Error rules</div>
+      </article>
+      <article class="stat-card">
+        <div id="catalog-warning-count" class="stat-value">-</div>
+        <div class="stat-label">Warning rules</div>
+      </article>
+    </section>
 
-  <h2>Rule Families</h2>
+    <section class="control-panel" aria-label="Catalog filters">
+      <label class="field search-field" for="catalog-search">
+        <span class="field-label">Search</span>
+        <input id="catalog-search" type="search" placeholder="Search rule IDs, families, purpose text, or fixture names">
+      </label>
 
-  <table>
-    <thead>
-      <tr>
-        <th>Rule Family</th>
-        <th>Rule ID</th>
-        <th>Purpose</th>
-        <th>Level</th>
-        <th>Source</th>
-        <th>Examples</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Ternary interpolation locator aliases</td>
-        <td><code>VAL-SEM-INTERPOLATION-ALIASES-AGREE</code></td>
-        <td>Checks that the two serialized locator aliases on a ternary interpolation constituent do not disagree.</td>
-        <td>error</td>
-        <td><code><a href="../../schematron/rules/ternary-interpolation-locator-aliases/rule.sch">schematron/rules/ternary-interpolation-locator-aliases/rule.sch</a></code></td>
-        <td><code><a href="../../schematron/rules/ternary-interpolation-locator-aliases/valid.xml">valid.xml</a></code>, <code><a href="../../schematron/rules/ternary-interpolation-locator-aliases/invalid.xml">invalid.xml</a></code></td>
-      </tr>
-      <tr>
-        <td rowspan="3">Redlich-Kister rank</td>
-        <td><code>VAL-DOM-RK-RANK</code></td>
-        <td>Rejects Redlich-Kister rank values that are not non-negative integers.</td>
-        <td>error</td>
-        <td rowspan="3"><code><a href="../../schematron/rules/redlich-kister-rank/rule.sch">schematron/rules/redlich-kister-rank/rule.sch</a></code></td>
-        <td><code><a href="../../schematron/rules/redlich-kister-rank/invalid.xml">invalid.xml</a></code>, <code><a href="../../schematron/rules/redlich-kister-rank/warning.xml">warning.xml</a></code></td>
-      </tr>
-      <tr>
-        <td><code>VAL-SEM-RK-HIGH-RANK-SUSPICIOUS</code></td>
-        <td>Flags Redlich-Kister ranks above <code>2</code> for review.</td>
-        <td>warning</td>
-        <td><code><a href="../../schematron/rules/redlich-kister-rank/warning.xml">warning.xml</a></code></td>
-      </tr>
-      <tr>
-        <td><code>VAL-SEM-RK-RANK-GAPS-SUSPICIOUS</code></td>
-        <td>Flags missing lower ranks in an otherwise higher-rank Redlich-Kister series.</td>
-        <td>warning</td>
-        <td><code><a href="../../schematron/rules/redlich-kister-rank/warning.xml">warning.xml</a></code></td>
-      </tr>
-      <tr>
-        <td>CEF endmember cartesian count</td>
-        <td><code>VAL-SEM-CEF-ENDMEMBER-CARTESIAN-COUNT</code></td>
-        <td>Checks that the declared CEF endmember list matches the cartesian product implied by the sublattice constituent lists.</td>
-        <td>error</td>
-        <td><code><a href="../../schematron/rules/cef-endmember-cartesian-count/rule.sch">schematron/rules/cef-endmember-cartesian-count/rule.sch</a></code></td>
-        <td><code><a href="../../schematron/rules/cef-endmember-cartesian-count/valid.xml">valid.xml</a></code>, <code><a href="../../schematron/rules/cef-endmember-cartesian-count/invalid.xml">invalid.xml</a></code></td>
-      </tr>
-    </tbody>
-  </table>
+      <fieldset class="field levels-field">
+        <legend class="field-label">Levels</legend>
+        <label class="toggle-option" for="level-error">
+          <input id="level-error" type="checkbox" name="catalog-level" value="error" checked>
+          <span>Error</span>
+        </label>
+        <label class="toggle-option" for="level-warning">
+          <input id="level-warning" type="checkbox" name="catalog-level" value="warning" checked>
+          <span>Warning</span>
+        </label>
+      </fieldset>
 
-  <h2>Combined Entrypoint</h2>
+      <label class="field" for="catalog-family">
+        <span class="field-label">Rule family</span>
+        <select id="catalog-family">
+          <option value="">All families</option>
+        </select>
+      </label>
 
-  <p>The runnable combined entrypoint is <code>schematron/thermml.sch</code>. That file mirrors the currently published rule families and is the Schematron layer used by the repository-level <code>validate_one.py</code> command.</p>
+      <label class="field" for="catalog-fixture">
+        <span class="field-label">Fixture</span>
+        <select id="catalog-fixture">
+          <option value="">Any fixture</option>
+        </select>
+      </label>
 
-  <h2>Layout Note</h2>
+      <div class="actions">
+        <button id="catalog-reset" type="button">Reset filters</button>
+      </div>
+    </section>
 
-  <p>Each rule family currently has two Schematron files with different roles.</p>
+    <p class="results-meta">
+      <strong id="catalog-result-count"></strong>
+      <span id="catalog-active-filters"></span>
+    </p>
 
-  <ul>
-    <li><code>module.sch</code> is the shared include fragment that contains the actual rule-family body.</li>
-    <li><code>rule.sch</code> is a thin standalone wrapper that includes <code>module.sch</code> so the family can still be executed by itself.</li>
-  </ul>
+    <p id="catalog-error" class="catalog-error" hidden></p>
 
-  <p>This split exists because the current <code>lxml.isoschematron</code> workflow supports include-based composition cleanly when the included file is a Schematron fragment such as a top-level <code>pattern</code>, not a full independent schema used as an include target.</p>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Rule Family</th>
+            <th>Rule ID</th>
+            <th>Purpose</th>
+            <th>Level</th>
+            <th>Source</th>
+            <th>Examples</th>
+          </tr>
+        </thead>
+        <tbody id="catalog-table-body">
+          <tr>
+            <td colspan="6" class="empty-state">Loading catalog...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-  <h2>Fixture Convention</h2>
+    <section class="note-card">
+      <h2>Combined Entrypoint</h2>
+      <p>The runnable combined entrypoint is <code>schematron/thermml.sch</code>. That file mirrors the currently published rule families and is the Schematron layer used by the repository-level <code>validate_one.py</code> command.</p>
+    </section>
 
-  <ul>
-    <li><code>valid.xml</code>: passes without errors</li>
-    <li><code>invalid.xml</code>: fails at least one assert</li>
-    <li><code>warning.xml</code>: passes but emits one or more <code>report</code> diagnostics when the rule family uses warnings</li>
-  </ul>
+    <section class="note-grid">
+      <article class="note-card">
+        <h2>Layout Note</h2>
+        <p>Each rule family currently has two Schematron files with different roles.</p>
+        <ul>
+          <li><code>module.sch</code> is the shared include fragment that contains the actual rule-family body.</li>
+          <li><code>rule.sch</code> is a thin standalone wrapper that includes <code>module.sch</code> so the family can still be executed by itself.</li>
+        </ul>
+        <p>This split exists because the current <code>lxml.isoschematron</code> workflow supports include-based composition cleanly when the included file is a Schematron fragment such as a top-level <code>pattern</code>, not a full independent schema used as an include target.</p>
+      </article>
+
+      <article class="note-card">
+        <h2>Fixture Convention</h2>
+        <ul>
+          <li><code>valid.xml</code>: passes without errors</li>
+          <li><code>invalid.xml</code>: fails at least one assert</li>
+          <li><code>warning.xml</code>: passes but emits one or more <code>report</code> diagnostics when the rule family uses warnings</li>
+        </ul>
+      </article>
+    </section>
+  </main>
+  <script>
+(() => {
+  const tableBody = document.getElementById("catalog-table-body");
+  const resultCount = document.getElementById("catalog-result-count");
+  const activeFilters = document.getElementById("catalog-active-filters");
+  const errorBanner = document.getElementById("catalog-error");
+  const familyCount = document.getElementById("catalog-family-count");
+  const ruleCount = document.getElementById("catalog-rule-count");
+  const errorCount = document.getElementById("catalog-error-count");
+  const warningCount = document.getElementById("catalog-warning-count");
+  const searchInput = document.getElementById("catalog-search");
+  const familySelect = document.getElementById("catalog-family");
+  const fixtureSelect = document.getElementById("catalog-fixture");
+  const levelInputs = Array.from(document.querySelectorAll('input[name="catalog-level"]'));
+  const resetButton = document.getElementById("catalog-reset");
+  let catalogRows = [];
+
+  function uniqueSorted(values) {
+    return Array.from(new Set(values)).sort((left, right) =>
+      left.localeCompare(right, undefined, { sensitivity: "base" })
+    );
+  }
+
+  function appendCodeLink(cell, label, href) {
+    const code = document.createElement("code");
+    const link = document.createElement("a");
+    link.href = href;
+    link.textContent = label;
+    code.append(link);
+    cell.append(code);
+  }
+
+  function createFamilyCell(row) {
+    const cell = document.createElement("td");
+    cell.className = "family-cell";
+
+    const title = document.createElement("strong");
+    title.textContent = row.familyName;
+    cell.append(title);
+
+    const summary = document.createElement("div");
+    summary.className = "family-summary";
+    summary.textContent = row.familySummary;
+    cell.append(summary);
+
+    return cell;
+  }
+
+  function createRuleIdCell(row) {
+    const cell = document.createElement("td");
+    appendCodeLink(cell, row.ruleId, row.source.href);
+    return cell;
+  }
+
+  function createLevelCell(row) {
+    const cell = document.createElement("td");
+    const badge = document.createElement("span");
+    badge.className = `level-badge level-${row.level}`;
+    badge.textContent = row.level;
+    cell.append(badge);
+    return cell;
+  }
+
+  function createExamplesCell(row) {
+    const cell = document.createElement("td");
+    if (!row.examples.length) {
+      cell.textContent = "No examples";
+      return cell;
+    }
+
+    row.examples.forEach((example, index) => {
+      appendCodeLink(cell, example.name, example.href);
+      if (index < row.examples.length - 1) {
+        cell.append(document.createTextNode(", "));
+      }
+    });
+    return cell;
+  }
+
+  function renderRows(rows) {
+    tableBody.replaceChildren();
+
+    if (!rows.length) {
+      const row = document.createElement("tr");
+      const cell = document.createElement("td");
+      cell.colSpan = 6;
+      cell.className = "empty-state";
+      cell.textContent = "No rules match the current filters.";
+      row.append(cell);
+      tableBody.append(row);
+      return;
+    }
+
+    rows.forEach((entry) => {
+      const row = document.createElement("tr");
+      row.append(createFamilyCell(entry));
+      row.append(createRuleIdCell(entry));
+
+      const purposeCell = document.createElement("td");
+      purposeCell.textContent = entry.purpose;
+      row.append(purposeCell);
+
+      row.append(createLevelCell(entry));
+
+      const sourceCell = document.createElement("td");
+      appendCodeLink(sourceCell, entry.source.label, entry.source.href);
+      row.append(sourceCell);
+
+      row.append(createExamplesCell(entry));
+      tableBody.append(row);
+    });
+  }
+
+  function selectedLevels() {
+    return levelInputs.filter((input) => input.checked).map((input) => input.value);
+  }
+
+  function buildSearchBlob(row) {
+    return [
+      row.familyName,
+      row.familySummary,
+      row.ruleId,
+      row.purpose,
+      row.level,
+      ...row.examples.map((example) => example.name),
+    ]
+      .join(" ")
+      .toLowerCase();
+  }
+
+  function activeFilterText(search, levels, family, fixture) {
+    const parts = [];
+    if (search) {
+      parts.push(`search "${search}"`);
+    }
+    if (family) {
+      parts.push(`family ${family}`);
+    }
+    if (fixture) {
+      parts.push(`fixture ${fixture}`);
+    }
+    if (levels.length && levels.length < levelInputs.length) {
+      parts.push(`levels ${levels.join(" + ")}`);
+    }
+    return parts.length ? `Active filters: ${parts.join(", ")}.` : "Showing the full catalog.";
+  }
+
+  function setSummary(rows) {
+    const families = uniqueSorted(rows.map((row) => row.familyName)).length;
+    familyCount.textContent = String(families);
+    ruleCount.textContent = String(rows.length);
+    errorCount.textContent = String(rows.filter((row) => row.level === "error").length);
+    warningCount.textContent = String(rows.filter((row) => row.level === "warning").length);
+  }
+
+  function syncResults(rows, filteredRows, search, levels, family, fixture) {
+    const visibleFamilies = uniqueSorted(filteredRows.map((row) => row.familyName)).length;
+    resultCount.textContent = `Showing ${filteredRows.length} of ${rows.length} rules across ${visibleFamilies} families.`;
+    activeFilters.textContent = activeFilterText(search, levels, family, fixture);
+  }
+
+  function applyFilters() {
+    const search = searchInput.value.trim().toLowerCase();
+    const levels = selectedLevels();
+    const family = familySelect.value;
+    const fixture = fixtureSelect.value;
+
+    const filteredRows = catalogRows.filter((row) => {
+      if (levels.length && !levels.includes(row.level)) {
+        return false;
+      }
+      if (!levels.length) {
+        return false;
+      }
+      if (family && row.familyName !== family) {
+        return false;
+      }
+      if (fixture && !row.examples.some((example) => example.name === fixture)) {
+        return false;
+      }
+      if (search && !buildSearchBlob(row).includes(search)) {
+        return false;
+      }
+      return true;
+    });
+
+    renderRows(filteredRows);
+    syncResults(catalogRows, filteredRows, searchInput.value.trim(), levels, family, fixture);
+  }
+
+  function populateSelect(select, values, defaultLabel) {
+    select.replaceChildren();
+
+    const defaultOption = document.createElement("option");
+    defaultOption.value = "";
+    defaultOption.textContent = defaultLabel;
+    select.append(defaultOption);
+
+    values.forEach((value) => {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = value;
+      select.append(option);
+    });
+  }
+
+  searchInput.addEventListener("input", applyFilters);
+  familySelect.addEventListener("change", applyFilters);
+  fixtureSelect.addEventListener("change", applyFilters);
+  levelInputs.forEach((input) => input.addEventListener("change", applyFilters));
+  resetButton.addEventListener("click", () => {
+    searchInput.value = "";
+    familySelect.value = "";
+    fixtureSelect.value = "";
+    levelInputs.forEach((input) => {
+      input.checked = true;
+    });
+    applyFilters();
+  });
+
+  async function loadCatalog() {
+    try {
+      const response = await fetch("./schematron-catalog.json", { cache: "no-store" });
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+
+      const payload = await response.json();
+      catalogRows = Array.isArray(payload.rows) ? payload.rows : [];
+      setSummary(catalogRows);
+      populateSelect(
+        familySelect,
+        uniqueSorted(catalogRows.map((row) => row.familyName)),
+        "All families"
+      );
+      populateSelect(
+        fixtureSelect,
+        uniqueSorted(catalogRows.flatMap((row) => row.examples.map((example) => example.name))),
+        "Any fixture"
+      );
+      applyFilters();
+    } catch (error) {
+      errorBanner.hidden = false;
+      errorBanner.textContent = `Failed to load schematron-catalog.json: ${error}`;
+      tableBody.replaceChildren();
+      const row = document.createElement("tr");
+      const cell = document.createElement("td");
+      cell.colSpan = 6;
+      cell.className = "empty-state";
+      cell.textContent = "Catalog data could not be loaded.";
+      row.append(cell);
+      tableBody.append(row);
+      [familyCount, ruleCount, errorCount, warningCount].forEach((node) => {
+        node.textContent = "0";
+      });
+      resultCount.textContent = "No catalog data loaded.";
+      activeFilters.textContent = "";
+    }
+  }
+
+  loadCatalog();
+})();
+
+  </script>
 </body>
 </html>

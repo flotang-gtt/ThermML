@@ -46,3 +46,15 @@ files in one shell loop, see `examples/Examples.md`.
 As of the drafting stage of this project, every contribution is welcome. Pull
 requests may add examples or requirements. Most current implementations can be
 seen as discussable items. The issues section is good place to start discussions.
+
+For local guardrails, install the repository pre-commit hooks once after
+cloning:
+
+```bash
+uv run --with pre-commit pre-commit install
+```
+
+That hook currently refreshes `docs/validation/schematron-catalog.json` and
+fails the commit if the generated file changed, so the catalog diff must be
+reviewed and staged explicitly. GitHub Actions also re-runs the same check on
+push and pull request updates.
