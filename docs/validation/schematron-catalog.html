@@ -11,8 +11,6 @@
 
   <p>This catalog lists the Schematron rules that are currently published and kept with runnable fixtures.</p>
 
-  <p>Rules that still exist only in <code>semantic_validation.py</code> are intentionally excluded from this catalog until they are promoted into Schematron or explicitly retired from the published rule surface.</p>
-
   <h2>Rule Families</h2>
 
   <table>
@@ -68,7 +66,7 @@
 
   <h2>Combined Entrypoint</h2>
 
-  <p>The runnable combined entrypoint is <code>schematron/thermml.sch</code>. That file mirrors the currently published rule families so that a single validator command can still be used against arbitrary XML inputs.</p>
+  <p>The runnable combined entrypoint is <code>schematron/thermml.sch</code>. That file mirrors the currently published rule families and is the Schematron layer used by the repository-level <code>validate_one.py</code> command.</p>
 
   <h2>Layout Note</h2>
 

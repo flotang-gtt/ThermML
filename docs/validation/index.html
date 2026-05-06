@@ -16,7 +16,7 @@
   <ul>
     <li><a href="xsd-catalog.html">XSD Validation Catalog</a> — XSD-enforced rules worth naming as public constraints.</li>
     <li><a href="schematron-catalog.html">Schematron Validation Catalog</a> — Schematron rule families kept with runnable fixtures.</li>
-    <li><a href="../../schematron/README.md">schematron/README.md</a> — runnable Schematron layout and fixture conventions.</li>
+    <li><a href="../../schematron/README.md">schematron/README.md</a> — runnable Schematron layout, fixture conventions, and combined CLI integration.</li>
   </ul>
 
   <h2>Catalog Policy</h2>
@@ -24,7 +24,7 @@
   <ul>
     <li>XSD rules that are intentionally hoisted from reusable types, local declarations, or key/keyref logic belong in the published catalog.</li>
     <li>Schematron rules that are intended to be part of the published validation surface belong in the published catalog and must have discoverable source files and sample fixtures.</li>
-    <li>Rules that currently exist only as Python semantic-validator behavior are not listed here as published rules until they are either promoted to Schematron or intentionally documented elsewhere.</li>
+    <li>The repository-shipped CLI validation flow is the combination of XSD plus the bundled Schematron entrypoint.</li>
   </ul>
 </body>
 </html>

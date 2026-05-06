@@ -5,6 +5,10 @@ This directory contains the current Schematron validation layer and a small set 
 - `thermml.sch`: combined entrypoint for all currently published Schematron rules in this repo.
 - `rules/<rule-family>/`: one directory per Schematron rule family, with its source and fixtures kept together.
 
+The repository-level `validate_one.py` command compiles and runs `thermml.sch`
+as the Schematron phase of the normal validation flow. The standalone runner in
+this directory remains useful for fixture work and focused rule-family testing.
+
 The combined entrypoint uses Schematron `include` directives to pull in shared rule modules from the rule-family directories. Each standalone `rule.sch` does the same, so the actual rule body exists in one place per family, and allows isolated testing.
 
 The two-file split is a consequence of how the current `lxml.isoschematron` based toolchain processes Schematron `include` directives.
