@@ -2,7 +2,7 @@
 
 Rule family:
 
-- `VAL-SEM-INTERPOLATION-ALIASES-AGREE`
+- `VAL-ERR-TERNARY-INTERPOLATION-LOCATOR-ALIASES-MISMATCH`
 
 Files in this directory keep the rule and its minimal pass/fail fixtures together.
 

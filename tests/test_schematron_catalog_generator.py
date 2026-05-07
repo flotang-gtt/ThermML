@@ -40,7 +40,7 @@ def test_rendered_catalog_payload_contains_filterable_rule_data() -> None:
     rule_ids = {row["ruleId"] for row in rows}
 
     assert levels == {"error", "warning"}
-    assert "VAL-SEM-RK-HIGH-RANK-SUSPICIOUS" in rule_ids
+    assert "VAL-WARN-RK-HIGH-RANK" in rule_ids
     assert any(
         row["familyName"] == "Redlich-Kister rank"
         and any(example["name"] == "warning.xml" for example in row["examples"])

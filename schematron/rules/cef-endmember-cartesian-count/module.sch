@@ -36,7 +36,7 @@
     "/>
 
     <sch:assert
-        id="VAL-SEM-CEF-ENDMEMBER-CARTESIAN-COUNT"
+        id="VAL-ERR-CEF-ENDMEMBER-CARTESIAN-COUNT-MISMATCH"
         role="error"
         test="$actual-endmember-count = $expected-endmember-count">
       CEF phase <sch:value-of select="@name"/> declares <sch:value-of select="$site-count"/> sublattices; the constituent lists imply <sch:value-of select="$expected-endmember-count"/> endmembers, but found <sch:value-of select="$actual-endmember-count"/>.

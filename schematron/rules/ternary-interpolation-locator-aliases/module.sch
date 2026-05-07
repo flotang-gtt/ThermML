@@ -4,7 +4,7 @@
 
   <sch:rule context="t:database//t:ternaryInterpolations/t:interpolation//t:const[@site and @siteIndex]">
     <sch:assert
-        id="VAL-SEM-INTERPOLATION-ALIASES-AGREE"
+        id="VAL-ERR-TERNARY-INTERPOLATION-LOCATOR-ALIASES-MISMATCH"
         role="error"
         test="@site = @siteIndex">
       Ternary interpolation locator aliases disagree for constituent <sch:value-of select="@name"/> in phase <sch:value-of select="ancestor::t:phase[1]/@name"/>: site=<sch:value-of select="@site"/> and siteIndex=<sch:value-of select="@siteIndex"/> must carry the same locator value.

@@ -2,7 +2,7 @@
 
 Rule family:
 
-- `VAL-SEM-CEF-ENDMEMBER-CARTESIAN-COUNT`
+- `VAL-ERR-CEF-ENDMEMBER-CARTESIAN-COUNT-MISMATCH`
 
 Files in this directory keep the rule and its minimal pass/fail fixtures together.
 

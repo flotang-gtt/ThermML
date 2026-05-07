@@ -2,9 +2,9 @@
 
 Rule family:
 
-- `VAL-DOM-RK-RANK`
-- `VAL-SEM-RK-HIGH-RANK-SUSPICIOUS`
-- `VAL-SEM-RK-RANK-GAPS-SUSPICIOUS`
+- `VAL-ERR-RK-RANK-INVALID`
+- `VAL-WARN-RK-HIGH-RANK`
+- `VAL-WARN-RK-RANK-GAPS`
 
 Files in this directory keep the assert and warning reports with their fixtures.
 

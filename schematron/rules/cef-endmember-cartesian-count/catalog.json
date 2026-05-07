@@ -3,7 +3,7 @@
   "family_summary": "Checks that declared CEF endmember lists match the cartesian product implied by the sublattice constituent arrays.",
   "rules": [
     {
-      "id": "VAL-SEM-CEF-ENDMEMBER-CARTESIAN-COUNT",
+      "id": "VAL-ERR-CEF-ENDMEMBER-CARTESIAN-COUNT-MISMATCH",
       "purpose": "Checks that the declared CEF endmember list matches the cartesian product implied by the sublattice constituent lists.",
       "level": "error",
       "examples": [

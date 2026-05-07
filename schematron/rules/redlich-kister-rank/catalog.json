@@ -3,7 +3,7 @@
   "family_summary": "Checks Redlich-Kister rank values and flags suspicious high-rank or gap-filled series for review.",
   "rules": [
     {
-      "id": "VAL-DOM-RK-RANK",
+      "id": "VAL-ERR-RK-RANK-INVALID",
       "purpose": "Rejects Redlich-Kister rank values that are not non-negative integers.",
       "level": "error",
       "examples": [
@@ -12,7 +12,7 @@
       ]
     },
     {
-      "id": "VAL-SEM-RK-HIGH-RANK-SUSPICIOUS",
+      "id": "VAL-WARN-RK-HIGH-RANK",
       "purpose": "Flags Redlich-Kister ranks above 2 for review.",
       "level": "warning",
       "examples": [
@@ -20,7 +20,7 @@
       ]
     },
     {
-      "id": "VAL-SEM-RK-RANK-GAPS-SUSPICIOUS",
+      "id": "VAL-WARN-RK-RANK-GAPS",
       "purpose": "Flags missing lower ranks in an otherwise higher-rank Redlich-Kister series.",
       "level": "warning",
       "examples": [

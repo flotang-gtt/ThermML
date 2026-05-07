@@ -5,7 +5,7 @@
       "familyName": "CEF endmember cartesian count",
       "familySlug": "cef-endmember-cartesian-count",
       "familySummary": "Checks that declared CEF endmember lists match the cartesian product implied by the sublattice constituent arrays.",
-      "ruleId": "VAL-SEM-CEF-ENDMEMBER-CARTESIAN-COUNT",
+      "ruleId": "VAL-ERR-CEF-ENDMEMBER-CARTESIAN-COUNT-MISMATCH",
       "purpose": "Checks that the declared CEF endmember list matches the cartesian product implied by the sublattice constituent lists.",
       "level": "error",
       "source": {
@@ -27,7 +27,7 @@
       "familyName": "Redlich-Kister rank",
       "familySlug": "redlich-kister-rank",
       "familySummary": "Checks Redlich-Kister rank values and flags suspicious high-rank or gap-filled series for review.",
-      "ruleId": "VAL-DOM-RK-RANK",
+      "ruleId": "VAL-ERR-RK-RANK-INVALID",
       "purpose": "Rejects Redlich-Kister rank values that are not non-negative integers.",
       "level": "error",
       "source": {
@@ -49,7 +49,7 @@
       "familyName": "Redlich-Kister rank",
       "familySlug": "redlich-kister-rank",
       "familySummary": "Checks Redlich-Kister rank values and flags suspicious high-rank or gap-filled series for review.",
-      "ruleId": "VAL-SEM-RK-HIGH-RANK-SUSPICIOUS",
+      "ruleId": "VAL-WARN-RK-HIGH-RANK",
       "purpose": "Flags Redlich-Kister ranks above 2 for review.",
       "level": "warning",
       "source": {
@@ -67,7 +67,7 @@
       "familyName": "Redlich-Kister rank",
       "familySlug": "redlich-kister-rank",
       "familySummary": "Checks Redlich-Kister rank values and flags suspicious high-rank or gap-filled series for review.",
-      "ruleId": "VAL-SEM-RK-RANK-GAPS-SUSPICIOUS",
+      "ruleId": "VAL-WARN-RK-RANK-GAPS",
       "purpose": "Flags missing lower ranks in an otherwise higher-rank Redlich-Kister series.",
       "level": "warning",
       "source": {
@@ -85,7 +85,7 @@
       "familyName": "Ternary interpolation locator aliases",
       "familySlug": "ternary-interpolation-locator-aliases",
       "familySummary": "Checks that duplicated ternary locator aliases stay internally consistent when both serialized forms are present.",
-      "ruleId": "VAL-SEM-INTERPOLATION-ALIASES-AGREE",
+      "ruleId": "VAL-ERR-TERNARY-INTERPOLATION-LOCATOR-ALIASES-MISMATCH",
       "purpose": "Checks that the two serialized locator aliases on a ternary interpolation constituent do not disagree.",
       "level": "error",
       "source": {
