@@ -3,67 +3,35 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Schematron Validation Catalog</title>
+  <title>ThermML Rule Catalog</title>
   <link rel="stylesheet" href="assets/catalog.css">
 </head>
 <body class="catalog-page">
   <main class="catalog-shell">
     <header class="hero">
-      <p class="eyebrow">Runtime renderer for <code>schematron-catalog.json</code></p>
-      <h1>Schematron Validation Catalog</h1>
-      <p class="hero-copy">This page renders the generated <code>schematron-catalog.json</code> payload in the browser. Add or update a rule-family <code>catalog.json</code> file, then rerun <code>uv run .\schematron\generate_catalog.py</code> to refresh the data.</p>
+      <h1>ThermML Rule Catalog</h1>
+      <p class="hero-copy">This page renders the ThermML Schematron rules in a catalog format. The catalog is auto-generated from existing rules in the ThermML repository.</p>
     </header>
-
-    <section class="stat-grid" aria-label="Catalog summary">
-      <article class="stat-card">
-        <div id="catalog-family-count" class="stat-value">-</div>
-        <div class="stat-label">Rule families</div>
-      </article>
-      <article class="stat-card">
-        <div id="catalog-rule-count" class="stat-value">-</div>
-        <div class="stat-label">Published rules</div>
-      </article>
-      <article class="stat-card">
-        <div id="catalog-error-count" class="stat-value">-</div>
-        <div class="stat-label">Error rules</div>
-      </article>
-      <article class="stat-card">
-        <div id="catalog-warning-count" class="stat-value">-</div>
-        <div class="stat-label">Warning rules</div>
-      </article>
-    </section>
 
     <section class="control-panel" aria-label="Catalog filters">
       <label class="field search-field" for="catalog-search">
-        <span class="field-label">Search</span>
-        <input id="catalog-search" type="search" placeholder="Search rule IDs, families, purpose text, or fixture names">
+        <span class="field-label">Filter</span>
+        <input id="catalog-search" type="search" placeholder="Filter IDs, families, purpose, or examples">
       </label>
 
       <fieldset class="field levels-field">
         <legend class="field-label">Levels</legend>
-        <label class="toggle-option" for="level-error">
-          <input id="level-error" type="checkbox" name="catalog-level" value="error" checked>
-          <span>Error</span>
-        </label>
-        <label class="toggle-option" for="level-warning">
-          <input id="level-warning" type="checkbox" name="catalog-level" value="warning" checked>
-          <span>Warning</span>
-        </label>
+        <div class="toggle-group">
+          <label class="toggle-option" for="level-error">
+            <input id="level-error" type="checkbox" name="catalog-level" value="error" checked>
+            <span>Error</span>
+          </label>
+          <label class="toggle-option" for="level-warning">
+            <input id="level-warning" type="checkbox" name="catalog-level" value="warning" checked>
+            <span>Warning</span>
+          </label>
+        </div>
       </fieldset>
-
-      <label class="field" for="catalog-family">
-        <span class="field-label">Rule family</span>
-        <select id="catalog-family">
-          <option value="">All families</option>
-        </select>
-      </label>
-
-      <label class="field" for="catalog-fixture">
-        <span class="field-label">Fixture</span>
-        <select id="catalog-fixture">
-          <option value="">Any fixture</option>
-        </select>
-      </label>
 
       <div class="actions">
         <button id="catalog-reset" type="button">Reset filters</button>
@@ -77,16 +45,54 @@
 
     <p id="catalog-error" class="catalog-error" hidden></p>
 
+    <fieldset class="column-panel" aria-label="Visible table columns">
+      <legend class="field-label">Visible columns</legend>
+      <div class="column-options">
+        <label class="column-option" for="column-family-toggle">
+          <input id="column-family-toggle" type="checkbox" data-column-toggle="family" checked>
+          <span>Rule Family</span>
+        </label>
+        <label class="column-option" for="column-rule-id-toggle">
+          <input id="column-rule-id-toggle" type="checkbox" data-column-toggle="rule-id" checked>
+          <span>Rule ID</span>
+        </label>
+        <label class="column-option" for="column-purpose-toggle">
+          <input id="column-purpose-toggle" type="checkbox" data-column-toggle="purpose" checked>
+          <span>Purpose</span>
+        </label>
+        <label class="column-option" for="column-level-toggle">
+          <input id="column-level-toggle" type="checkbox" data-column-toggle="level" checked>
+          <span>Level</span>
+        </label>
+        <label class="column-option" for="column-source-toggle">
+          <input id="column-source-toggle" type="checkbox" data-column-toggle="source" checked>
+          <span>Source</span>
+        </label>
+        <label class="column-option" for="column-examples-toggle">
+          <input id="column-examples-toggle" type="checkbox" data-column-toggle="examples" checked>
+          <span>Examples</span>
+        </label>
+      </div>
+    </fieldset>
+
     <div class="table-wrap">
-      <table>
+      <table id="catalog-table">
+        <colgroup>
+          <col data-column="family" class="column-family">
+          <col data-column="rule-id" class="column-rule-id">
+          <col data-column="purpose" class="column-purpose">
+          <col data-column="level" class="column-level">
+          <col data-column="source" class="column-source">
+          <col data-column="examples" class="column-examples">
+        </colgroup>
         <thead>
           <tr>
-            <th>Rule Family</th>
-            <th>Rule ID</th>
-            <th>Purpose</th>
-            <th>Level</th>
-            <th>Source</th>
-            <th>Examples</th>
+            <th scope="col" data-column="family">Rule Family</th>
+            <th scope="col" data-column="rule-id">Rule ID</th>
+            <th scope="col" data-column="purpose">Purpose</th>
+            <th scope="col" data-column="level">Level</th>
+            <th scope="col" data-column="source">Source</th>
+            <th scope="col" data-column="examples">Examples</th>
           </tr>
         </thead>
         <tbody id="catalog-table-body">
@@ -97,48 +103,44 @@
       </table>
     </div>
 
-    <section class="note-card">
-      <h2>Combined Entrypoint</h2>
-      <p>The runnable combined entrypoint is <code>schematron/thermml.sch</code>. That file mirrors the currently published rule families and is the Schematron layer used by the repository-level <code>validate_one.py</code> command.</p>
-    </section>
-
-    <section class="note-grid">
-      <article class="note-card">
-        <h2>Layout Note</h2>
-        <p>Each rule family currently has two Schematron files with different roles.</p>
-        <ul>
-          <li><code>module.sch</code> is the shared include fragment that contains the actual rule-family body.</li>
-          <li><code>rule.sch</code> is a thin standalone wrapper that includes <code>module.sch</code> so the family can still be executed by itself.</li>
-        </ul>
-        <p>This split exists because the current <code>lxml.isoschematron</code> workflow supports include-based composition cleanly when the included file is a Schematron fragment such as a top-level <code>pattern</code>, not a full independent schema used as an include target.</p>
-      </article>
-
-      <article class="note-card">
-        <h2>Fixture Convention</h2>
-        <ul>
-          <li><code>valid.xml</code>: passes without errors</li>
-          <li><code>invalid.xml</code>: fails at least one assert</li>
-          <li><code>warning.xml</code>: passes but emits one or more <code>report</code> diagnostics when the rule family uses warnings</li>
-        </ul>
-      </article>
-    </section>
   </main>
   <script>
 (() => {
+  const catalogTable = document.getElementById("catalog-table");
   const tableBody = document.getElementById("catalog-table-body");
   const resultCount = document.getElementById("catalog-result-count");
   const activeFilters = document.getElementById("catalog-active-filters");
   const errorBanner = document.getElementById("catalog-error");
-  const familyCount = document.getElementById("catalog-family-count");
-  const ruleCount = document.getElementById("catalog-rule-count");
-  const errorCount = document.getElementById("catalog-error-count");
-  const warningCount = document.getElementById("catalog-warning-count");
   const searchInput = document.getElementById("catalog-search");
-  const familySelect = document.getElementById("catalog-family");
-  const fixtureSelect = document.getElementById("catalog-fixture");
   const levelInputs = Array.from(document.querySelectorAll('input[name="catalog-level"]'));
+  const columnToggles = Array.from(document.querySelectorAll('[data-column-toggle]'));
   const resetButton = document.getElementById("catalog-reset");
+  const hiddenColumns = new Set();
   let catalogRows = [];
+
+  function createColumnCell(columnName) {
+    const cell = document.createElement("td");
+    cell.dataset.column = columnName;
+    return cell;
+  }
+
+  function syncColumnVisibility() {
+    const columnNames = uniqueSorted(
+      Array.from(new Set(columnToggles.map((toggle) => toggle.dataset.columnToggle)))
+    );
+
+    columnNames.forEach((columnName) => {
+      const isHidden = hiddenColumns.has(columnName);
+      catalogTable
+        .querySelectorAll(`[data-column="${columnName}"]`)
+        .forEach((node) => node.classList.toggle("is-hidden", isHidden));
+
+      const toggle = columnToggles.find((entry) => entry.dataset.columnToggle === columnName);
+      if (toggle) {
+        toggle.checked = !isHidden;
+      }
+    });
+  }
 
   function uniqueSorted(values) {
     return Array.from(new Set(values)).sort((left, right) =>
@@ -156,7 +158,7 @@
   }
 
   function createFamilyCell(row) {
-    const cell = document.createElement("td");
+    const cell = createColumnCell("family");
     cell.className = "family-cell";
 
     const title = document.createElement("strong");
@@ -172,13 +174,13 @@
   }
 
   function createRuleIdCell(row) {
-    const cell = document.createElement("td");
+    const cell = createColumnCell("rule-id");
     appendCodeLink(cell, row.ruleId, row.source.href);
     return cell;
   }
 
   function createLevelCell(row) {
-    const cell = document.createElement("td");
+    const cell = createColumnCell("level");
     const badge = document.createElement("span");
     badge.className = `level-badge level-${row.level}`;
     badge.textContent = row.level;
@@ -187,7 +189,7 @@
   }
 
   function createExamplesCell(row) {
-    const cell = document.createElement("td");
+    const cell = createColumnCell("examples");
     if (!row.examples.length) {
       cell.textContent = "No examples";
       return cell;
@@ -221,19 +223,21 @@
       row.append(createFamilyCell(entry));
       row.append(createRuleIdCell(entry));
 
-      const purposeCell = document.createElement("td");
+      const purposeCell = createColumnCell("purpose");
       purposeCell.textContent = entry.purpose;
       row.append(purposeCell);
 
       row.append(createLevelCell(entry));
 
-      const sourceCell = document.createElement("td");
+      const sourceCell = createColumnCell("source");
       appendCodeLink(sourceCell, entry.source.label, entry.source.href);
       row.append(sourceCell);
 
       row.append(createExamplesCell(entry));
       tableBody.append(row);
     });
+
+    syncColumnVisibility();
   }
 
   function selectedLevels() {
@@ -253,16 +257,10 @@
       .toLowerCase();
   }
 
-  function activeFilterText(search, levels, family, fixture) {
+  function activeFilterText(search, levels) {
     const parts = [];
     if (search) {
       parts.push(`search "${search}"`);
-    }
-    if (family) {
-      parts.push(`family ${family}`);
-    }
-    if (fixture) {
-      parts.push(`fixture ${fixture}`);
     }
     if (levels.length && levels.length < levelInputs.length) {
       parts.push(`levels ${levels.join(" + ")}`);
@@ -270,37 +268,20 @@
     return parts.length ? `Active filters: ${parts.join(", ")}.` : "Showing the full catalog.";
   }
 
-  function setSummary(rows) {
-    const families = uniqueSorted(rows.map((row) => row.familyName)).length;
-    familyCount.textContent = String(families);
-    ruleCount.textContent = String(rows.length);
-    errorCount.textContent = String(rows.filter((row) => row.level === "error").length);
-    warningCount.textContent = String(rows.filter((row) => row.level === "warning").length);
-  }
-
-  function syncResults(rows, filteredRows, search, levels, family, fixture) {
-    const visibleFamilies = uniqueSorted(filteredRows.map((row) => row.familyName)).length;
-    resultCount.textContent = `Showing ${filteredRows.length} of ${rows.length} rules across ${visibleFamilies} families.`;
-    activeFilters.textContent = activeFilterText(search, levels, family, fixture);
+  function syncResults(rows, filteredRows, search, levels) {
+    resultCount.textContent = `Showing ${filteredRows.length} of ${rows.length} rules.`;
+    activeFilters.textContent = activeFilterText(search, levels);
   }
 
   function applyFilters() {
     const search = searchInput.value.trim().toLowerCase();
     const levels = selectedLevels();
-    const family = familySelect.value;
-    const fixture = fixtureSelect.value;
 
     const filteredRows = catalogRows.filter((row) => {
       if (levels.length && !levels.includes(row.level)) {
         return false;
       }
       if (!levels.length) {
-        return false;
-      }
-      if (family && row.familyName !== family) {
-        return false;
-      }
-      if (fixture && !row.examples.some((example) => example.name === fixture)) {
         return false;
       }
       if (search && !buildSearchBlob(row).includes(search)) {
@@ -310,36 +291,29 @@
     });
 
     renderRows(filteredRows);
-    syncResults(catalogRows, filteredRows, searchInput.value.trim(), levels, family, fixture);
-  }
-
-  function populateSelect(select, values, defaultLabel) {
-    select.replaceChildren();
-
-    const defaultOption = document.createElement("option");
-    defaultOption.value = "";
-    defaultOption.textContent = defaultLabel;
-    select.append(defaultOption);
-
-    values.forEach((value) => {
-      const option = document.createElement("option");
-      option.value = value;
-      option.textContent = value;
-      select.append(option);
-    });
+    syncResults(catalogRows, filteredRows, searchInput.value.trim(), levels);
   }
 
   searchInput.addEventListener("input", applyFilters);
-  familySelect.addEventListener("change", applyFilters);
-  fixtureSelect.addEventListener("change", applyFilters);
   levelInputs.forEach((input) => input.addEventListener("change", applyFilters));
+  columnToggles.forEach((toggle) => {
+    toggle.addEventListener("change", () => {
+      const columnName = toggle.dataset.columnToggle;
+      if (toggle.checked) {
+        hiddenColumns.delete(columnName);
+      } else {
+        hiddenColumns.add(columnName);
+      }
+      syncColumnVisibility();
+    });
+  });
   resetButton.addEventListener("click", () => {
     searchInput.value = "";
-    familySelect.value = "";
-    fixtureSelect.value = "";
     levelInputs.forEach((input) => {
       input.checked = true;
     });
+    hiddenColumns.clear();
+    syncColumnVisibility();
     applyFilters();
   });
 
@@ -352,17 +326,6 @@
 
       const payload = await response.json();
       catalogRows = Array.isArray(payload.rows) ? payload.rows : [];
-      setSummary(catalogRows);
-      populateSelect(
-        familySelect,
-        uniqueSorted(catalogRows.map((row) => row.familyName)),
-        "All families"
-      );
-      populateSelect(
-        fixtureSelect,
-        uniqueSorted(catalogRows.flatMap((row) => row.examples.map((example) => example.name))),
-        "Any fixture"
-      );
       applyFilters();
     } catch (error) {
       errorBanner.hidden = false;
@@ -375,15 +338,13 @@
       cell.textContent = "Catalog data could not be loaded.";
       row.append(cell);
       tableBody.append(row);
-      [familyCount, ruleCount, errorCount, warningCount].forEach((node) => {
-        node.textContent = "0";
-      });
       resultCount.textContent = "No catalog data loaded.";
       activeFilters.textContent = "";
     }
   }
 
   loadCatalog();
+  syncColumnVisibility();
 })();
 
   </script>
