@@ -242,6 +242,31 @@ def test_sublattice_multiplicities_must_be_numeric_list(
     ), [f"{error.type_name}: {error.message}" for error in errors]
 
 
+def test_cef_magnetic_structure_accepts_renamed_factor_fields(
+    schema: etree.XMLSchema, simple_solution_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    structure = simple_solution_doc.xpath(
+        './t:phases/t:phase[1]/t:structure', namespaces=NS
+    )[0]
+    magnetic = etree.fromstring(
+        '''
+        <magnetic xmlns="http://calphad.org/thermml/0.1"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:type="IHJMagneticType">
+            <AFMFactor>1 - 0.5*T</AFMFactor>
+            <structureFactorP>0.28</structureFactorP>
+        </magnetic>
+        '''
+    )
+    structure.insert(1, magnetic)
+
+    is_valid, errors = validate_tree(
+        schema, simple_solution_doc, tmp_path, 'cef-magnetic-renamed-factors.xml'
+    )
+
+    assert is_valid, [f"{error.type_name}: {error.message}" for error in errors]
+
+
 def test_phase_name_must_not_contain_whitespace(
     schema: etree.XMLSchema, basic_example_doc: etree._ElementTree, tmp_path: Path
 ) -> None:
