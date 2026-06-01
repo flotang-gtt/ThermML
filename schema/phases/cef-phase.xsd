@@ -104,6 +104,14 @@
     <!-- Magnetic Types                                                     -->
     <!-- ================================================================== -->
 
+    <xs:simpleType name="MagneticFactorValueType">
+        <xs:annotation>
+            <xs:documentation>Magnetic model factor value. Stored as text so emitters may
+                provide either a numeric literal or a mathematical expression string.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string" />
+    </xs:simpleType>
+
     <xs:complexType name="IHJMagneticType">
         <xs:annotation>
             <xs:documentation>Magnetic properties following the classic Inden-Hillert-Jarl (IHJ)
@@ -120,16 +128,16 @@
                     <xs:documentation>Optional comment on the magnetic parameters.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="structureFactor" type="xs:double" minOccurs="0">
+            <xs:element name="AFMFactor" type="MagneticFactorValueType" minOccurs="0">
                 <xs:annotation>
-                    <xs:documentation>Structure factor for the magnetic model
-                        (dimensionless).</xs:documentation>
+                    <xs:documentation>AFM factor for the magnetic model. May be provided as a
+                        numeric literal or an expression string.</xs:documentation>
                 </xs:annotation>
             </xs:element>
-            <xs:element name="pFactor" type="xs:double" minOccurs="0">
+            <xs:element name="structureFactorP" type="MagneticFactorValueType" minOccurs="0">
                 <xs:annotation>
-                    <xs:documentation>p-factor for the magnetic model
-                        (dimensionless).</xs:documentation>
+                    <xs:documentation>Structure factor P for the magnetic model. May be provided
+                        as a numeric literal or an expression string.</xs:documentation>
                 </xs:annotation>
             </xs:element>
         </xs:sequence>
@@ -143,8 +151,8 @@
         <xs:sequence>
             <xs:element name="ref" type="xs:string" minOccurs="0" />
             <xs:element name="comment" type="xs:string" minOccurs="0" />
-            <xs:element name="structureFactor" type="xs:double" minOccurs="0" />
-            <xs:element name="pFactor" type="xs:double" minOccurs="0" />
+            <xs:element name="AFMFactor" type="MagneticFactorValueType" minOccurs="0" />
+            <xs:element name="structureFactorP" type="MagneticFactorValueType" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
 

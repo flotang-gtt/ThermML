@@ -5,7 +5,7 @@ All notable changes to the ThermML schema will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
-## [0.1] - 2026-02-24
+## [0.1] - 2026-06-01
 
 ### Added
 - Ordered phase schema with required `disorderedPhase` attribute
@@ -16,6 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - `<numberOfDatComponents>` element for MQM serialization metadata
 - Optional `<comment>` on MQM endmembers
 - Optional `k` attribute on `MQM-L-PF` for ternary pair-fraction interactions
+- Optional `<version>` element on revisions
+- `MagneticFactorValueType` allowing CEF magnetic factors to be a numeric literal or expression string
+- XSD identity constraints enforcing references for system components, global functions, ordered phases, and MQM species/quadruplets
+- Schematron rule layer (`schematron/`) for semantic checks beyond XSD grammar: Redlich-Kister rank, CEF endmember Cartesian count, ternary interpolation locator aliases, and empty-or-zero global expression content
+- Per-rule fixtures (valid/invalid/warning) and a runtime Schematron catalog generated from per-rule JSON, with a CI check enforcing catalog freshness
+- HTML rule catalogs (XSD and Schematron) published under `docs/validation/`
+- `validate_one.py` CLI running XSD plus bundled Schematron validation with combined error/warning reporting
 
 ### Changed
 - Bumped namespace from `http://calphad.org/thermml/0.0` to `http://calphad.org/thermml/0.1`
@@ -31,6 +38,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 - Renamed `assessed_systems` to `assessedSystems`
 - Renamed child `<species>` to `<specie>` inside species containers
 - `MQMEndmemberPropertyType` now extends `PhasePropertyType`
+- Renamed CEF magnetic factor fields: `structureFactor` to `AFMFactor`, `pFactor` to `structureFactorP`
+- Tightened phase/species identifiers, sublattice multiplicities, component refstates, expression selector types, MQM species groups, and metadata `<created>` dates
+- Relaxed refstate and MQM group constraints, and allowed zero-width expression ranges and braced expression references
 
 ### Fixed
 - Metadata constraints relaxed to allow empty `<authors>`, `<revisions>`, `<references>`
