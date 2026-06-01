@@ -24,6 +24,28 @@
       ]
     },
     {
+      "familyName": "Global expression empty or zero content",
+      "familySlug": "global-expression-empty-or-zero-content",
+      "familySummary": "Warns when a textual global-expression body is serialized as empty text or as a numeric zero literal.",
+      "ruleId": "VAL-WARN-GLOBAL-EXPRESSION-EMPTY-OR-ZERO-CONTENT",
+      "purpose": "Warns when a global expression's textual content node is empty or serialized as a numeric zero literal, which often indicates a missing or null function body.",
+      "level": "warning",
+      "source": {
+        "href": "../../schematron/rules/global-expression-empty-or-zero-content/rule.sch",
+        "label": "schematron/rules/global-expression-empty-or-zero-content/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/global-expression-empty-or-zero-content/valid.xml"
+        },
+        {
+          "name": "warning.xml",
+          "href": "../../schematron/rules/global-expression-empty-or-zero-content/warning.xml"
+        }
+      ]
+    },
+    {
       "familyName": "Redlich-Kister rank",
       "familySlug": "redlich-kister-rank",
       "familySummary": "Checks Redlich-Kister rank values and flags suspicious high-rank or gap-filled series for review.",

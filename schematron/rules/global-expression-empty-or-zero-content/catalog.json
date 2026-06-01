@@ -1,0 +1,15 @@
+{
+  "family_name": "Global expression empty or zero content",
+  "family_summary": "Warns when a textual global-expression body is serialized as empty text or as a numeric zero literal.",
+  "rules": [
+    {
+      "id": "VAL-WARN-GLOBAL-EXPRESSION-EMPTY-OR-ZERO-CONTENT",
+      "purpose": "Warns when a global expression's textual content node is empty or serialized as a numeric zero literal, which often indicates a missing or null function body.",
+      "level": "warning",
+      "examples": [
+        "valid.xml",
+        "warning.xml"
+      ]
+    }
+  ]
+}

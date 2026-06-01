@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/0.1"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <globalExpressions>
+    <expression name="GHSERNI" xsi:type="FunctionTypeTDB">
+      <tdb>298.15  -5179.159+117.854*T-22.096*T*LN(T); 3000.00 N !</tdb>
+    </expression>
+    <expression name="SiO2#other_func" xsi:type="RangedTemperatureExpr">
+      <range low="298.15" high="373.0">80.0119918*T^0 + 4.2</range>
+    </expression>
+    <expression name="Cr#FCC_A1" xsi:type="FunctionTypeCSdat">
+      <chemsage>4 2 1478.0000 -1490500.2 1740.8682</chemsage>
+    </expression>
+  </globalExpressions>
+</database>

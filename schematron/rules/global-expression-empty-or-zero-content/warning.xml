@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/0.1"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <globalExpressions>
+    <expression name="EMPTY_TDB" xsi:type="FunctionTypeTDB">
+      <tdb/>
+    </expression>
+    <expression name="ZERO_RANGE" xsi:type="RangedTemperatureExpr">
+      <range low="298.15" high="6000.0">0</range>
+    </expression>
+    <expression name="ZERO_CHEMSAGE" xsi:type="FunctionTypeCSdat">
+      <chemsage>0.0</chemsage>
+    </expression>
+  </globalExpressions>
+</database>
