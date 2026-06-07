@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/0.1"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <phases>
+    <phase xsi:type="CEFPhaseType" name="FCC_A1" state="solid">
+      <structure>
+        <sublattices multiplicities="1.0 1.0">
+          <site constituents="Fe Mn"/>
+          <site constituents="C Va"/>
+        </sublattices>
+      </structure>
+      <endmembers>
+        <!-- Phase declares 2 sublattices; endmember has only 1 site: rejected. -->
+        <endmember name="FeOnly">
+          <constituents>
+            <site><const species="Fe"/></site>
+          </constituents>
+        </endmember>
+        <!-- Phase declares 2 sublattices; endmember has 3 sites: rejected. -->
+        <endmember name="FeCVaExtra">
+          <constituents>
+            <site><const species="Fe"/></site>
+            <site><const species="C"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+        </endmember>
+      </endmembers>
+    </phase>
+  </phases>
+</database>

@@ -24,6 +24,28 @@
       ]
     },
     {
+      "familyName": "Endmember constituent site count",
+      "familySlug": "endmember-constituent-site-count",
+      "familySummary": "Validates that each endmember has exactly as many constituent sites as the phase declares sublattices.",
+      "ruleId": "VAL-ERR-ENDMEMBER-CONSTITUENT-SITE-COUNT-MISMATCH",
+      "purpose": "Rejects endmembers whose number of constituent sites does not match the phase's declared number of sublattices.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/endmember-constituent-site-count/rule.sch",
+        "label": "schematron/rules/endmember-constituent-site-count/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/endmember-constituent-site-count/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/endmember-constituent-site-count/invalid.xml"
+        }
+      ]
+    },
+    {
       "familyName": "Endmember duplicate constituents",
       "familySlug": "endmember-duplicate-constituents",
       "familySummary": "Rejects two endmembers in the same phase that occupy the sublattice sites with an identical, order-sensitive constituent array.",

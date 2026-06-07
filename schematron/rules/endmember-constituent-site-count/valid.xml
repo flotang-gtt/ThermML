@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/0.1"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <phases>
+    <!-- Phase with 2 sublattices (Fe/Mn and C/Va): cartesian product = 4 endmembers. -->
+    <phase xsi:type="CEFPhaseType" name="FCC_A1" state="solid">
+      <structure>
+        <sublattices multiplicities="1.0 1.0">
+          <site constituents="Fe Mn"/>
+          <site constituents="C Va"/>
+        </sublattices>
+      </structure>
+      <endmembers>
+        <!-- Each endmember has exactly 2 sites (matching 2 sublattices): valid. -->
+        <endmember name="FeVa">
+          <constituents>
+            <site><const species="Fe"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+        </endmember>
+        <endmember name="FeC">
+          <constituents>
+            <site><const species="Fe"/></site>
+            <site><const species="C"/></site>
+          </constituents>
+        </endmember>
+        <endmember name="MnVa">
+          <constituents>
+            <site><const species="Mn"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+        </endmember>
+        <endmember name="MnC">
+          <constituents>
+            <site><const species="Mn"/></site>
+            <site><const species="C"/></site>
+          </constituents>
+        </endmember>
+      </endmembers>
+    </phase>
+  </phases>
+</database>

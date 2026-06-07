@@ -1,0 +1,15 @@
+{
+  "family_name": "Endmember constituent site count",
+  "family_summary": "Validates that each endmember has exactly as many constituent sites as the phase declares sublattices.",
+  "rules": [
+    {
+      "id": "VAL-ERR-ENDMEMBER-CONSTITUENT-SITE-COUNT-MISMATCH",
+      "purpose": "Rejects endmembers whose number of constituent sites does not match the phase's declared number of sublattices.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    }
+  ]
+}

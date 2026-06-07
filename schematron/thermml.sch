@@ -16,4 +16,5 @@
   <sch:include href="rules/global-expression-empty-or-zero-content/module.sch"/>
   <sch:include href="rules/species-duplicate-stoichiometry/module.sch"/>
   <sch:include href="rules/endmember-duplicate-constituents/module.sch"/>
+  <sch:include href="rules/endmember-constituent-site-count/module.sch"/>
 </sch:schema>
