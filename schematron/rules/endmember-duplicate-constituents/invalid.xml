@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/0.1"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <phases>
+    <phase xsi:type="CEFPhaseType" name="FCC_A1" state="solid">
+      <endmembers>
+        <endmember name="FeVa">
+          <constituents>
+            <site><const species="Fe"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+        </endmember>
+        <!-- Different name, identical constituent array as FeVa: rejected. -->
+        <endmember name="Austenite_FeVa">
+          <constituents>
+            <site><const species="Fe"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+        </endmember>
+        <endmember name="MnVa">
+          <constituents>
+            <site><const species="Mn"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+        </endmember>
+      </endmembers>
+    </phase>
+  </phases>
+</database>

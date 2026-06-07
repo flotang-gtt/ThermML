@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/0.1"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <phases>
+    <!-- Same composition string, different charge: distinct ions, not duplicates. -->
+    <phase xsi:type="CEFPhaseType" name="Liquid" state="liquid">
+      <species>
+        <specie name="Cu[1+]" composition="Cu1" charge="+1" group="1"/>
+        <specie name="Cu[2+]" composition="Cu1" charge="+2" group="1"/>
+        <specie name="Fe[2+]" composition="Fe1" charge="+2" group="1"/>
+        <specie name="Fe[3+]" composition="Fe1" charge="+3" group="1"/>
+        <specie name="Cl[1-]" composition="Cl1" charge="-1" group="2"/>
+      </species>
+    </phase>
+    <!-- The same formula (Fe1, +2) reappears in another phase: scoped per phase, allowed. -->
+    <phase xsi:type="CEFPhaseType" name="FCC_A1" state="solid">
+      <species>
+        <specie name="Fe" composition="Fe1" charge="+2"/>
+        <specie name="Va" composition="Va"/>
+      </species>
+    </phase>
+  </phases>
+</database>

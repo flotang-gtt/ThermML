@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/0.1"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <phases>
+    <phase xsi:type="CEFPhaseType" name="FCC_A1" state="solid">
+      <species>
+        <!-- Two different names, same stoichiometric formula (Fe1, no charge): rejected. -->
+        <specie name="Fe" composition="Fe1"/>
+        <specie name="Iron" composition="Fe1"/>
+        <!-- Same composition and same charge as below: also rejected. -->
+        <specie name="O[2-]" composition="O1" charge="-2"/>
+        <specie name="Oxide" composition="O1" charge="-2"/>
+        <specie name="C" composition="C1"/>
+      </species>
+    </phase>
+  </phases>
+</database>

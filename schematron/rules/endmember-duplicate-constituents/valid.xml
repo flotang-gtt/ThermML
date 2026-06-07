@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/0.1"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <phases>
+    <phase xsi:type="CEFPhaseType" name="FCC_A1" state="solid">
+      <endmembers>
+        <endmember name="FeVa">
+          <constituents>
+            <site><const species="Fe"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+        </endmember>
+        <endmember name="MnVa">
+          <constituents>
+            <site><const species="Mn"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+        </endmember>
+        <!-- Same species, different site order: a distinct endmember, not a duplicate. -->
+        <endmember name="VaFe">
+          <constituents>
+            <site><const species="Va"/></site>
+            <site><const species="Fe"/></site>
+          </constituents>
+        </endmember>
+      </endmembers>
+    </phase>
+    <!-- The FeVa constituent array reappears in another phase: scoped per phase, allowed. -->
+    <phase xsi:type="CEFPhaseType" name="BCC_A2" state="solid">
+      <endmembers>
+        <endmember name="FeVa">
+          <constituents>
+            <site><const species="Fe"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+        </endmember>
+      </endmembers>
+    </phase>
+  </phases>
+</database>

@@ -1,0 +1,15 @@
+{
+  "family_name": "Endmember duplicate constituents",
+  "family_summary": "Rejects two endmembers in the same phase that occupy the sublattice sites with an identical, order-sensitive constituent array.",
+  "rules": [
+    {
+      "id": "VAL-ERR-ENDMEMBER-DUPLICATE-CONSTITUENTS",
+      "purpose": "Rejects two endmembers in the same phase whose per-site species signatures are identical, comparing the constituent array literally and in site order.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    }
+  ]
+}

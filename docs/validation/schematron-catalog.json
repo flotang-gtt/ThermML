@@ -24,6 +24,28 @@
       ]
     },
     {
+      "familyName": "Endmember duplicate constituents",
+      "familySlug": "endmember-duplicate-constituents",
+      "familySummary": "Rejects two endmembers in the same phase that occupy the sublattice sites with an identical, order-sensitive constituent array.",
+      "ruleId": "VAL-ERR-ENDMEMBER-DUPLICATE-CONSTITUENTS",
+      "purpose": "Rejects two endmembers in the same phase whose per-site species signatures are identical, comparing the constituent array literally and in site order.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/endmember-duplicate-constituents/rule.sch",
+        "label": "schematron/rules/endmember-duplicate-constituents/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/endmember-duplicate-constituents/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/endmember-duplicate-constituents/invalid.xml"
+        }
+      ]
+    },
+    {
       "familyName": "Global expression empty or zero content",
       "familySlug": "global-expression-empty-or-zero-content",
       "familySummary": "Warns when a textual global-expression body is serialized as empty text or as a numeric zero literal.",
@@ -100,6 +122,28 @@
         {
           "name": "warning.xml",
           "href": "../../schematron/rules/redlich-kister-rank/warning.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Species duplicate stoichiometry",
+      "familySlug": "species-duplicate-stoichiometry",
+      "familySummary": "Rejects two species in the same phase that share an identical stoichiometric formula, compared as the literal (composition, charge) string pair.",
+      "ruleId": "VAL-ERR-SPECIES-DUPLICATE-STOICHIOMETRY",
+      "purpose": "Rejects two species in the same phase whose normalized composition and charge strings are identical, while allowing same-composition species that differ in charge.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/species-duplicate-stoichiometry/rule.sch",
+        "label": "schematron/rules/species-duplicate-stoichiometry/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/species-duplicate-stoichiometry/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/species-duplicate-stoichiometry/invalid.xml"
         }
       ]
     },

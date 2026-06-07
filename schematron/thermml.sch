@@ -14,4 +14,6 @@
   <sch:include href="rules/redlich-kister-rank/module.sch"/>
   <sch:include href="rules/cef-endmember-cartesian-count/module.sch"/>
   <sch:include href="rules/global-expression-empty-or-zero-content/module.sch"/>
+  <sch:include href="rules/species-duplicate-stoichiometry/module.sch"/>
+  <sch:include href="rules/endmember-duplicate-constituents/module.sch"/>
 </sch:schema>

@@ -1,0 +1,15 @@
+{
+  "family_name": "Species duplicate stoichiometry",
+  "family_summary": "Rejects two species in the same phase that share an identical stoichiometric formula, compared as the literal (composition, charge) string pair.",
+  "rules": [
+    {
+      "id": "VAL-ERR-SPECIES-DUPLICATE-STOICHIOMETRY",
+      "purpose": "Rejects two species in the same phase whose normalized composition and charge strings are identical, while allowing same-composition species that differ in charge.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    }
+  ]
+}
