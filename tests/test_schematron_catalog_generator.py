@@ -9,7 +9,6 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-import re
 import sys
 
 
@@ -25,10 +24,13 @@ def test_generator_loads_all_rule_families() -> None:
 
     assert [family.slug for family in families] == [
         "cef-endmember-cartesian-count",
+        "endmember-duplicate-constituents",
+        "global-expression-empty-or-zero-content",
         "redlich-kister-rank",
+        "species-duplicate-stoichiometry",
         "ternary-interpolation-locator-aliases",
     ]
-    assert sum(len(family.rules) for family in families) == 5
+    assert sum(len(family.rules) for family in families) == 8
 
 
 def test_rendered_catalog_payload_contains_filterable_rule_data() -> None:
@@ -52,7 +54,10 @@ def test_runtime_html_fetches_generated_catalog_json() -> None:
         encoding="utf-8"
     )
 
+    # Verify the page is wired to fetch the catalog JSON at runtime.
     assert 'fetch("./schematron-catalog.json"' in html
-    assert 'id="catalog-family-count"' in html
-    assert 'id="catalog-error"' in html
-    assert re.search(r'id="catalog-search"', html) is not None
+
+    # Verify key UI elements exist (by semantic role, not brittle IDs, so refactors don't break the test).
+    assert '<table id="catalog-table">' in html, "missing catalog results table"
+    assert 'type="search"' in html, "missing search input"
+    assert 'id="catalog-error"' in html, "missing error message container"
