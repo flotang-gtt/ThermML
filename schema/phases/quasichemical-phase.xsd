@@ -50,31 +50,6 @@
                                 set to 2.4 by convention, but may vary for specific systems.</xs:documentation>
                         </xs:annotation>
                     </xs:element>
-                    <xs:element name="coordinationNumbers">
-                        <xs:annotation>
-                            <xs:documentation>Coordination numbers for cation and anion sublattices
-                                in this MQM endmember.</xs:documentation>
-                        </xs:annotation>
-                        <xs:complexType>
-                            <xs:sequence>
-                                <xs:element name="comment" type="xs:string" minOccurs="0">
-                                    <xs:annotation>
-                                        <xs:documentation>Optional comment on the coordination numbers.</xs:documentation>
-                                    </xs:annotation>
-                                </xs:element>
-                                <xs:element name="cation" type="xs:float" maxOccurs="1">
-                                    <xs:annotation>
-                                        <xs:documentation>Coordination number for the cation sublattice.</xs:documentation>
-                                    </xs:annotation>
-                                </xs:element>
-                                <xs:element name="anion" type="xs:float" maxOccurs="1">
-                                    <xs:annotation>
-                                        <xs:documentation>Coordination number for the anion sublattice.</xs:documentation>
-                                    </xs:annotation>
-                                </xs:element>
-                            </xs:sequence>
-                        </xs:complexType>
-                    </xs:element>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>

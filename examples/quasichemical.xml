@@ -78,10 +78,6 @@
                         <comment/>
                         <expr>CuCl#Liquid</expr>
                         <zeta>2.4</zeta>
-                        <coordinationNumbers>
-                            <cation>6.0</cation>
-                            <anion>6.0</anion>
-                        </coordinationNumbers>
                     </property>
                 </endmember>
 
@@ -102,11 +98,6 @@
                         <comment/>
                         <expr>ZnCl2#Liquid</expr>
                         <zeta>2.4</zeta>
-                        <coordinationNumbers>
-                            <comment>'Second Nearest Neighbor' coordination numbers</comment>
-                            <cation>6.0</cation>
-                            <anion>3.0</anion>
-                        </coordinationNumbers>
                     </property>
                 </endmember>
             </endmembers>
