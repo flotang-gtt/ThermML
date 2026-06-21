@@ -88,7 +88,7 @@ def render_location(doc: etree._ElementTree, location: str) -> str:
     if node.sourceline is not None:
         parts.append(f"line {node.sourceline}")
 
-    phase_name = node.xpath("string(ancestor-or-self::t:phase[1]/@name)", namespaces={"t": "http://calphad.org/thermml/0.1"})
+    phase_name = node.xpath("string(ancestor-or-self::t:phase[1]/@name)", namespaces={"t": "http://calphad.org/thermml/v0"})
     if phase_name:
         parts.append(f"phase={phase_name}")
 

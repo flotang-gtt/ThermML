@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<database xmlns="http://calphad.org/thermml/0.1"
+<database xmlns="http://calphad.org/thermml/v0"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <phases>
     <!-- Phase with 2 sublattices (Fe/Mn and C/Va): cartesian product = 4 endmembers. -->

@@ -1,8 +1,8 @@
 <xs:schema
-    targetNamespace="http://calphad.org/thermml/0.1"
+    targetNamespace="http://calphad.org/thermml/v0"
     elementFormDefault="qualified"
     version="0.1"
-    xmlns="http://calphad.org/thermml/0.1"
+    xmlns="http://calphad.org/thermml/v0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:include schemaLocation="../simple-types/main.xsd" />

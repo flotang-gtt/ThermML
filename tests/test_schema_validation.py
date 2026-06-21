@@ -17,7 +17,7 @@ import pytest
 
 
 NS = {
-    "t": "http://calphad.org/thermml/0.1",
+    "t": "http://calphad.org/thermml/v0",
     "xsi": "http://www.w3.org/2001/XMLSchema-instance",
 }
 SCHEMA_PATH = Path(__file__).resolve().parents[1] / "schema" / "thermml-schema.xsd"
@@ -250,7 +250,7 @@ def test_cef_magnetic_structure_accepts_renamed_factor_fields(
     )[0]
     magnetic = etree.fromstring(
         '''
-        <magnetic xmlns="http://calphad.org/thermml/0.1"
+        <magnetic xmlns="http://calphad.org/thermml/v0"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:type="IHJMagneticType">
             <AFMFactor>1 - 0.5*T</AFMFactor>
@@ -372,14 +372,14 @@ def test_revision_version_element_may_precede_date(
 ) -> None:
     metadata = basic_example_doc.xpath('./t:metadata', namespaces=NS)[0]
     revisions = metadata.xpath('./t:revisions', namespaces=NS)[0]
-    revision = etree.SubElement(revisions, '{http://calphad.org/thermml/0.1}revision')
-    version = etree.SubElement(revision, '{http://calphad.org/thermml/0.1}version')
+    revision = etree.SubElement(revisions, '{http://calphad.org/thermml/v0}revision')
+    version = etree.SubElement(revision, '{http://calphad.org/thermml/v0}version')
     version.text = '1.0'
-    date = etree.SubElement(revision, '{http://calphad.org/thermml/0.1}date')
+    date = etree.SubElement(revision, '{http://calphad.org/thermml/v0}date')
     date.text = '2025-04-01'
-    author = etree.SubElement(revision, '{http://calphad.org/thermml/0.1}author')
+    author = etree.SubElement(revision, '{http://calphad.org/thermml/v0}author')
     author.text = 'Test Author'
-    description = etree.SubElement(revision, '{http://calphad.org/thermml/0.1}description')
+    description = etree.SubElement(revision, '{http://calphad.org/thermml/v0}description')
     description.text = 'Schema regression test.'
 
     is_valid, errors = validate_tree(
@@ -487,7 +487,7 @@ def test_selected_must_reference_current_interaction_constituent(
         namespaces=NS,
     )[0]
     selected = etree.SubElement(
-        property_element, '{http://calphad.org/thermml/0.1}selected'
+        property_element, '{http://calphad.org/thermml/v0}selected'
     )
     selected.text = 'Fe[2+]'
 
