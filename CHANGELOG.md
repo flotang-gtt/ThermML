@@ -5,6 +5,24 @@ All notable changes to the ThermML schema will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [0.1.0] - 2026-06-21
+
+First version to be expressed with Semantic Versioning. The schema major
+version is now encoded in the namespace (`v0`) and the full version is carried
+on each database via the new `version` attribute.
+
+### Added
+- `SemanticVersionType` simple type validating Semantic Versioning 2.0.0 strings
+- Required `version` attribute on the `<database>` element holding the targeted
+  schema version, starting at `0.1.0` (distinct from the content-oriented
+  `<metadata><version>` element)
+
+### Changed
+- Bumped namespace from `http://calphad.org/thermml/0.1` to
+  `http://calphad.org/thermml/v0`; only the major version is encoded in the
+  namespace, so minor and patch iterations no longer require a namespace change
+- Aligned every `xs:schema/@version` to the semver form `0.1.0`
+
 ## [0.1] - 2026-06-01
 
 ### Added

@@ -25,6 +25,26 @@ schema.
 
 The `schema` directory contains the schema definition files.
 
+## Versioning
+
+ThermML follows [Semantic Versioning](https://semver.org/). The version is
+expressed in two complementary places:
+
+- The **target namespace** encodes only the major version, e.g.
+  `http://calphad.org/thermml/v0`. A breaking (major) change introduces a new
+  namespace (`v1`, `v2`, ...).
+- The **`version` attribute** on the root `<database>` element carries the full
+  `MAJOR.MINOR.PATCH` string a document targets, starting at `0.1.0`. Minor and
+  patch iterations change this attribute while staying within the same
+  namespace.
+
+This keeps minor and patch revisions compatible within a namespace while
+reserving namespace changes for breaking, major releases.
+
+Note that this schema `version` attribute is distinct from the
+`<metadata><version>` element, which versions the *content* of a particular
+database rather than the schema it conforms to.
+
 ## Validation
 
 Validate a single XML file against the XSD schema and bundled Schematron rules
