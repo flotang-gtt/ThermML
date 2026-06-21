@@ -105,7 +105,7 @@
 
         </xs:sequence>
         <xs:attribute name="name" type="xs:string" />
-        <xs:attribute name="version" type="SemanticVersionType">
+        <xs:attribute name="version" type="SemanticVersionType" use="required">
             <xs:annotation>
                 <xs:documentation> The Semantic Versioning string of the ThermML schema that this
                     database targets, e.g. "0.1.0". The schema major version is also encoded in the

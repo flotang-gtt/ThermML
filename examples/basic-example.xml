@@ -3,7 +3,8 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xmlns:xi="http://www.w3.org/2001/XInclude"
         xsi:schemaLocation="http://calphad.org/thermml/v0 ../schema/thermml-schema.xsd"
-        name="Example Database">
+        name="Example Database"
+        version="0.1.0">
 
     <metadata>
         <title>Example Database</title>
