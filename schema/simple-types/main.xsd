@@ -1,9 +1,22 @@
 <xs:schema
     targetNamespace="http://calphad.org/thermml/v0"
     elementFormDefault="qualified"
-    version="0.1"
+    version="0.1.0"
     xmlns="http://calphad.org/thermml/v0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:simpleType name="SemanticVersionType">
+        <xs:annotation>
+            <xs:documentation> A Semantic Versioning 2.0.0 string (https://semver.org), e.g.
+                "0.1.0". Composed of MAJOR.MINOR.PATCH with optional pre-release and build-metadata
+                suffixes. The MAJOR version is also encoded in the schema target namespace (the
+                ".../thermml/v0" segment), so a MAJOR bump implies a new namespace while MINOR and
+                PATCH iterations stay within it. </xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(-((0|[1-9][0-9]*|[0-9]*[a-zA-Z-][0-9a-zA-Z-]*)(\.(0|[1-9][0-9]*|[0-9]*[a-zA-Z-][0-9a-zA-Z-]*))*))?(\+([0-9a-zA-Z-]+(\.[0-9a-zA-Z-]+)*))?" />
+        </xs:restriction>
+    </xs:simpleType>
 
     <xs:simpleType name="MatterStateType" final="restriction">
         <xs:annotation>

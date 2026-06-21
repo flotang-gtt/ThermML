@@ -1,7 +1,7 @@
 <xs:schema
     targetNamespace="http://calphad.org/thermml/v0"
     elementFormDefault="qualified"
-    version="0.1"
+    version="0.1.0"
     xmlns="http://calphad.org/thermml/v0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
 

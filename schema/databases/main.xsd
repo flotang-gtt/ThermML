@@ -1,7 +1,7 @@
 <xs:schema
     targetNamespace="http://calphad.org/thermml/v0"
     elementFormDefault="qualified"
-    version="0.1"
+    version="0.1.0"
     xmlns="http://calphad.org/thermml/v0"
     xmlns:tm="http://calphad.org/thermml/v0"
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
@@ -105,6 +105,15 @@
 
         </xs:sequence>
         <xs:attribute name="name" type="xs:string" />
+        <xs:attribute name="version" type="SemanticVersionType">
+            <xs:annotation>
+                <xs:documentation> The Semantic Versioning string of the ThermML schema that this
+                    database targets, e.g. "0.1.0". The schema major version is also encoded in the
+                    target namespace (".../thermml/v0"). This is distinct from the
+                    metadata/version element, which versions the database content rather than the
+                    schema. </xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
     </xs:complexType>
 
 </xs:schema>
