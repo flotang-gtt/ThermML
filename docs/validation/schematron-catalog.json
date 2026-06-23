@@ -24,6 +24,42 @@
       ]
     },
     {
+      "familyName": "CEF magnetic consistency",
+      "familySlug": "cef-magnetic-consistency",
+      "familySummary": "Cross-checks that a CEF phase declares a magnetic model in its structure if and only if its endmembers or interactions carry magnetic parameters.",
+      "ruleId": "VAL-WARN-CEF-MAGNETIC-STRUCTURE-WITHOUT-PARAMETERS",
+      "purpose": "Flags a CEF phase whose structure declares a magnetic model while no endmember or interaction carries magnetic parameters (M, BML, TCL).",
+      "level": "warning",
+      "source": {
+        "href": "../../schematron/rules/cef-magnetic-consistency/rule.sch",
+        "label": "schematron/rules/cef-magnetic-consistency/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "warning.xml",
+          "href": "../../schematron/rules/cef-magnetic-consistency/warning.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "CEF magnetic consistency",
+      "familySlug": "cef-magnetic-consistency",
+      "familySummary": "Cross-checks that a CEF phase declares a magnetic model in its structure if and only if its endmembers or interactions carry magnetic parameters.",
+      "ruleId": "VAL-WARN-CEF-MAGNETIC-PARAMETERS-WITHOUT-STRUCTURE",
+      "purpose": "Flags a CEF phase that carries magnetic parameters (M, BML, TCL) while its structure declares no magnetic model.",
+      "level": "warning",
+      "source": {
+        "href": "../../schematron/rules/cef-magnetic-consistency/rule.sch",
+        "label": "schematron/rules/cef-magnetic-consistency/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "warning.xml",
+          "href": "../../schematron/rules/cef-magnetic-consistency/warning.xml"
+        }
+      ]
+    },
+    {
       "familyName": "Endmember constituent site count",
       "familySlug": "endmember-constituent-site-count",
       "familySummary": "Validates that each endmember has exactly as many constituent sites as the phase declares sublattices.",

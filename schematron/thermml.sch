@@ -17,4 +17,5 @@
   <sch:include href="rules/species-duplicate-stoichiometry/module.sch"/>
   <sch:include href="rules/endmember-duplicate-constituents/module.sch"/>
   <sch:include href="rules/endmember-constituent-site-count/module.sch"/>
+  <sch:include href="rules/cef-magnetic-consistency/module.sch"/>
 </sch:schema>

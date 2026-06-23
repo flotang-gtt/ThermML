@@ -1,0 +1,22 @@
+{
+  "family_name": "CEF magnetic consistency",
+  "family_summary": "Cross-checks that a CEF phase declares a magnetic model in its structure if and only if its endmembers or interactions carry magnetic parameters.",
+  "rules": [
+    {
+      "id": "VAL-WARN-CEF-MAGNETIC-STRUCTURE-WITHOUT-PARAMETERS",
+      "purpose": "Flags a CEF phase whose structure declares a magnetic model while no endmember or interaction carries magnetic parameters (M, BML, TCL).",
+      "level": "warning",
+      "examples": [
+        "warning.xml"
+      ]
+    },
+    {
+      "id": "VAL-WARN-CEF-MAGNETIC-PARAMETERS-WITHOUT-STRUCTURE",
+      "purpose": "Flags a CEF phase that carries magnetic parameters (M, BML, TCL) while its structure declares no magnetic model.",
+      "level": "warning",
+      "examples": [
+        "warning.xml"
+      ]
+    }
+  ]
+}

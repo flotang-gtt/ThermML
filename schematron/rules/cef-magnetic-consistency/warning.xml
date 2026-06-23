@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/v0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <phases>
+    <!-- Magnetic model in structure, but no magnetic parameters anywhere:
+         emits VAL-WARN-CEF-MAGNETIC-STRUCTURE-WITHOUT-PARAMETERS. -->
+    <phase xsi:type="CEFPhaseType" name="BCC_A2" state="solid">
+      <structure>
+        <sublattices multiplicities="1 3">
+          <site constituents="Cr Fe"/>
+          <site constituents="Va"/>
+        </sublattices>
+        <magnetic xsi:type="IHJMagneticType">
+          <AFMFactor>-1.0</AFMFactor>
+          <structureFactorP>0.4</structureFactorP>
+        </magnetic>
+      </structure>
+      <endmembers>
+        <endmember name="Cr:Va">
+          <constituents>
+            <site><const species="Cr"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+          <property xsi:type="G">
+            <expr>+1*{GHSERCR}</expr>
+          </property>
+        </endmember>
+        <endmember name="Fe:Va">
+          <constituents>
+            <site><const species="Fe"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+          <property xsi:type="G">
+            <expr>+1*{GHSERFE}</expr>
+          </property>
+        </endmember>
+      </endmembers>
+    </phase>
+    <!-- Magnetic parameters present, but the structure declares no magnetic
+         model: emits VAL-WARN-CEF-MAGNETIC-PARAMETERS-WITHOUT-STRUCTURE. -->
+    <phase xsi:type="CEFPhaseType" name="HCP_A3" state="solid">
+      <structure>
+        <sublattices multiplicities="1 0.5">
+          <site constituents="Co Fe"/>
+          <site constituents="Va"/>
+        </sublattices>
+      </structure>
+      <endmembers>
+        <endmember name="Co:Va">
+          <constituents>
+            <site><const species="Co"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+          <property xsi:type="G">
+            <expr>+1*{GHSERCO}</expr>
+          </property>
+          <property xsi:type="M">
+            <temperature type="Curie">1396</temperature>
+            <moment>1.35</moment>
+          </property>
+        </endmember>
+        <endmember name="Fe:Va">
+          <constituents>
+            <site><const species="Fe"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+          <property xsi:type="G">
+            <expr>+1*{GHSERFE}</expr>
+          </property>
+        </endmember>
+      </endmembers>
+    </phase>
+  </phases>
+</database>

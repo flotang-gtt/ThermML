@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/v0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <phases>
+    <!-- Magnetic model in structure AND magnetic parameters: consistent. -->
+    <phase xsi:type="CEFPhaseType" name="FCC_A1" state="solid">
+      <structure>
+        <sublattices multiplicities="1 1">
+          <site constituents="Cr Ni"/>
+          <site constituents="Va"/>
+        </sublattices>
+        <magnetic xsi:type="IHJMagneticType">
+          <AFMFactor>-3.0</AFMFactor>
+          <structureFactorP>0.28</structureFactorP>
+        </magnetic>
+      </structure>
+      <endmembers>
+        <endmember name="Cr:Va">
+          <constituents>
+            <site><const species="Cr"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+          <property xsi:type="G">
+            <expr>+1*{GHSERCR}</expr>
+          </property>
+          <property xsi:type="M">
+            <temperature type="Neel">-311.5</temperature>
+            <moment>-0.008</moment>
+          </property>
+        </endmember>
+        <endmember name="Ni:Va">
+          <constituents>
+            <site><const species="Ni"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+          <property xsi:type="G">
+            <expr>+1*{GHSERNI}</expr>
+          </property>
+          <property xsi:type="M">
+            <temperature type="Curie">633</temperature>
+            <moment>0.52</moment>
+          </property>
+        </endmember>
+      </endmembers>
+      <interactions>
+        <interaction name="Cr,Ni:Va">
+          <constituents>
+            <site><const species="Cr"/><const species="Ni"/></site>
+            <site><const species="Va"/></site>
+          </constituents>
+          <property xsi:type="TCL">
+            <expr rank="0">-3605</expr>
+          </property>
+          <property xsi:type="BML">
+            <expr rank="0">-1.91</expr>
+          </property>
+        </interaction>
+      </interactions>
+    </phase>
+    <!-- No magnetic model and no magnetic parameters: also consistent. -->
+    <phase xsi:type="CEFPhaseType" name="LIQUID" state="liquid">
+      <structure>
+        <sublattices multiplicities="1">
+          <site constituents="Cr Ni"/>
+        </sublattices>
+      </structure>
+      <endmembers>
+        <endmember name="Cr">
+          <constituents>
+            <site><const species="Cr"/></site>
+          </constituents>
+          <property xsi:type="G">
+            <expr>+1*{GLIQCR}</expr>
+          </property>
+        </endmember>
+        <endmember name="Ni">
+          <constituents>
+            <site><const species="Ni"/></site>
+          </constituents>
+          <property xsi:type="G">
+            <expr>+1*{GLIQNI}</expr>
+          </property>
+        </endmember>
+      </endmembers>
+    </phase>
+  </phases>
+</database>
