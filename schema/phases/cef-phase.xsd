@@ -146,12 +146,12 @@
     <xs:complexType name="IHXMagneticType">
         <xs:annotation>
             <xs:documentation>Magnetic properties based on the effective formalism by Xiong, W.
-                (doi:10.1016/j.calphad.2012.07.002).</xs:documentation>
+                (doi:10.1016/j.calphad.2012.07.002). Currently not supported by ChemSage consumers.
+            </xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="ref" type="xs:string" minOccurs="0" />
             <xs:element name="comment" type="xs:string" minOccurs="0" />
-            <xs:element name="AFMFactor" type="MagneticFactorValueType" minOccurs="0" />
             <xs:element name="structureFactorP" type="MagneticFactorValueType" minOccurs="0" />
         </xs:sequence>
     </xs:complexType>
