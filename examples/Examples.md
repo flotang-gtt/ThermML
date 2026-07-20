@@ -6,13 +6,13 @@ should be able to validate.
 Validate a single example from the project root with:
 
 ```powershell
-uv run --with lxml python validate_one.py .\examples\basic-example.xml
+uv run validate_one.py .\examples\basic-example.xml
 ```
 
 Validate all examples from the project root with:
 
 ```powershell
-Get-ChildItem .\examples\*.xml | ForEach-Object { uv run --with lxml python .\validate_one.py $_.FullName }
+Get-ChildItem .\examples\*.xml | ForEach-Object { uv run .\validate_one.py $_.FullName }
 ```
 
 Both commands run the XSD schema in `schema/thermml-schema.xsd` and the bundled

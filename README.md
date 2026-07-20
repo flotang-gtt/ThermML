@@ -47,16 +47,53 @@ database rather than the schema it conforms to.
 
 ## Validation
 
-Validate a single XML file against the XSD schema and bundled Schematron rules
+Validate either a ThermML XML file or the database XML stored in a Calphad
+Optimizer `.optx` save file against the XSD schema and bundled Schematron rules
 using [lxml](https://lxml.de/):
 
 ```bash
-uv run --with lxml python validate_one.py path/to/file.xml
+uv run validate_one.py path/to/file.xml
+uv run validate_one.py path/to/saved-run.optx
 ```
 
 This parses `schema/thermml-schema.xsd`, compiles `schematron/thermml.sch`, and
-validates the given XML file against both layers, reporting pass/fail status and
-detailed errors or warnings for any findings.
+validates the selected XML document against both layers. For `.optx` input,
+`validate_one.py` reads `manifest.json` and validates the archive member named by
+`members.database`; it does not extract the archive. The command reports
+`PASS`, `PASS WITH WARNINGS`, or `FAIL`, followed by detailed XSD errors and
+Schematron findings. It exits with status `0` for either passing result and `1`
+for validation failures or unreadable inputs/validators.
+
+Use custom validation resources when needed:
+
+```bash
+uv run validate_one.py INPUT \
+  --schema path/to/thermml-schema.xsd \
+  --schematron path/to/thermml.sch
+```
+
+The Python API returns the same result as structured data:
+
+```python
+from validate_one import ValidationLoadError, format_report, validate_file
+
+try:
+    report = validate_file("path/to/saved-run.optx")
+except ValidationLoadError as error:
+    print(f"{error.component} ERROR: {error}")
+else:
+    print(format_report(report))
+    if report.is_valid:
+        print("database is valid")
+```
+
+`validate_file(input_file, *, schema_path=..., schematron_path=...)` accepts a
+string or `pathlib.Path` and returns a `ValidationReport`. Its main fields are
+`input_path`, `document_label`, `archive_member`, `xsd_valid`, `xsd_errors`,
+`schematron_valid`, `schematron_errors`, and `schematron_warnings`; `is_valid`
+and `status` are convenience properties. It raises `ValidationLoadError` when
+an input, its OPTX manifest/database member, the XSD, or the Schematron cannot
+be loaded. `format_report(report)` renders the command-line report as a string.
 
 For example-specific validation commands, including how to run all example XML
 files in one shell loop, see `examples/Examples.md`.
