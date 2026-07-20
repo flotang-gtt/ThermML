@@ -24,14 +24,16 @@ def test_generator_loads_all_rule_families() -> None:
 
     assert [family.slug for family in families] == [
         "cef-endmember-cartesian-count",
+        "cef-magnetic-consistency",
         "endmember-constituent-site-count",
         "endmember-duplicate-constituents",
         "global-expression-empty-or-zero-content",
         "redlich-kister-rank",
         "species-duplicate-stoichiometry",
+        "subq-interaction-semantics",
         "ternary-interpolation-locator-aliases",
     ]
-    assert sum(len(family.rules) for family in families) == 9
+    assert sum(len(family.rules) for family in families) == 17
 
 
 def test_rendered_catalog_payload_contains_filterable_rule_data() -> None:

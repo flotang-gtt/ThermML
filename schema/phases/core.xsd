@@ -151,7 +151,7 @@
                             of the same phase. </xs:documentation>
                     </xs:annotation>
                     <xs:sequence>
-                        <xs:element name="site" minOccurs="1" maxOccurs="unbounded">
+                        <xs:element name="site" minOccurs="2" maxOccurs="2">
                             <xs:complexType>
                                 <xs:sequence>
                                     <xs:element name="const" minOccurs="1" maxOccurs="unbounded">
@@ -197,6 +197,5 @@
             <xs:element name="jk" minOccurs="1" maxOccurs="1" type="InterpolationMethodType" />
             <xs:element name="ik" minOccurs="1" maxOccurs="1" type="InterpolationMethodType" />
         </xs:sequence>
-        <xs:attribute name="constituents" type="xs:string" />
     </xs:complexType>
 </xs:schema>

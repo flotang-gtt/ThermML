@@ -183,7 +183,7 @@ def write_catalog_payload(output_path: Path = OUTPUT_PATH) -> tuple[Path, bool, 
     rendered = render_catalog_payload(families)
     previous = output_path.read_text(encoding="utf-8") if output_path.exists() else None
     changed = previous != rendered
-    output_path.write_text(rendered, encoding="utf-8")
+    output_path.write_text(rendered, encoding="utf-8", newline="\n")
     return output_path, changed, len(families), sum(len(family.rules) for family in families)
 
 

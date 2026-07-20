@@ -5,6 +5,26 @@ All notable changes to the ThermML schema will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/),
 and this project adheres to [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Canonical ChemSage SUBQ interaction support for `MQM-L-RC`, ternary
+  `MQM-L-SP` and `MQM-L-Quasichemical`, and the reader alias `MQM-L-Q`
+- Dedicated expression types for I/J/K, Redlich-Kister, reciprocal mean,
+  reciprocal side, and reciprocal corner parameter shapes
+- Schematron checks for selected ternary terms, reciprocal two-by-two
+  constituent cardinality, and ternary interpolation labels
+- Compact `subq-interaction-models.xml` interoperability example covering all
+  seven canonical emitted interaction families
+
+### Changed
+
+- SUBQ expression indices are restricted to unsigned 16-bit values
+- `MQM-L-RS` and `MQM-L-RC` require family-specific reciprocal variants
+- `numberOfDatComponents` is non-negative, quadruplets use canonical child
+  order, and ternary interpolations contain exactly two sites
+
 ## [0.1.0] - 2026-06-21
 
 First version to be expressed with Semantic Versioning. The schema major

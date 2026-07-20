@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/v0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <phases>
+    <phase xsi:type="ModifiedQuasichemicalPhaseType" name="SALT" state="liquid">
+      <interactions>
+        <interaction name="A,B:X">
+          <constituents>
+            <site><const species="A"/><const species="B"/></site>
+            <site><const species="X"/></site>
+          </constituents>
+          <property xsi:type="MQM-L-SP">
+            <expr i="0" j="0">1</expr>
+            <selected>Missing</selected>
+          </property>
+        </interaction>
+        <interaction name="A,B:X">
+          <constituents>
+            <site><const species="A"/><const species="B"/></site>
+            <site><const species="X"/></site>
+          </constituents>
+          <property xsi:type="MQM-L-RS" variant="A-BX-BY">
+            <expr i="0" j="0" k="1">2</expr>
+          </property>
+        </interaction>
+      </interactions>
+      <ternaryInterpolations>
+        <interpolation>
+          <constituents>
+            <site>
+              <const site="i" species="A"/>
+              <const site="i" species="B"/>
+              <const site="k" species="C"/>
+            </site>
+            <site><const species="X"/></site>
+          </constituents>
+          <ij xsi:type="Kohler"/>
+          <jk xsi:type="Muggiano"/>
+          <ik xsi:type="Toop"><constant>k</constant></ik>
+        </interpolation>
+      </ternaryInterpolations>
+    </phase>
+  </phases>
+</database>

@@ -1,0 +1,42 @@
+{
+  "family_name": "SUBQ interaction semantics",
+  "family_summary": "Checks ternary selection, reciprocal constituent cardinality, and interpolation labels for Modified Quasichemical phases.",
+  "rules": [
+    {
+      "id": "VAL-ERR-SUBQ-SELECTED-PROPERTY-TYPE",
+      "purpose": "Restricts selected to SUBQ PF, SP, Quasichemical, and RK property families.",
+      "level": "error",
+      "examples": ["valid.xml", "invalid.xml"]
+    },
+    {
+      "id": "VAL-ERR-SUBQ-SELECTED-CONSTITUENT",
+      "purpose": "Requires selected to name a constituent of its interaction.",
+      "level": "error",
+      "examples": ["valid.xml", "invalid.xml"]
+    },
+    {
+      "id": "VAL-ERR-SUBQ-SELECTED-TERNARY-SITE",
+      "purpose": "Requires selected interactions to contain one ternary site and one fixed site.",
+      "level": "error",
+      "examples": ["valid.xml", "invalid.xml"]
+    },
+    {
+      "id": "VAL-ERR-SUBQ-SELECTED-K",
+      "purpose": "Requires selected PF, SP, and Quasichemical expressions to carry an explicit positive k index.",
+      "level": "error",
+      "examples": ["valid.xml", "invalid.xml"]
+    },
+    {
+      "id": "VAL-ERR-SUBQ-RECIPROCAL-CARDINALITY",
+      "purpose": "Requires reciprocal properties to operate on two constituents on each of two sites.",
+      "level": "error",
+      "examples": ["valid.xml", "invalid.xml"]
+    },
+    {
+      "id": "VAL-ERR-SUBQ-INTERPOLATION-LABELS",
+      "purpose": "Requires ternary interpolation constituents to provide exactly one i, j, and k label on the ternary site.",
+      "level": "error",
+      "examples": ["valid.xml", "invalid.xml"]
+    }
+  ]
+}

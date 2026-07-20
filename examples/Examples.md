@@ -17,3 +17,8 @@ Get-ChildItem .\examples\*.xml | ForEach-Object { uv run .\validate_one.py $_.Fu
 
 Both commands run the XSD schema in `schema/thermml-schema.xsd` and the bundled
 Schematron rules in `schematron/thermml.sch`.
+
+`subq-interaction-models.xml` is the canonical compact example for ChemSage
+Modified Quasichemical interaction serialization. It covers all seven emitted
+interaction property types, reciprocal variants, selected ternary terms,
+quadruplets, and ternary interpolation models.

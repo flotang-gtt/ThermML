@@ -128,6 +128,78 @@
         </xs:complexContent>
     </xs:complexType>
 
+    <xs:simpleType name="SUBQIndexType">
+        <xs:annotation>
+            <xs:documentation>Unsigned 16-bit index used by serialized SUBQ interaction
+                expressions.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:nonNegativeInteger">
+            <xs:maxInclusive value="65535" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="MQMIJKExpressionType">
+        <xs:annotation>
+            <xs:documentation>SUBQ polynomial expression indexed by i and j, with an optional
+                ternary-corner exponent k. An omitted k has the serialized default value
+                zero.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="i" type="SUBQIndexType" use="required" />
+                <xs:attribute name="j" type="SUBQIndexType" use="required" />
+                <xs:attribute name="k" type="SUBQIndexType" use="optional" default="0" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="MQMRKExpressionType">
+        <xs:annotation>
+            <xs:documentation>Redlich-Kister SUBQ expression indexed by polynomial
+                rank.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="rank" type="SUBQIndexType" use="required" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="MQMReciprocalMeanExpressionType">
+        <xs:annotation>
+            <xs:documentation>Unindexed reciprocal mean or centre expression.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string" />
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="MQMReciprocalSideExpressionType">
+        <xs:annotation>
+            <xs:documentation>Reciprocal-side expression carrying the three required SUBQ
+                indices.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="i" type="SUBQIndexType" use="required" />
+                <xs:attribute name="j" type="SUBQIndexType" use="required" />
+                <xs:attribute name="k" type="SUBQIndexType" use="required" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="MQMReciprocalCornerExpressionType">
+        <xs:annotation>
+            <xs:documentation>Reciprocal-corner expression carrying its one required SUBQ
+                index.</xs:documentation>
+        </xs:annotation>
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="i" type="SUBQIndexType" use="required" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
     <xs:complexType name="MQM-L-PF">
         <xs:annotation>
             <xs:documentation>Pair-fraction expansion parameter for MQM excess energies. Binary
@@ -138,7 +210,8 @@
         <xs:complexContent>
             <xs:extension base="MQMInteractionPropertyType">
                 <xs:sequence>
-                    <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
+                    <xs:element name="expr" type="MQMIJKExpressionType" minOccurs="1"
+                        maxOccurs="unbounded">
                         <xs:annotation>
                             <xs:documentation>One coefficient expression of the pair-fraction
                                 expansion. i and j are the exponents of the two regular mixing
@@ -146,15 +219,6 @@
                                 the selected ternary-corner species and is expected to be the
                                 asymmetric index of that term.</xs:documentation>
                         </xs:annotation>
-                        <xs:complexType>
-                            <xs:simpleContent>
-                                <xs:extension base="xs:string">
-                                    <xs:attribute name="i" type="xs:integer" use="required" />
-                                    <xs:attribute name="j" type="xs:integer" use="required" />
-                                    <xs:attribute name="k" type="xs:integer" use="optional" />
-                                </xs:extension>
-                            </xs:simpleContent>
-                        </xs:complexType>
                     </xs:element>
                     <xs:element name="selected" type="NoWhitespaceString" minOccurs="0" maxOccurs="1">
                         <xs:annotation>
@@ -179,19 +243,13 @@
         <xs:complexContent>
             <xs:extension base="MQMInteractionPropertyType">
                 <xs:sequence>
-                    <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
+                    <xs:element name="expr" type="MQMRKExpressionType" minOccurs="1"
+                        maxOccurs="unbounded">
                         <xs:annotation>
                             <xs:documentation>One Redlich-Kister coefficient expression indexed by
                                 rank. rank 0 is the base term, higher ranks are successive
                                 polynomial orders in the chosen RK representation.</xs:documentation>
                         </xs:annotation>
-                        <xs:complexType>
-                            <xs:simpleContent>
-                                <xs:extension base="xs:string">
-                                    <xs:attribute name="rank" type="xs:integer" use="required" />
-                                </xs:extension>
-                            </xs:simpleContent>
-                        </xs:complexType>
                     </xs:element>
                     <xs:element name="selected" type="NoWhitespaceString" minOccurs="0" maxOccurs="1">
                         <xs:annotation>
@@ -216,7 +274,8 @@
         <xs:complexContent>
             <xs:extension base="MQMInteractionPropertyType">
                 <xs:sequence>
-                    <xs:element name="expr" type="xs:string" minOccurs="1" maxOccurs="1">
+                    <xs:element name="expr" type="MQMReciprocalMeanExpressionType" minOccurs="1"
+                        maxOccurs="unbounded">
                         <xs:annotation>
                             <xs:documentation>The Gibbs-energy expression for the reciprocal-center
                                 term. Because MQM-L-RM identifies the single fully symmetric point
@@ -239,25 +298,17 @@
         <xs:complexContent>
             <xs:extension base="MQMInteractionPropertyType">
                 <xs:sequence>
-                    <xs:element name="expr" minOccurs="1" maxOccurs="1">
+                    <xs:element name="expr" type="MQMReciprocalSideExpressionType" minOccurs="1"
+                        maxOccurs="unbounded">
                         <xs:annotation>
                             <xs:documentation>Expression term for the selected reciprocal-side
                                 parameter. The i, j, and k attributes carry the ChemSage exponent
                                 triple for this term. Their physical association to side and
                                 corner exponents depends on the chosen variant.</xs:documentation>
                         </xs:annotation>
-                        <xs:complexType>
-                            <xs:simpleContent>
-                                <xs:extension base="xs:string">
-                                    <xs:attribute name="i" type="xs:integer" use="required" />
-                                    <xs:attribute name="j" type="xs:integer" use="required" />
-                                    <xs:attribute name="k" type="xs:integer" use="required" />
-                                </xs:extension>
-                            </xs:simpleContent>
-                        </xs:complexType>
                     </xs:element>
                 </xs:sequence>
-                <xs:attribute name="variant" type="MQMReciprocalSideVariantType" use="optional">
+                <xs:attribute name="variant" type="MQMReciprocalSideVariantType" use="required">
                     <xs:annotation>
                         <xs:documentation>Reciprocal-side selector. Expected values are the four
                             side encodings used by the Solution Module and design note:
@@ -266,6 +317,23 @@
                             adjacent corner exponents.</xs:documentation>
                     </xs:annotation>
                 </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MQM-L-RC">
+        <xs:annotation>
+            <xs:documentation>Reciprocal corner parameter for a reciprocal interaction A,B:X,Y.
+                The corner is identified by the required variant attribute and each expression
+                carries only its corner index i.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="MQMInteractionPropertyType">
+                <xs:sequence>
+                    <xs:element name="expr" type="MQMReciprocalCornerExpressionType" minOccurs="1"
+                        maxOccurs="unbounded" />
+                </xs:sequence>
+                <xs:attribute name="variant" type="MQMReciprocalCornerVariantType" use="required" />
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -280,20 +348,15 @@
         <xs:complexContent>
             <xs:extension base="MQMInteractionPropertyType">
                 <xs:sequence>
-                    <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
+                    <xs:element name="expr" type="MQMIJKExpressionType" minOccurs="1"
+                        maxOccurs="unbounded">
                         <xs:annotation>
                             <xs:documentation>Expression term with pair-fraction exponents i and
                                 j.</xs:documentation>
                         </xs:annotation>
-                        <xs:complexType>
-                            <xs:simpleContent>
-                                <xs:extension base="xs:string">
-                                    <xs:attribute name="i" type="xs:integer" use="required" />
-                                    <xs:attribute name="j" type="xs:integer" use="required" />
-                                </xs:extension>
-                            </xs:simpleContent>
-                        </xs:complexType>
                     </xs:element>
+                    <xs:element name="selected" type="NoWhitespaceString" minOccurs="0"
+                        maxOccurs="1" />
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
@@ -310,20 +373,12 @@
         <xs:complexContent>
             <xs:extension base="MQMInteractionPropertyType">
                 <xs:sequence>
-                    <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
+                    <xs:element name="expr" type="MQMReciprocalSideExpressionType" minOccurs="1"
+                        maxOccurs="unbounded">
                         <xs:annotation>
                             <xs:documentation>Expression term with indices i, j, and k for the
                                 reciprocal interaction polynomial.</xs:documentation>
                         </xs:annotation>
-                        <xs:complexType>
-                            <xs:simpleContent>
-                                <xs:extension base="xs:string">
-                                    <xs:attribute name="i" type="xs:integer" use="required" />
-                                    <xs:attribute name="j" type="xs:integer" use="required" />
-                                    <xs:attribute name="k" type="xs:integer" use="required" />
-                                </xs:extension>
-                            </xs:simpleContent>
-                        </xs:complexType>
                     </xs:element>
                 </xs:sequence>
             </xs:extension>
@@ -341,22 +396,27 @@
         <xs:complexContent>
             <xs:extension base="MQMInteractionPropertyType">
                 <xs:sequence>
-                    <xs:element name="expr" minOccurs="1" maxOccurs="unbounded">
+                    <xs:element name="expr" type="MQMIJKExpressionType" minOccurs="1"
+                        maxOccurs="unbounded">
                         <xs:annotation>
                             <xs:documentation>Expression term with pair-fraction exponents i and
                                 j.</xs:documentation>
                         </xs:annotation>
-                        <xs:complexType>
-                            <xs:simpleContent>
-                                <xs:extension base="xs:string">
-                                    <xs:attribute name="i" type="xs:integer" use="required" />
-                                    <xs:attribute name="j" type="xs:integer" use="required" />
-                                </xs:extension>
-                            </xs:simpleContent>
-                        </xs:complexType>
                     </xs:element>
+                    <xs:element name="selected" type="NoWhitespaceString" minOccurs="0"
+                        maxOccurs="1" />
                 </xs:sequence>
             </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="MQM-L-Q">
+        <xs:annotation>
+            <xs:documentation>Deprecated reader alias for MQM-L-Quasichemical. New producers
+                must emit MQM-L-Quasichemical.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="MQM-L-Quasichemical" />
         </xs:complexContent>
     </xs:complexType>
 
@@ -370,12 +430,12 @@
                 to construct non-default quadruplets with custom coordination numbers (Z
                 values).</xs:documentation>
         </xs:annotation>
-        <xs:attribute name="species" type="xs:string" use="required">
+        <xs:attribute name="species" type="NoWhitespaceString" use="required">
             <xs:annotation>
                 <xs:documentation>Name of the species occupying this quadruplet site.</xs:documentation>
             </xs:annotation>
         </xs:attribute>
-        <xs:attribute name="Z" type="xs:float" use="required">
+        <xs:attribute name="Z" type="xs:double" use="required">
             <xs:annotation>
                 <xs:documentation>Coordination number (Z value) for this species in the
                     quadruplet.</xs:documentation>
@@ -404,6 +464,19 @@
             <xs:enumeration value="B-AX-AY" />
             <xs:enumeration value="X-AY-BY" />
             <xs:enumeration value="Y-AX-BX" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="MQMReciprocalCornerVariantType">
+        <xs:annotation>
+            <xs:documentation>Allowed corner encodings for MQM-L-RC reciprocal-corner
+                parameters.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="AX" />
+            <xs:enumeration value="AY" />
+            <xs:enumeration value="BX" />
+            <xs:enumeration value="BY" />
         </xs:restriction>
     </xs:simpleType>
 
@@ -509,9 +582,9 @@
         <xs:annotation>
             <xs:documentation>Interaction parameter type for the Modified Quasichemical Model.
                 Extends AbstractInteractionType with MQM-specific property elements. Use xsi:type
-                on property elements to select concrete interaction models (MQM-L-PF, MQM-L-RK,
-                MQM-L-RM, MQM-L-RS, MQM-L-SP, MQM-L-Reciprocal,
-                MQM-L-Quasichemical).</xs:documentation>
+                on property elements to select concrete interaction models (MQM-L-PF, MQM-L-SP,
+                MQM-L-Quasichemical, MQM-L-RK, MQM-L-RM, MQM-L-RS, or
+                MQM-L-RC).</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="AbstractInteractionType">
@@ -520,10 +593,9 @@
                         maxOccurs="unbounded">
                         <xs:annotation>
                             <xs:documentation>MQM interaction property. Use xsi:type to select
-                                the concrete model: MQM-L-PF (pair fraction), MQM-L-RK
-                                (Redlich-Kister), MQM-L-RM, MQM-L-RS, MQM-L-SP (simple
-                                polynomial), MQM-L-Reciprocal, or
-                                MQM-L-Quasichemical.</xs:documentation>
+                                the concrete model: MQM-L-PF (pair fraction), MQM-L-SP (simple
+                                polynomial), MQM-L-Quasichemical, MQM-L-RK (Redlich-Kister),
+                                MQM-L-RM, MQM-L-RS, or MQM-L-RC.</xs:documentation>
                         </xs:annotation>
                     </xs:element>
                 </xs:sequence>
@@ -544,7 +616,8 @@
         <xs:complexContent>
             <xs:extension base="PhaseType">
                 <xs:sequence>
-                    <xs:element name="numberOfDatComponents" type="xs:integer" minOccurs="0">
+                    <xs:element name="numberOfDatComponents" type="xs:nonNegativeInteger"
+                        minOccurs="0">
                         <xs:annotation>
                             <xs:documentation>Serialization metadata from ChemSage .dat format.
                                 Indicates the number of distinct species constituents in this
@@ -633,7 +706,7 @@
                         </xs:annotation>
                         <xs:complexType>
                             <xs:sequence>
-                                <xs:element name="quadruplet" minOccurs="1" maxOccurs="unbounded">
+                                <xs:element name="quadruplet" minOccurs="0" maxOccurs="unbounded">
                                     <xs:annotation>
                                         <xs:documentation>A quadruplet defined by cation pair (A,B)
                                             and anion pair (X,Y). Since A-B and X-Y zeta values are
@@ -641,7 +714,7 @@
                                             the others.</xs:documentation>
                                     </xs:annotation>
                                     <xs:complexType>
-                                        <xs:all>
+                                        <xs:sequence>
                                             <xs:element name="a" type="MQMquadSite">
                                                 <xs:annotation>
                                                     <xs:documentation>First cation site of the quadruplet.</xs:documentation>
@@ -662,8 +735,8 @@
                                                     <xs:documentation>Second anion site of the quadruplet.</xs:documentation>
                                                 </xs:annotation>
                                             </xs:element>
-                                        </xs:all>
-                                        <xs:attribute name="name" type="xs:string" />
+                                        </xs:sequence>
+                                        <xs:attribute name="name" type="xs:string" use="required" />
                                     </xs:complexType>
                                 </xs:element>
                             </xs:sequence>

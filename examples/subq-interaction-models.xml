@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/v0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://calphad.org/thermml/v0 ../schema/thermml-schema.xsd"
+          name="Canonical SUBQ interaction models"
+          version="0.1.0">
+  <metadata>
+    <title>Canonical SUBQ interaction models</title>
+    <version>1.0</version>
+    <description>Compact coverage of the ChemSage Modified Quasichemical interaction wire format.</description>
+    <license/>
+    <authors/>
+    <revisions/>
+    <references/>
+  </metadata>
+  <systemComponents>
+    <systemComponent symbol="Na"/>
+    <systemComponent symbol="K"/>
+    <systemComponent symbol="Mg"/>
+    <systemComponent symbol="F"/>
+    <systemComponent symbol="Cl"/>
+  </systemComponents>
+  <phases>
+    <phase xsi:type="ModifiedQuasichemicalPhaseType" name="Salt-liquid" state="liquid">
+      <numberOfDatComponents>5</numberOfDatComponents>
+      <description>Canonical SUBQ interaction and auxiliary-particle example.</description>
+      <species>
+        <specie name="Na[+]" composition="Na" charge="1" group="1"/>
+        <specie name="K[+]" composition="K" charge="1" group="1"/>
+        <specie name="Mg[2+]" composition="Mg" charge="2" group="2"/>
+        <specie name="F[-]" composition="F" charge="-1" group="1"/>
+        <specie name="Cl[-]" composition="Cl" charge="-1" group="1"/>
+      </species>
+      <endmembers>
+        <endmember name="NaF">
+          <constituents>
+            <site><const species="Na[+]"/></site>
+            <site><const species="F[-]"/></site>
+          </constituents>
+          <property xsi:type="MQM-G">
+            <ref/>
+            <expr>0</expr>
+            <zeta>6</zeta>
+          </property>
+        </endmember>
+      </endmembers>
+      <quadruplets>
+        <quadruplet name="Na[+],Mg[2+]:F[-],Cl[-]">
+          <a species="Na[+]" Z="4"/>
+          <b species="Mg[2+]" Z="4"/>
+          <x species="F[-]" Z="2"/>
+          <y species="Cl[-]" Z="4"/>
+        </quadruplet>
+      </quadruplets>
+      <interactions>
+        <interaction name="K[+],Mg[2+]:Cl[-]">
+          <constituents>
+            <site><const species="K[+]"/><const species="Mg[2+]"/></site>
+            <site><const species="Cl[-]"/></site>
+          </constituents>
+          <property xsi:type="MQM-L-PF"><ref/><expr i="0" j="2">-9481.6653</expr></property>
+          <property xsi:type="MQM-L-SP"><ref/><expr i="2" j="5">7126.223*T*LN(T)</expr></property>
+          <property xsi:type="MQM-L-Quasichemical"><ref/><expr i="0" j="2">777+14*T**2</expr></property>
+          <property xsi:type="MQM-L-RK"><ref/><expr rank="2">2500-3*T</expr></property>
+        </interaction>
+        <interaction name="Na[+],K[+],Mg[2+]:Cl[-]">
+          <constituents>
+            <site>
+              <const species="Na[+]"/>
+              <const species="K[+]"/>
+              <const species="Mg[2+]"/>
+            </site>
+            <site><const species="Cl[-]"/></site>
+          </constituents>
+          <property xsi:type="MQM-L-PF">
+            <ref/><expr i="0" j="1" k="1">-2510.4</expr><selected>K[+]</selected>
+          </property>
+          <property xsi:type="MQM-L-SP">
+            <ref/><expr i="0" j="0" k="1">12*T+5512.18*T**3</expr><selected>Mg[2+]</selected>
+          </property>
+          <property xsi:type="MQM-L-Quasichemical">
+            <ref/><expr i="2" j="6" k="4">9000-14.5*T**2</expr><selected>Na[+]</selected>
+          </property>
+          <property xsi:type="MQM-L-RK">
+            <ref/><expr rank="0">28*T</expr><selected>Na[+]</selected>
+          </property>
+        </interaction>
+        <interaction name="Na[+],K[+]:F[-],Cl[-]">
+          <constituents>
+            <site><const species="Na[+]"/><const species="K[+]"/></site>
+            <site><const species="F[-]"/><const species="Cl[-]"/></site>
+          </constituents>
+          <property xsi:type="MQM-L-RM"><ref/><expr>99+2882.1*T**(-1)</expr></property>
+          <property xsi:type="MQM-L-RS" variant="A-BX-BY"><ref/><expr i="0" j="1" k="2">44.3</expr></property>
+          <property xsi:type="MQM-L-RS" variant="B-AX-AY"><ref/><expr i="1" j="3" k="2">44</expr></property>
+          <property xsi:type="MQM-L-RS" variant="X-AY-BY"><ref/><expr i="5" j="7" k="2">77</expr></property>
+          <property xsi:type="MQM-L-RS" variant="Y-AX-BX"><ref/><expr i="3" j="4" k="1">66</expr></property>
+          <property xsi:type="MQM-L-RC" variant="AX"><ref/><expr i="2">78*T</expr></property>
+          <property xsi:type="MQM-L-RC" variant="AY"><ref/><expr i="1">10</expr></property>
+          <property xsi:type="MQM-L-RC" variant="BX"><ref/><expr i="3">-20+T</expr></property>
+          <property xsi:type="MQM-L-RC" variant="BY"><ref/><expr i="4">30</expr></property>
+        </interaction>
+      </interactions>
+      <ternaryInterpolations>
+        <interpolation>
+          <constituents>
+            <site>
+              <const site="i" species="Na[+]"/>
+              <const site="j" species="K[+]"/>
+              <const site="k" species="Mg[2+]"/>
+            </site>
+            <site><const species="Cl[-]"/></site>
+          </constituents>
+          <ij xsi:type="Kohler"/>
+          <jk xsi:type="Muggiano"/>
+          <ik xsi:type="Toop"><constant>k</constant></ik>
+        </interpolation>
+      </ternaryInterpolations>
+    </phase>
+  </phases>
+</database>

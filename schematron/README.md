@@ -18,9 +18,15 @@ The two-file split is a consequence of how the current `lxml.isoschematron` base
 
 The current rule families are:
 
-- `rules/ternary-interpolation-locator-aliases/`
-- `rules/redlich-kister-rank/`
 - `rules/cef-endmember-cartesian-count/`
+- `rules/cef-magnetic-consistency/`
+- `rules/endmember-constituent-site-count/`
+- `rules/endmember-duplicate-constituents/`
+- `rules/global-expression-empty-or-zero-content/`
+- `rules/redlich-kister-rank/`
+- `rules/species-duplicate-stoichiometry/`
+- `rules/subq-interaction-semantics/`
+- `rules/ternary-interpolation-locator-aliases/`
 
 Each rule-family directory contains:
 
