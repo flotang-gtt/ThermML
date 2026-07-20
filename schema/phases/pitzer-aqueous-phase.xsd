@@ -1,0 +1,295 @@
+<xs:schema
+    targetNamespace="http://calphad.org/thermml/v0"
+    elementFormDefault="qualified"
+    version="0.1.0"
+    xmlns="http://calphad.org/thermml/v0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:include schemaLocation="core.xsd" />
+    <xs:include schemaLocation="quasichemical-phase.xsd" />
+    <xs:include schemaLocation="phase-properties.xsd" />
+
+    <!-- ================================================================== -->
+    <!-- Pitzer/Aqueous Common Types                                        -->
+    <!-- ================================================================== -->
+
+    <xs:simpleType name="PitzerSpeciesRoleType">
+        <xs:annotation>
+            <xs:documentation>Role of a species in an aqueous Pitzer phase. The solvent is
+                typically H2O; solutes are the dissolved neutral or charged species.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="solvent" />
+            <xs:enumeration value="solute" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <!-- ================================================================== -->
+    <!-- Pitzer/Aqueous Species and Endmembers                              -->
+    <!-- ================================================================== -->
+
+    <xs:complexType name="PitzerAqueousSpeciesType">
+        <xs:annotation>
+            <xs:documentation>Defines a species available in a Pitzer aqueous phase. Species names
+                are the stable identifiers used by endmembers and interaction constituents.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="name" type="NoWhitespaceString" use="required">
+            <xs:annotation>
+                <xs:documentation>Unique species name in this phase, for example H2O, H[+], or
+                    Cl[-].</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="composition" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>Chemical composition of the species, for example H2O1, H1, or
+                    Cl1.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="charge" type="xs:decimal" use="optional">
+            <xs:annotation>
+                <xs:documentation>Formal charge of the aqueous species.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="role" type="PitzerSpeciesRoleType" use="optional">
+            <xs:annotation>
+                <xs:documentation>Whether this species is the aqueous solvent or a solute.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="PitzerAqueousSpeciesListType">
+        <xs:annotation>
+            <xs:documentation>Container for all species defined in a Pitzer aqueous phase.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="specie" type="PitzerAqueousSpeciesType" minOccurs="1"
+                maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="PitzerAqueousEndmemberType">
+        <xs:annotation>
+            <xs:documentation>An aqueous endmember/species entry in the Pitzer phase model. The
+                constituents element normally contains one site with one species, but the same
+                structured constituent representation as CEF and MQM is used so existing
+                ThermML species-reference validation applies.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="description" minOccurs="0" type="xs:string" />
+            <xs:element name="comment" minOccurs="0" type="xs:string" />
+            <xs:element name="constituents" minOccurs="1" maxOccurs="1" type="ConstituentArrayType">
+                <xs:annotation>
+                    <xs:documentation>Structured reference to the species represented by this
+                        endmember.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="property" type="PhasePropertyType" minOccurs="0"
+                maxOccurs="unbounded">
+                <xs:annotation>
+                    <xs:documentation>Thermodynamic or physical property of this aqueous
+                        endmember. Use xsi:type to select G, MolarVolume, or other general phase
+                        property types.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" type="NoWhitespaceString" use="required">
+            <xs:annotation>
+                <xs:documentation>Name of the aqueous endmember.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="charge" type="xs:decimal" use="optional">
+            <xs:annotation>
+                <xs:documentation>Formal charge of the endmember.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <!-- ================================================================== -->
+    <!-- Pitzer/Aqueous Interactions                                        -->
+    <!-- ================================================================== -->
+
+    <xs:complexType name="PitzerAqueousInteractionPropertyType" abstract="true">
+        <xs:annotation>
+            <xs:documentation>Abstract base type for Pitzer aqueous interaction properties. Each
+                concrete property type identifies one parameter family and stores a mathematical
+                expression for the parameter as a function of temperature.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="AbstractPhasePropertyType">
+                <xs:sequence>
+                    <xs:element name="expr" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Mathematical expression for this Pitzer parameter,
+                                usually as a function of T. Serialization-specific coefficient
+                                lists should be derived by exporters rather than stored here.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PitzerAlphaInteractionPropertyType" abstract="true">
+        <xs:annotation>
+            <xs:documentation>Abstract base for Pitzer aqueous interaction properties that require
+                an alpha value.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="PitzerAqueousInteractionPropertyType">
+                <xs:attribute name="alpha" type="xs:double" use="required">
+                    <xs:annotation>
+                        <xs:documentation>Pitzer alpha value for this alpha-dependent parameter.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PitzerBeta0">
+        <xs:annotation>
+            <xs:documentation>Pitzer beta-zero binary electrolyte interaction parameter.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="PitzerAqueousInteractionPropertyType" />
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PitzerBeta1">
+        <xs:annotation>
+            <xs:documentation>Pitzer beta-one binary electrolyte interaction parameter. Carries
+                the Pitzer alpha value used by the beta-one term.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="PitzerAlphaInteractionPropertyType" />
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PitzerBeta2">
+        <xs:annotation>
+            <xs:documentation>Pitzer beta-two binary electrolyte interaction parameter. Carries
+                the Pitzer alpha value used by the beta-two term.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="PitzerAlphaInteractionPropertyType" />
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PitzerCphi">
+        <xs:annotation>
+            <xs:documentation>Pitzer C-phi binary electrolyte interaction parameter.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="PitzerAqueousInteractionPropertyType" />
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PitzerTheta">
+        <xs:annotation>
+            <xs:documentation>Pitzer theta interaction parameter, commonly used for like-charge
+                ion pairs.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="PitzerAqueousInteractionPropertyType" />
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PitzerLambda">
+        <xs:annotation>
+            <xs:documentation>Pitzer lambda interaction parameter, commonly used for neutral
+                species interactions.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="PitzerAqueousInteractionPropertyType" />
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PitzerPsi">
+        <xs:annotation>
+            <xs:documentation>Pitzer psi ternary interaction parameter.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="PitzerAqueousInteractionPropertyType" />
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="PitzerInteractionType">
+        <xs:annotation>
+            <xs:documentation>Interaction parameter for a Pitzer aqueous phase. Constituents
+                reference the participating aqueous species by name; property elements carry the
+                Pitzer parameter kind and expression.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="AbstractInteractionType">
+                <xs:sequence>
+                    <xs:element name="property" type="PitzerAqueousInteractionPropertyType"
+                        minOccurs="1" maxOccurs="unbounded">
+                        <xs:annotation>
+                            <xs:documentation>Pitzer interaction property. Use
+                                xsi:type to select the concrete parameter family: PitzerBeta0,
+                                PitzerBeta1, PitzerBeta2, PitzerCphi, PitzerTheta, PitzerLambda,
+                                or PitzerPsi.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <!-- ================================================================== -->
+    <!-- Pitzer/Aqueous Phase Type                                          -->
+    <!-- ================================================================== -->
+
+    <xs:complexType name="PitzerAqueousPhaseType">
+        <xs:annotation>
+            <xs:documentation>Phase model type for Pitzer aqueous solutions, including the
+                Harvie-Moller-Weare style aqueous parameterization. The model uses aqueous
+                species/endmembers plus interaction properties such as PitzerBeta0, PitzerBeta1,
+                PitzerBeta2, PitzerCphi, PitzerTheta, PitzerLambda, and PitzerPsi.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="PhaseType">
+                <xs:sequence>
+                    <xs:element name="description" minOccurs="0" type="xs:string">
+                        <xs:annotation>
+                            <xs:documentation>Optional description of the aqueous Pitzer phase.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="species" type="PitzerAqueousSpeciesListType" minOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Container for aqueous species definitions.</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="endmembers">
+                        <xs:annotation>
+                            <xs:documentation>Container grouping aqueous endmember definitions.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="endmember" type="PitzerAqueousEndmemberType"
+                                    minOccurs="1" maxOccurs="unbounded" />
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="interactions" minOccurs="0">
+                        <xs:annotation>
+                            <xs:documentation>Container grouping Pitzer aqueous interaction
+                                parameters.</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="interaction" type="PitzerInteractionType"
+                                    minOccurs="0" maxOccurs="unbounded" />
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="solvent" type="NoWhitespaceString" use="optional">
+                    <xs:annotation>
+                        <xs:documentation>Name of the solvent species, typically H2O.</xs:documentation>
+                    </xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

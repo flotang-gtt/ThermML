@@ -24,6 +24,7 @@ SCHEMA_PATH = Path(__file__).resolve().parents[1] / "schema" / "thermml-schema.x
 EXAMPLE_PATH = Path(__file__).resolve().parents[1] / "examples" / "quasichemical.xml"
 BASIC_EXAMPLE_PATH = Path(__file__).resolve().parents[1] / "examples" / "basic-example.xml"
 SIMPLE_SOLUTION_PATH = Path(__file__).resolve().parents[1] / "examples" / "simple_solution.xml"
+PITZER_EXAMPLE_PATH = Path(__file__).resolve().parents[1] / "examples" / "pitzer-aqueous.xml"
 
 
 @pytest.fixture
@@ -44,6 +45,11 @@ def basic_example_doc() -> etree._ElementTree:
 @pytest.fixture
 def simple_solution_doc() -> etree._ElementTree:
     return etree.parse(str(SIMPLE_SOLUTION_PATH))
+
+
+@pytest.fixture
+def pitzer_example_doc() -> etree._ElementTree:
+    return etree.parse(str(PITZER_EXAMPLE_PATH))
 
 
 def validate_tree(
@@ -79,12 +85,95 @@ def get_mqm_phase(doc: etree._ElementTree):
     )[0]
 
 
+def get_pitzer_phase(doc: etree._ElementTree):
+    return doc.xpath(
+        './t:phases/t:phase[@xsi:type="PitzerAqueousPhaseType"]',
+        namespaces=NS,
+    )[0]
+
+
 def test_quasichemical_example_is_valid(
     schema: etree.XMLSchema, example_doc: etree._ElementTree, tmp_path: Path
 ) -> None:
     is_valid, errors = validate_tree(schema, example_doc, tmp_path, "valid.xml")
 
     assert is_valid, [f"{error.type_name}: {error.message}" for error in errors]
+
+
+def test_pitzer_aqueous_example_is_valid(
+    schema: etree.XMLSchema, pitzer_example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    is_valid, errors = validate_tree(
+        schema, pitzer_example_doc, tmp_path, "valid-pitzer-aqueous.xml"
+    )
+
+    assert is_valid, [f"{error.type_name}: {error.message}" for error in errors]
+
+
+def test_pitzer_interaction_constituent_species_references_must_exist(
+    schema: etree.XMLSchema, pitzer_example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    phase = get_pitzer_phase(pitzer_example_doc)
+    const = phase.xpath(
+        './t:interactions/t:interaction[1]/t:constituents/t:site/t:const[1]',
+        namespaces=NS,
+    )[0]
+    const.attrib["species"] = "MissingSpecies"
+
+    is_valid, errors = validate_tree(
+        schema, pitzer_example_doc, tmp_path, "bad-pitzer-interaction.xml"
+    )
+
+    assert not is_valid
+    assert_has_error(
+        errors,
+        type_name="SCHEMAV_CVC_IDC",
+        contains="phaseInteractionConstituentSpeciesMustExist",
+    )
+
+
+def test_pitzer_property_type_must_be_concrete_pitzer_type(
+    schema: etree.XMLSchema, pitzer_example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    phase = get_pitzer_phase(pitzer_example_doc)
+    property_element = phase.xpath(
+        './t:interactions/t:interaction[1]/t:property[1]',
+        namespaces=NS,
+    )[0]
+    property_element.attrib['{http://www.w3.org/2001/XMLSchema-instance}type'] = 'G'
+
+    is_valid, errors = validate_tree(
+        schema, pitzer_example_doc, tmp_path, "bad-pitzer-property-type.xml"
+    )
+
+    assert not is_valid
+    assert_has_error(
+        errors,
+        type_name="SCHEMAV_CVC_ELT_4_3",
+        contains="xsi:type",
+    )
+
+
+def test_pitzer_alpha_parameter_requires_alpha(
+    schema: etree.XMLSchema, pitzer_example_doc: etree._ElementTree, tmp_path: Path
+) -> None:
+    phase = get_pitzer_phase(pitzer_example_doc)
+    property_element = phase.xpath(
+        './t:interactions/t:interaction[1]/t:property[2]',
+        namespaces=NS,
+    )[0]
+    del property_element.attrib["alpha"]
+
+    is_valid, errors = validate_tree(
+        schema, pitzer_example_doc, tmp_path, "bad-pitzer-alpha.xml"
+    )
+
+    assert not is_valid
+    assert_has_error(
+        errors,
+        type_name="SCHEMAV_CVC_COMPLEX_TYPE_4",
+        contains="'alpha'",
+    )
 
 
 def test_phase_stoichiometry_components_must_exist(

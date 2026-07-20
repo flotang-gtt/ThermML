@@ -9,6 +9,7 @@
     <xs:include schemaLocation="pure-substances.xsd" />
     <xs:include schemaLocation="cef-phase.xsd" />
     <xs:include schemaLocation="quasichemical-phase.xsd" />
+    <xs:include schemaLocation="pitzer-aqueous-phase.xsd" />
     <xs:include schemaLocation="ordered-phase.xsd" />
 
 </xs:schema>
