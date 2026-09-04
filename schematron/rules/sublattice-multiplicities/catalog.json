@@ -1,0 +1,15 @@
+{
+  "family_name": "Sublattice multiplicity count",
+  "family_summary": "Sublattice multiplicity count.",
+  "rules": [
+    {
+      "id": "VAL-ERR-SUBLATTICE-MULTIPLICITY-COUNT",
+      "purpose": "Requires exactly one multiplicity value per declared sublattice site.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    }
+  ]
+}

@@ -57,6 +57,7 @@ def test_gas_integrity_failures_are_reported(schematron) -> None:
         "VAL-ERR-CEF-GAS-ENDMEMBER-COVERAGE",
         "VAL-ERR-CEF-GAS-ENDMEMBER-CONSTITUENT",
         "VAL-ERR-CEF-GAS-ENDMEMBER-NAME-UNIQUE",
+        "VAL-ERR-CEF-CONSTITUENT-SITE-MEMBERSHIP",
     }
     assert warnings == []
 

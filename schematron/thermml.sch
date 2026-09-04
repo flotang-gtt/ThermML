@@ -13,6 +13,7 @@
   <sch:include href="rules/ternary-interpolation-locator-aliases/module.sch"/>
   <sch:include href="rules/redlich-kister-rank/module.sch"/>
   <sch:include href="rules/cef-endmember-cartesian-count/module.sch"/>
+  <sch:include href="rules/gas-endmember-consistency/module.sch"/>
   <sch:include href="rules/global-expression-empty-or-zero-content/module.sch"/>
   <sch:include href="rules/species-duplicate-stoichiometry/module.sch"/>
   <sch:include href="rules/endmember-duplicate-constituents/module.sch"/>
@@ -20,5 +21,7 @@
   <sch:include href="rules/cef-magnetic-consistency/module.sch"/>
   <sch:include href="rules/subq-interaction-semantics/module.sch"/>
   <sch:include href="rules/ionic-liquid-constituents/module.sch"/>
-  <sch:include href="rules/gas-endmember-consistency/module.sch"/>
+  <sch:include href="rules/cef-constituent-occupancy/module.sch"/>
+  <sch:include href="rules/sublattice-multiplicities/module.sch"/>
+  <sch:include href="rules/expression-range-consistency/module.sch"/>
 </sch:schema>

@@ -2,6 +2,72 @@
   "generatedFrom": "schematron/rules/*/catalog.json",
   "rows": [
     {
+      "familyName": "Sublattice constituent occupancy",
+      "familySlug": "cef-constituent-occupancy",
+      "familySummary": "Sublattice constituent occupancy.",
+      "ruleId": "VAL-ERR-CEF-ENDMEMBER-SINGLE-OCCUPANCY",
+      "purpose": "Each endmember site must contain exactly one constituent.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/cef-constituent-occupancy/rule.sch",
+        "label": "schematron/rules/cef-constituent-occupancy/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/cef-constituent-occupancy/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/cef-constituent-occupancy/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Sublattice constituent occupancy",
+      "familySlug": "cef-constituent-occupancy",
+      "familySummary": "Sublattice constituent occupancy.",
+      "ruleId": "VAL-ERR-CEF-INTERACTION-SITE-COUNT",
+      "purpose": "Interaction constituent sites must match the phase's sublattice count.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/cef-constituent-occupancy/rule.sch",
+        "label": "schematron/rules/cef-constituent-occupancy/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/cef-constituent-occupancy/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/cef-constituent-occupancy/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Sublattice constituent occupancy",
+      "familySlug": "cef-constituent-occupancy",
+      "familySummary": "Sublattice constituent occupancy.",
+      "ruleId": "VAL-ERR-CEF-CONSTITUENT-SITE-MEMBERSHIP",
+      "purpose": "Requires endmember and interaction references to belong to the corresponding sublattice constituent list.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/cef-constituent-occupancy/rule.sch",
+        "label": "schematron/rules/cef-constituent-occupancy/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/cef-constituent-occupancy/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/cef-constituent-occupancy/invalid.xml"
+        }
+      ]
+    },
+    {
       "familyName": "CEF endmember cartesian count",
       "familySlug": "cef-endmember-cartesian-count",
       "familySummary": "Checks that non-gas CEF endmember lists match the cartesian product implied by the sublattice constituent arrays.",
@@ -100,6 +166,72 @@
         {
           "name": "invalid.xml",
           "href": "../../schematron/rules/endmember-duplicate-constituents/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Expression range bounds, order and overlap",
+      "familySlug": "expression-range-consistency",
+      "familySummary": "Expression range bounds, order and overlap.",
+      "ruleId": "VAL-ERR-EXPRESSION-RANGE-BOUNDS",
+      "purpose": "Requires each expression range lower bound to be less than or equal to its upper bound.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/expression-range-consistency/rule.sch",
+        "label": "schematron/rules/expression-range-consistency/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/expression-range-consistency/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/expression-range-consistency/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Expression range bounds, order and overlap",
+      "familySlug": "expression-range-consistency",
+      "familySummary": "Expression range bounds, order and overlap.",
+      "ruleId": "VAL-ERR-EXPRESSION-RANGE-ORDER",
+      "purpose": "Expression ranges must be listed in nondecreasing order of lower bound.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/expression-range-consistency/rule.sch",
+        "label": "schematron/rules/expression-range-consistency/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/expression-range-consistency/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/expression-range-consistency/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Expression range bounds, order and overlap",
+      "familySlug": "expression-range-consistency",
+      "familySummary": "Expression range bounds, order and overlap.",
+      "ruleId": "VAL-ERR-EXPRESSION-RANGE-OVERLAP",
+      "purpose": "Positive-width expression ranges must not overlap. Shared boundaries and zero-width records are allowed.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/expression-range-consistency/rule.sch",
+        "label": "schematron/rules/expression-range-consistency/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/expression-range-consistency/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/expression-range-consistency/invalid.xml"
         }
       ]
     },
@@ -356,6 +488,28 @@
         {
           "name": "invalid.xml",
           "href": "../../schematron/rules/species-duplicate-stoichiometry/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Sublattice multiplicity count",
+      "familySlug": "sublattice-multiplicities",
+      "familySummary": "Sublattice multiplicity count.",
+      "ruleId": "VAL-ERR-SUBLATTICE-MULTIPLICITY-COUNT",
+      "purpose": "Requires exactly one multiplicity value per declared sublattice site.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/sublattice-multiplicities/rule.sch",
+        "label": "schematron/rules/sublattice-multiplicities/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/sublattice-multiplicities/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/sublattice-multiplicities/invalid.xml"
         }
       ]
     },

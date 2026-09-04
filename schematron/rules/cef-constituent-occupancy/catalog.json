@@ -1,0 +1,33 @@
+{
+  "family_name": "Sublattice constituent occupancy",
+  "family_summary": "Sublattice constituent occupancy.",
+  "rules": [
+    {
+      "id": "VAL-ERR-CEF-ENDMEMBER-SINGLE-OCCUPANCY",
+      "purpose": "Each endmember site must contain exactly one constituent.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    },
+    {
+      "id": "VAL-ERR-CEF-INTERACTION-SITE-COUNT",
+      "purpose": "Interaction constituent sites must match the phase's sublattice count.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    },
+    {
+      "id": "VAL-ERR-CEF-CONSTITUENT-SITE-MEMBERSHIP",
+      "purpose": "Requires endmember and interaction references to belong to the corresponding sublattice constituent list.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    }
+  ]
+}

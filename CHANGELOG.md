@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- CEF occupancy, sublattice multiplicity count, and expression range consistency rules
+
 - Gas constituent coverage and Gibbs-expression consistency checks
 
 - Ionic-liquid phase, species, endmember and interaction types with a fixed two-site layout
@@ -24,6 +26,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   seven canonical emitted interaction families
 
 ### Changed
+
+- Sublattice multiplicities must be a non-empty list of positive decimals
 
 - CEF gas phases permit multiple thermodynamic states for one constituent
 - Missing gas energies remain valid placeholders without duplicate-Gibbs warnings

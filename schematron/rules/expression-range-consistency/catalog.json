@@ -1,0 +1,33 @@
+{
+  "family_name": "Expression range bounds, order and overlap",
+  "family_summary": "Expression range bounds, order and overlap.",
+  "rules": [
+    {
+      "id": "VAL-ERR-EXPRESSION-RANGE-BOUNDS",
+      "purpose": "Requires each expression range lower bound to be less than or equal to its upper bound.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    },
+    {
+      "id": "VAL-ERR-EXPRESSION-RANGE-ORDER",
+      "purpose": "Expression ranges must be listed in nondecreasing order of lower bound.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    },
+    {
+      "id": "VAL-ERR-EXPRESSION-RANGE-OVERLAP",
+      "purpose": "Positive-width expression ranges must not overlap. Shared boundaries and zero-width records are allowed.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    }
+  ]
+}

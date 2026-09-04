@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<database xmlns="http://calphad.org/thermml/v0">
+  <phases>
+    <phase>
+      <property>
+        <function>
+          <range low="200" high="500">1</range>
+          <range low="300" high="300">2</range>
+          <range low="500" high="1000">3</range>
+          <range low="1200" high="1500">4</range>
+        </function>
+      </property>
+    </phase>
+  </phases>
+</database>

@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<database xmlns="http://calphad.org/thermml/v0">
+  <phases>
+    <phase>
+      <structure>
+        <sublattices multiplicities="1 1">
+          <site constituents="Fe Mn"/>
+          <site constituents="C Va"/>
+        </sublattices>
+      </structure>
+      <endmembers>
+        <endmember>
+          <constituents>
+            <site>
+              <const species="Fe"/>
+            </site>
+            <site>
+              <const species="Va"/>
+            </site>
+          </constituents>
+        </endmember>
+      </endmembers>
+      <interactions>
+        <interaction>
+          <constituents>
+            <site>
+              <const species="Fe"/>
+              <const species="Mn"/>
+            </site>
+            <site>
+              <const species="Va"/>
+            </site>
+          </constituents>
+        </interaction>
+      </interactions>
+    </phase>
+  </phases>
+</database>

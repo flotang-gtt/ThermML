@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<database xmlns="http://calphad.org/thermml/v0">
+  <phases>
+    <phase>
+      <structure>
+        <sublattices multiplicities="1">
+          <site constituents="Fe"/>
+          <site constituents="Va"/>
+        </sublattices>
+      </structure>
+    </phase>
+  </phases>
+</database>
