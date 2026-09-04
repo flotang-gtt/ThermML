@@ -13,7 +13,7 @@
     that ceiling.
   -->
 
-  <sch:rule context="t:database//t:phase[((normalize-space(@xsi:type) = 'CEFPhaseType' or substring-after(normalize-space(@xsi:type), ':') = 'CEFPhaseType') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') and count(t:structure/t:sublattices/t:site[@constituents]) &gt;= 1 and count(t:structure/t:sublattices/t:site[@constituents]) &lt;= 8 and t:endmembers]">
+  <sch:rule context="t:database//t:phase[((normalize-space(@xsi:type) = 'CEFPhaseType' or substring-after(normalize-space(@xsi:type), ':') = 'CEFPhaseType') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') and not(@state = 'gas') and count(t:structure/t:sublattices/t:site[@constituents]) &gt;= 1 and count(t:structure/t:sublattices/t:site[@constituents]) &lt;= 8 and t:endmembers]">
     <sch:let name="site-count" value="count(t:structure/t:sublattices/t:site[@constituents])"/>
     <sch:let name="actual-endmember-count" value="count(t:endmembers/t:endmember)"/>
     <sch:let name="site1-count" value="string-length(normalize-space(t:structure/t:sublattices/t:site[1]/@constituents)) - string-length(translate(normalize-space(t:structure/t:sublattices/t:site[1]/@constituents), ' ', '')) + number(boolean(t:structure/t:sublattices/t:site[1]))"/>

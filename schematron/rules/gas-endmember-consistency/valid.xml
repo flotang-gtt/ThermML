@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/v0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <phases>
+    <phase xsi:type="CEFPhaseType" name="gas_ideal" state="gas">
+      <species>
+        <specie name="H[-]" composition="H" charge="-1"/>
+        <specie name="H" composition="H"/>
+        <specie name="H[+]" composition="H" charge="+1"/>
+        <specie name="H2N2(g)" composition="N2H2"/>
+      </species>
+      <structure>
+        <sublattices multiplicities="1">
+          <site constituents="H[-] H H[+] H2N2(g)"/>
+        </sublattices>
+      </structure>
+      <endmembers>
+        <endmember name="H[-]" charge="-1">
+          <constituents><site><const species="H[-]"/></site></constituents>
+          <property xsi:type="G"><expr>+1*{H[-]#gas_ideal}</expr></property>
+        </endmember>
+        <endmember name="H">
+          <constituents><site><const species="H"/></site></constituents>
+          <property xsi:type="G"><expr>+1*{H#gas_ideal}</expr></property>
+        </endmember>
+        <endmember name="H[+]" charge="+1">
+          <constituents><site><const species="H[+]"/></site></constituents>
+          <property xsi:type="G"><expr>+1*{H[+]#gas_ideal}</expr></property>
+        </endmember>
+        <endmember name="H2N2(g)">
+          <constituents><site><const species="H2N2(g)"/></site></constituents>
+          <property xsi:type="G"><expr>+1*{H2N2(g)#gas_ideal}</expr></property>
+        </endmember>
+        <endmember name="H2N2(g2)">
+          <constituents><site><const species="H2N2(g)"/></site></constituents>
+          <property xsi:type="G"><expr>+1*{H2N2(g2)#gas_ideal}</expr></property>
+        </endmember>
+        <endmember name="H2N2(g3)">
+          <constituents><site><const species="H2N2(g)"/></site></constituents>
+          <property xsi:type="G"><expr>+1*{H2N2(g3)#gas_ideal}</expr></property>
+        </endmember>
+      </endmembers>
+    </phase>
+  </phases>
+</database>

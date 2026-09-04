@@ -27,6 +27,7 @@ def test_generator_loads_all_rule_families() -> None:
         "cef-magnetic-consistency",
         "endmember-constituent-site-count",
         "endmember-duplicate-constituents",
+        "gas-endmember-consistency",
         "global-expression-empty-or-zero-content",
         "ionic-liquid-constituents",
         "redlich-kister-rank",
@@ -34,7 +35,7 @@ def test_generator_loads_all_rule_families() -> None:
         "subq-interaction-semantics",
         "ternary-interpolation-locator-aliases",
     ]
-    assert sum(len(family.rules) for family in families) == 19
+    assert sum(len(family.rules) for family in families) == 24
 
 
 def test_rendered_catalog_payload_contains_filterable_rule_data() -> None:

@@ -1,10 +1,10 @@
 {
   "family_name": "Endmember duplicate constituents",
-  "family_summary": "Rejects identical ordered endmember arrays except in ionic-liquid models.",
+  "family_summary": "Rejects duplicate endmember constituent arrays except in CEF gas models and ionic-liquid models.",
   "rules": [
     {
       "id": "VAL-ERR-ENDMEMBER-DUPLICATE-CONSTITUENTS",
-      "purpose": "Rejects identical ordered endmember arrays within a phase; ionic-liquid models are exempt.",
+      "purpose": "Rejects identical ordered endmember constituent arrays within a phase; CEF gas and ionic-liquid models are exempt.",
       "level": "error",
       "examples": [
         "valid.xml",

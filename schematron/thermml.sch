@@ -20,4 +20,5 @@
   <sch:include href="rules/cef-magnetic-consistency/module.sch"/>
   <sch:include href="rules/subq-interaction-semantics/module.sch"/>
   <sch:include href="rules/ionic-liquid-constituents/module.sch"/>
+  <sch:include href="rules/gas-endmember-consistency/module.sch"/>
 </sch:schema>

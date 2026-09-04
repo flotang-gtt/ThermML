@@ -249,3 +249,12 @@ def test_ionic_duplicate_endmembers_remain_allowed(ionic, validators, state):
 def test_explicit_cef_endmember_type_is_preserved(cef, validators):
     find(cef, "//t:endmember").set(XSI, "CEFEndmemberType")
     assert_valid(cef, validators)
+
+
+
+def test_gas_placeholders_remain_valid_without_duplicate_gibbs_warnings(validators):
+    doc = etree.parse(str(RULES / "gas-endmember-consistency/valid.xml"))
+    for prop in doc.xpath("//t:endmember/t:property", namespaces=NS):
+        prop.getparent().remove(prop)
+    valid, errors, warnings = validate_document(doc, validators[1])
+    assert valid and not errors and not warnings

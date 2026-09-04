@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<database xmlns="http://calphad.org/thermml/v0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <phases>
+    <phase xsi:type="CEFPhaseType" name="gas_ideal" state="gas">
+      <species>
+        <specie name="H" composition="H"/>
+        <specie name="H[+]" composition="H" charge="+1"/>
+        <specie name="Ar" composition="Ar"/>
+        <specie name="Qe[-]" composition="Qe" charge="-1"/>
+      </species>
+      <structure>
+        <sublattices multiplicities="1">
+          <site constituents="H H[+] Ar Missing"/>
+        </sublattices>
+      </structure>
+      <endmembers>
+        <endmember name="H">
+          <constituents><site><const species="H"/></site></constituents>
+          <property xsi:type="G"><expr>+1*{H#gas_ideal}</expr></property>
+        </endmember>
+        <endmember name="H">
+          <constituents><site><const species="H"/></site></constituents>
+          <property xsi:type="G"><expr>+1*{H_excited#gas_ideal}</expr></property>
+        </endmember>
+        <endmember name="H[+]" charge="+1">
+          <constituents><site><const species="H[+]"/></site></constituents>
+          <property xsi:type="G"><expr>+1*{H[+]#gas_ideal}</expr></property>
+        </endmember>
+        <endmember name="electron" charge="-1">
+          <constituents><site><const species="Qe[-]"/></site></constituents>
+          <property xsi:type="G"><expr>+1*{Qe[-]#gas_ideal}</expr></property>
+        </endmember>
+      </endmembers>
+    </phase>
+  </phases>
+</database>

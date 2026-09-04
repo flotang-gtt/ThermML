@@ -22,4 +22,12 @@ expected to carry exactly one constituent per site (standard CEF endmember); onl
 first constituent of each site participates in the signature. The scope is per phase; the
 same constituent array may appear in a different phase without being reported.
 
-Ionic-liquid phases are excluded; duplicate ionic endmember arrays remain permitted.
+CEF phases with `state="gas"` are excluded because multiple named thermodynamic
+states may intentionally refer to the same constituent array. Those phases use
+the coverage and Gibbs-expression checks in `gas-endmember-consistency`.
+
+`IonicLiquidPhaseType` is also excluded: ionic endmember multiplicity is permitted.
+The dedicated ionic rule checks species identity and site membership, not
+endmember-array uniqueness. Other phase types do not gain an exemption merely
+by setting `state="gas"`. Type names are matched by their resolved namespace and
+local name, independently of the chosen XML prefix.

@@ -18,6 +18,8 @@ The two-file split is a consequence of how the current `lxml.isoschematron` base
 
 The current rule families are:
 
+- `rules/gas-endmember-consistency/`
+
 - `rules/ionic-liquid-constituents/`
 
 - `rules/cef-endmember-cartesian-count/`

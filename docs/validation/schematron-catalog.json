@@ -4,9 +4,9 @@
     {
       "familyName": "CEF endmember cartesian count",
       "familySlug": "cef-endmember-cartesian-count",
-      "familySummary": "Checks that declared CEF endmember lists match the cartesian product implied by the sublattice constituent arrays.",
+      "familySummary": "Checks that non-gas CEF endmember lists match the cartesian product implied by the sublattice constituent arrays.",
       "ruleId": "VAL-ERR-CEF-ENDMEMBER-CARTESIAN-COUNT-MISMATCH",
-      "purpose": "Checks that the declared CEF endmember list matches the cartesian product implied by the sublattice constituent lists.",
+      "purpose": "Checks that a non-gas CEF endmember list matches the cartesian product implied by the sublattice constituent lists; gas phases use dedicated coverage rules.",
       "level": "error",
       "source": {
         "href": "../../schematron/rules/cef-endmember-cartesian-count/rule.sch",
@@ -84,9 +84,9 @@
     {
       "familyName": "Endmember duplicate constituents",
       "familySlug": "endmember-duplicate-constituents",
-      "familySummary": "Rejects identical ordered endmember arrays except in ionic-liquid models.",
+      "familySummary": "Rejects duplicate endmember constituent arrays except in CEF gas models and ionic-liquid models.",
       "ruleId": "VAL-ERR-ENDMEMBER-DUPLICATE-CONSTITUENTS",
-      "purpose": "Rejects identical ordered endmember arrays within a phase; ionic-liquid models are exempt.",
+      "purpose": "Rejects identical ordered endmember constituent arrays within a phase; CEF gas and ionic-liquid models are exempt.",
       "level": "error",
       "source": {
         "href": "../../schematron/rules/endmember-duplicate-constituents/rule.sch",
@@ -100,6 +100,116 @@
         {
           "name": "invalid.xml",
           "href": "../../schematron/rules/endmember-duplicate-constituents/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Gas endmember consistency",
+      "familySlug": "gas-endmember-consistency",
+      "familySummary": "Validates constituent coverage and intentional thermodynamic-state multiplicity in gas phases represented with the CEF storage shape.",
+      "ruleId": "VAL-ERR-CEF-GAS-STRUCTURE-CONSTITUENTS-DECLARED",
+      "purpose": "Requires every constituent token in a gas structure to name a species declared by that phase.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/gas-endmember-consistency/rule.sch",
+        "label": "schematron/rules/gas-endmember-consistency/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/gas-endmember-consistency/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/gas-endmember-consistency/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Gas endmember consistency",
+      "familySlug": "gas-endmember-consistency",
+      "familySummary": "Validates constituent coverage and intentional thermodynamic-state multiplicity in gas phases represented with the CEF storage shape.",
+      "ruleId": "VAL-ERR-CEF-GAS-ENDMEMBER-COVERAGE",
+      "purpose": "Requires every declared gas structure constituent to have at least one endmember definition.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/gas-endmember-consistency/rule.sch",
+        "label": "schematron/rules/gas-endmember-consistency/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/gas-endmember-consistency/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/gas-endmember-consistency/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Gas endmember consistency",
+      "familySlug": "gas-endmember-consistency",
+      "familySummary": "Validates constituent coverage and intentional thermodynamic-state multiplicity in gas phases represented with the CEF storage shape.",
+      "ruleId": "VAL-ERR-CEF-GAS-ENDMEMBER-CONSTITUENT",
+      "purpose": "Requires every gas endmember to reference exactly one constituent declared by the phase structure.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/gas-endmember-consistency/rule.sch",
+        "label": "schematron/rules/gas-endmember-consistency/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/gas-endmember-consistency/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/gas-endmember-consistency/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Gas endmember consistency",
+      "familySlug": "gas-endmember-consistency",
+      "familySummary": "Validates constituent coverage and intentional thermodynamic-state multiplicity in gas phases represented with the CEF storage shape.",
+      "ruleId": "VAL-ERR-CEF-GAS-ENDMEMBER-NAME-UNIQUE",
+      "purpose": "Requires endmember names to be unique within a gas phase.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/gas-endmember-consistency/rule.sch",
+        "label": "schematron/rules/gas-endmember-consistency/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/gas-endmember-consistency/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/gas-endmember-consistency/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Gas endmember consistency",
+      "familySlug": "gas-endmember-consistency",
+      "familySummary": "Validates constituent coverage and intentional thermodynamic-state multiplicity in gas phases represented with the CEF storage shape.",
+      "ruleId": "VAL-WARN-CEF-GAS-ENDMEMBER-DUPLICATE-GIBBS",
+      "purpose": "Warns when differently named gas endmembers share a constituent and the same non-empty normalized Gibbs expression.",
+      "level": "warning",
+      "source": {
+        "href": "../../schematron/rules/gas-endmember-consistency/rule.sch",
+        "label": "schematron/rules/gas-endmember-consistency/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/gas-endmember-consistency/valid.xml"
+        },
+        {
+          "name": "warning.xml",
+          "href": "../../schematron/rules/gas-endmember-consistency/warning.xml"
         }
       ]
     },

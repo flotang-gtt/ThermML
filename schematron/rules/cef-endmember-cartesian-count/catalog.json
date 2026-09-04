@@ -1,10 +1,10 @@
 {
   "family_name": "CEF endmember cartesian count",
-  "family_summary": "Checks that declared CEF endmember lists match the cartesian product implied by the sublattice constituent arrays.",
+  "family_summary": "Checks that non-gas CEF endmember lists match the cartesian product implied by the sublattice constituent arrays.",
   "rules": [
     {
       "id": "VAL-ERR-CEF-ENDMEMBER-CARTESIAN-COUNT-MISMATCH",
-      "purpose": "Checks that the declared CEF endmember list matches the cartesian product implied by the sublattice constituent lists.",
+      "purpose": "Checks that a non-gas CEF endmember list matches the cartesian product implied by the sublattice constituent lists; gas phases use dedicated coverage rules.",
       "level": "error",
       "examples": [
         "valid.xml",

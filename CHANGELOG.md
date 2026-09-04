@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Gas constituent coverage and Gibbs-expression consistency checks
+
 - Ionic-liquid phase, species, endmember and interaction types with a fixed two-site layout
 - Ionic constituent identity and group-membership rules and a complete XML example
 
@@ -22,6 +24,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   seven canonical emitted interaction families
 
 ### Changed
+
+- CEF gas phases permit multiple thermodynamic states for one constituent
+- Missing gas energies remain valid placeholders without duplicate-Gibbs warnings
 
 - Preserve the existing CEFEndmemberType name; ionic models use independent types
 
