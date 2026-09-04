@@ -2,7 +2,7 @@
 <sch:pattern xmlns:sch="http://purl.oclc.org/dsdl/schematron" id="thermml-global-expression-empty-or-zero-content">
   <sch:title>Global expression content that is empty or zero</sch:title>
 
-  <sch:rule context="t:database/t:globalExpressions/t:expression[@xsi:type='RangedTemperatureExpr' or @xsi:type='FunctionTypeExpr']/t:range | t:database/t:globalExpressions/t:expression/t:tdb | t:database/t:globalExpressions/t:expression/t:chemsage">
+  <sch:rule context="t:database/t:globalExpressions/t:expression[((normalize-space(@xsi:type) = 'RangedTemperatureExpr' or substring-after(normalize-space(@xsi:type), ':') = 'RangedTemperatureExpr') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') or ((normalize-space(@xsi:type) = 'FunctionTypeExpr' or substring-after(normalize-space(@xsi:type), ':') = 'FunctionTypeExpr') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0')]/t:range | t:database/t:globalExpressions/t:expression/t:tdb | t:database/t:globalExpressions/t:expression/t:chemsage">
     <sch:report
         id="VAL-WARN-GLOBAL-EXPRESSION-EMPTY-OR-ZERO-CONTENT"
         role="warning"

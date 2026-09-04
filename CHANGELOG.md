@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- Schematron type matching resolves QName namespaces independently of prefixes
+
 - SUBQ expression indices are restricted to unsigned 16-bit values
 - `MQM-L-RS` and `MQM-L-RC` require family-specific reciprocal variants
 - `numberOfDatComponents` is non-negative, quadruplets use canonical child

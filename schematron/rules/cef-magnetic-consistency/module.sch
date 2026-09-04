@@ -17,9 +17,9 @@
     raise false positives.
   -->
 
-  <sch:rule context="t:database//t:phase[@xsi:type='CEFPhaseType']">
+  <sch:rule context="t:database//t:phase[((normalize-space(@xsi:type) = 'CEFPhaseType' or substring-after(normalize-space(@xsi:type), ':') = 'CEFPhaseType') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0')]">
     <sch:let name="has-magnetic-structure" value="boolean(t:structure/t:magnetic)"/>
-    <sch:let name="magnetic-parameter-count" value="count(.//t:property[@xsi:type='M' or @xsi:type='BML' or @xsi:type='TCL'])"/>
+    <sch:let name="magnetic-parameter-count" value="count(.//t:property[((normalize-space(@xsi:type) = 'M' or substring-after(normalize-space(@xsi:type), ':') = 'M') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') or ((normalize-space(@xsi:type) = 'BML' or substring-after(normalize-space(@xsi:type), ':') = 'BML') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') or ((normalize-space(@xsi:type) = 'TCL' or substring-after(normalize-space(@xsi:type), ':') = 'TCL') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0')])"/>
 
     <sch:report
         id="VAL-WARN-CEF-MAGNETIC-STRUCTURE-WITHOUT-PARAMETERS"

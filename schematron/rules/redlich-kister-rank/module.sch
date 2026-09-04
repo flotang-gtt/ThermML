@@ -2,7 +2,7 @@
 <sch:pattern xmlns:sch="http://purl.oclc.org/dsdl/schematron" id="thermml-rk-rank">
   <sch:title>Redlich-Kister rank diagnostics</sch:title>
 
-  <sch:rule context="t:database//t:interaction/t:property[@xsi:type='L']/t:expr[@rank]">
+  <sch:rule context="t:database//t:interaction/t:property[((normalize-space(@xsi:type) = 'L' or substring-after(normalize-space(@xsi:type), ':') = 'L') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0')]/t:expr[@rank]">
     <sch:assert
         id="VAL-ERR-RK-RANK-INVALID"
         role="error"

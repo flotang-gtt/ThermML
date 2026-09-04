@@ -104,3 +104,21 @@ To add a new rule, make sure to
 - If possible or needed, add examples for invalid and warning cases
 - Add the rule name to the `thermml.sch` aggregate file
 - Regenerate `docs/validation/schematron-catalog.json` with `uv run .\schematron\generate_catalog.py`.
+
+## Type matching and model scope
+
+`xsi:type` is an XML QName: `CEFPhaseType` in the ThermML default namespace
+and `tm:CEFPhaseType` with `tm` bound to that namespace identify the same type.
+Rules compare the local name and resolve the prefix (or default namespace)
+through the element's namespace axis. This remains plain XPath/XSLT 1.0;
+no preprocessing or application-specific extension functions are required.
+The namespace-axis predicate uses `..` to access the owning element's type.
+
+This does not infer schema type inheritance. Ordered CEF phases share the
+structural site-count, occupancy and multiplicity rules. Existing Cartesian
+and magnetic completeness rules remain limited to `CEFPhaseType`; ordered
+phases can inherit information from their disordered parent. New derived
+models should have their rule applicability considered explicitly.
+
+Energy properties remain optional for model development. These structural
+and consistency checks do not certify computational completeness.

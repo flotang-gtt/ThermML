@@ -2,11 +2,11 @@
 <sch:pattern xmlns:sch="http://purl.oclc.org/dsdl/schematron" id="thermml-subq-interaction-semantics">
   <sch:title>SUBQ interaction and interpolation semantics</sch:title>
 
-  <sch:rule context="t:database//t:phase[@xsi:type = 'ModifiedQuasichemicalPhaseType']//t:interaction/t:property[t:selected]">
+  <sch:rule context="t:database//t:phase[((normalize-space(@xsi:type) = 'ModifiedQuasichemicalPhaseType' or substring-after(normalize-space(@xsi:type), ':') = 'ModifiedQuasichemicalPhaseType') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0')]//t:interaction/t:property[t:selected]">
     <sch:assert
         id="VAL-ERR-SUBQ-SELECTED-PROPERTY-TYPE"
         role="error"
-        test="@xsi:type = 'MQM-L-PF' or @xsi:type = 'MQM-L-SP' or @xsi:type = 'MQM-L-Quasichemical' or @xsi:type = 'MQM-L-Q' or @xsi:type = 'MQM-L-RK'">
+        test="((normalize-space(@xsi:type) = 'MQM-L-PF' or substring-after(normalize-space(@xsi:type), ':') = 'MQM-L-PF') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') or ((normalize-space(@xsi:type) = 'MQM-L-SP' or substring-after(normalize-space(@xsi:type), ':') = 'MQM-L-SP') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') or ((normalize-space(@xsi:type) = 'MQM-L-Quasichemical' or substring-after(normalize-space(@xsi:type), ':') = 'MQM-L-Quasichemical') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') or ((normalize-space(@xsi:type) = 'MQM-L-Q' or substring-after(normalize-space(@xsi:type), ':') = 'MQM-L-Q') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') or ((normalize-space(@xsi:type) = 'MQM-L-RK' or substring-after(normalize-space(@xsi:type), ':') = 'MQM-L-RK') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0')">
       selected is valid only for PF, SP, Quasichemical, and RK SUBQ properties.
     </sch:assert>
     <sch:assert
@@ -24,12 +24,12 @@
     <sch:assert
         id="VAL-ERR-SUBQ-SELECTED-K"
         role="error"
-        test="not(@xsi:type = 'MQM-L-PF' or @xsi:type = 'MQM-L-SP' or @xsi:type = 'MQM-L-Quasichemical' or @xsi:type = 'MQM-L-Q') or not(t:expr[not(@k) or number(@k) &lt; 1])">
+        test="not(((normalize-space(@xsi:type) = 'MQM-L-PF' or substring-after(normalize-space(@xsi:type), ':') = 'MQM-L-PF') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') or ((normalize-space(@xsi:type) = 'MQM-L-SP' or substring-after(normalize-space(@xsi:type), ':') = 'MQM-L-SP') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') or ((normalize-space(@xsi:type) = 'MQM-L-Quasichemical' or substring-after(normalize-space(@xsi:type), ':') = 'MQM-L-Quasichemical') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') or ((normalize-space(@xsi:type) = 'MQM-L-Q' or substring-after(normalize-space(@xsi:type), ':') = 'MQM-L-Q') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0')) or not(t:expr[not(@k) or number(@k) &lt; 1])">
       A selected PF, SP, or Quasichemical property requires explicit k greater than or equal to one on every expression.
     </sch:assert>
   </sch:rule>
 
-  <sch:rule context="t:database//t:phase[@xsi:type = 'ModifiedQuasichemicalPhaseType']//t:interaction/t:property[@xsi:type = 'MQM-L-RM' or @xsi:type = 'MQM-L-RS' or @xsi:type = 'MQM-L-RC' or @xsi:type = 'MQM-L-Reciprocal']">
+  <sch:rule context="t:database//t:phase[((normalize-space(@xsi:type) = 'ModifiedQuasichemicalPhaseType' or substring-after(normalize-space(@xsi:type), ':') = 'ModifiedQuasichemicalPhaseType') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0')]//t:interaction/t:property[((normalize-space(@xsi:type) = 'MQM-L-RM' or substring-after(normalize-space(@xsi:type), ':') = 'MQM-L-RM') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') or ((normalize-space(@xsi:type) = 'MQM-L-RS' or substring-after(normalize-space(@xsi:type), ':') = 'MQM-L-RS') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') or ((normalize-space(@xsi:type) = 'MQM-L-RC' or substring-after(normalize-space(@xsi:type), ':') = 'MQM-L-RC') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') or ((normalize-space(@xsi:type) = 'MQM-L-Reciprocal' or substring-after(normalize-space(@xsi:type), ':') = 'MQM-L-Reciprocal') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0')]">
     <sch:assert
         id="VAL-ERR-SUBQ-RECIPROCAL-CARDINALITY"
         role="error"
@@ -38,7 +38,7 @@
     </sch:assert>
   </sch:rule>
 
-  <sch:rule context="t:database//t:phase[@xsi:type = 'ModifiedQuasichemicalPhaseType']/t:ternaryInterpolations/t:interpolation">
+  <sch:rule context="t:database//t:phase[((normalize-space(@xsi:type) = 'ModifiedQuasichemicalPhaseType' or substring-after(normalize-space(@xsi:type), ':') = 'ModifiedQuasichemicalPhaseType') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0')]/t:ternaryInterpolations/t:interpolation">
     <sch:assert
         id="VAL-ERR-SUBQ-INTERPOLATION-LABELS"
         role="error"
