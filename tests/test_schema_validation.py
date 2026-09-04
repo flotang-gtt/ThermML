@@ -52,6 +52,49 @@ def pitzer_example_doc() -> etree._ElementTree:
     return etree.parse(str(PITZER_EXAMPLE_PATH))
 
 
+@pytest.fixture
+def ionic_liquid_doc(simple_solution_doc: etree._ElementTree) -> etree._ElementTree:
+    phase = etree.fromstring(
+        b"""
+        <phase xmlns="http://calphad.org/thermml/v0"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:type="IonicLiquidPhaseType" name="IONIC_LIQUID" state="liquid">
+          <description>An ionic liquid with a neutral vacancy species.</description>
+          <constituents>
+            <cations>
+              <specie name="Fe[2+]" composition="Fe" charge="+2"/>
+            </cations>
+            <anions>
+              <specie name="C[4-]" composition="C" charge="-4"/>
+            </anions>
+            <neutrals>
+              <specie name="Va" composition="Va" charge="0"/>
+            </neutrals>
+          </constituents>
+          <endmembers>
+            <endmember name="FeC">
+              <constituents>
+                <site><const species="Fe[2+]"/></site>
+                <site><const species="C[4-]"/></site>
+              </constituents>
+              <property xsi:type="G"><expr>0</expr></property>
+            </endmember>
+            <endmember name="FeVa">
+              <constituents>
+                <site><const species="Fe[2+]"/></site>
+                <site><const species="Va"/></site>
+              </constituents>
+              <property xsi:type="G"><expr>0</expr></property>
+            </endmember>
+          </endmembers>
+        </phase>
+        """
+    )
+    phases = simple_solution_doc.xpath("./t:phases", namespaces=NS)[0]
+    phases.replace(phases[0], phase)
+    return simple_solution_doc
+
+
 def validate_tree(
     schema: etree.XMLSchema, doc: etree._ElementTree, tmp_path: Path, file_name: str
 ) -> tuple[bool, list[etree._LogEntry]]:
@@ -108,6 +151,104 @@ def test_pitzer_aqueous_example_is_valid(
     )
 
     assert is_valid, [f"{error.type_name}: {error.message}" for error in errors]
+
+
+def test_ionic_liquid_phase_type_accepts_grouped_species(
+    schema: etree.XMLSchema,
+    ionic_liquid_doc: etree._ElementTree,
+    tmp_path: Path,
+) -> None:
+    is_valid, errors = validate_tree(
+        schema,
+        ionic_liquid_doc,
+        tmp_path,
+        "valid-ionic-liquid.xml",
+    )
+
+    assert is_valid, [f"{error.type_name}: {error.message}" for error in errors]
+
+
+@pytest.mark.parametrize(
+    ("group", "invalid_charge", "error_type"),
+    [
+        ("cations", "-2", "SCHEMAV_CVC_PATTERN_VALID"),
+        ("anions", "+1", "SCHEMAV_CVC_PATTERN_VALID"),
+        ("neutrals", "+1", "SCHEMAV_CVC_AU"),
+    ],
+)
+def test_ionic_liquid_species_charge_must_match_group(
+    schema: etree.XMLSchema,
+    ionic_liquid_doc: etree._ElementTree,
+    tmp_path: Path,
+    group: str,
+    invalid_charge: str,
+    error_type: str,
+) -> None:
+    specie = ionic_liquid_doc.xpath(
+        f"./t:phases/t:phase/t:constituents/t:{group}/t:specie",
+        namespaces=NS,
+    )[0]
+    specie.attrib["charge"] = invalid_charge
+
+    is_valid, errors = validate_tree(
+        schema,
+        ionic_liquid_doc,
+        tmp_path,
+        f"bad-ionic-liquid-{group}-charge.xml",
+    )
+
+    assert not is_valid
+    assert_has_error(errors, type_name=error_type, contains="charge")
+
+
+@pytest.mark.parametrize("attribute", ["composition", "charge"])
+def test_ionic_liquid_species_requires_composition_and_charge(
+    schema: etree.XMLSchema,
+    ionic_liquid_doc: etree._ElementTree,
+    tmp_path: Path,
+    attribute: str,
+) -> None:
+    specie = ionic_liquid_doc.xpath(
+        "./t:phases/t:phase/t:constituents/t:cations/t:specie",
+        namespaces=NS,
+    )[0]
+    del specie.attrib[attribute]
+
+    is_valid, errors = validate_tree(
+        schema,
+        ionic_liquid_doc,
+        tmp_path,
+        f"bad-ionic-liquid-missing-{attribute}.xml",
+    )
+
+    assert not is_valid
+    assert_has_error(errors, type_name="SCHEMAV_CVC_COMPLEX_TYPE_4", contains=attribute)
+
+
+def test_ionic_liquid_endmember_species_reference_must_exist(
+    schema: etree.XMLSchema,
+    ionic_liquid_doc: etree._ElementTree,
+    tmp_path: Path,
+) -> None:
+    const = ionic_liquid_doc.xpath(
+        "./t:phases/t:phase/t:endmembers/t:endmember[1]/t:constituents/t:site[1]/t:const",
+        namespaces=NS,
+    )[0]
+    const.attrib["species"] = "MissingSpecies"
+
+    is_valid, errors = validate_tree(
+        schema,
+        ionic_liquid_doc,
+        tmp_path,
+        "bad-ionic-liquid-endmember-reference.xml",
+    )
+
+    assert not is_valid
+    assert_has_error(
+        errors,
+        type_name="SCHEMAV_CVC_IDC",
+        contains="phaseEndmemberConstituentSpeciesMustExist",
+    )
 
 
 def test_pitzer_interaction_constituent_species_references_must_exist(

@@ -28,12 +28,13 @@ def test_generator_loads_all_rule_families() -> None:
         "endmember-constituent-site-count",
         "endmember-duplicate-constituents",
         "global-expression-empty-or-zero-content",
+        "ionic-liquid-constituents",
         "redlich-kister-rank",
         "species-duplicate-stoichiometry",
         "subq-interaction-semantics",
         "ternary-interpolation-locator-aliases",
     ]
-    assert sum(len(family.rules) for family in families) == 17
+    assert sum(len(family.rules) for family in families) == 19
 
 
 def test_rendered_catalog_payload_contains_filterable_rule_data() -> None:

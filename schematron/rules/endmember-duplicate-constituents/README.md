@@ -21,3 +21,5 @@ arbitrary-length sequence; this mirrors the CEF endmember-count rule. Endmembers
 expected to carry exactly one constituent per site (standard CEF endmember); only the
 first constituent of each site participates in the signature. The scope is per phase; the
 same constituent array may appear in a different phase without being reported.
+
+Ionic-liquid phases are excluded; duplicate ionic endmember arrays remain permitted.

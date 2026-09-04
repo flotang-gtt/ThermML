@@ -20,7 +20,7 @@
     a different phase without being flagged.
   -->
 
-  <sch:rule context="t:database//t:phase/t:endmembers/t:endmember">
+  <sch:rule context="t:database//t:phase/t:endmembers/t:endmember[not(ancestor::t:phase[1][((normalize-space(@xsi:type) = 'IonicLiquidPhaseType' or substring-after(normalize-space(@xsi:type), ':') = 'IonicLiquidPhaseType') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0')])]">
     <sch:let name="signature" value="concat(
       count(t:constituents/t:site), '#',
       normalize-space(t:constituents/t:site[1]/t:const/@species), '#',

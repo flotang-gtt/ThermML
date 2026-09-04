@@ -21,7 +21,7 @@ URI = "http://calphad.org/thermml/v0"
 NS = {"t": URI}
 XSI = "{http://www.w3.org/2001/XMLSchema-instance}type"
 RULES = ROOT / "schematron/rules"
-NEW_FAMILIES = []
+NEW_FAMILIES = ["ionic-liquid-constituents"]
 
 
 ALL_FIXTURES = sorted(RULES.glob("*/*.xml"))
@@ -111,3 +111,141 @@ def test_prefixed_cef_type_cannot_bypass_cartesian_check(cef, validators):
     assert "VAL-ERR-CEF-ENDMEMBER-CARTESIAN-COUNT-MISMATCH" in error_ids(
         doc, validators
     )
+
+
+
+@pytest.fixture
+def ionic():
+    return etree.parse(str(ROOT / "examples/ionic-liquid.xml"))
+
+
+
+@pytest.mark.parametrize("family", NEW_FAMILIES)
+def test_standalone_fixtures_cover_every_new_assertion(family):
+    folder = RULES / family
+    validator = load_schematron(folder / "rule.sch")
+    valid, errors, warnings = validate_document(
+        etree.parse(str(folder / "valid.xml")), validator
+    )
+    assert valid and not errors and not warnings
+    valid, errors, warnings = validate_document(
+        etree.parse(str(folder / "invalid.xml")), validator
+    )
+    expected = {
+        rule["id"]
+        for rule in json.loads((folder / "catalog.json").read_text())["rules"]
+    }
+    assert not valid
+    assert {finding.rule_id for finding in errors} == expected
+
+
+
+def add_ionic_interaction(ionic):
+    phase = find(ionic, "//t:phase")
+    interactions = etree.SubElement(phase, f"{{{URI}}}interactions")
+    interaction = etree.SubElement(interactions, f"{{{URI}}}interaction")
+    array = deepcopy(find(ionic, "//t:endmember/t:constituents"))
+    interaction.append(array)
+    etree.SubElement(array[1], f"{{{URI}}}const", species="Va")
+    return interaction
+
+
+
+def test_ionic_example_and_explicit_ionic_types_are_valid(ionic, validators):
+    find(ionic, "//t:endmember").set(XSI, "IonicLiquidEndmemberType")
+    assert_valid(ionic, validators)
+    assert_valid(with_type_prefix(ionic), validators)
+
+
+
+@pytest.mark.parametrize(
+    "mutation",
+    [
+        "missing-site",
+        "extra-site",
+        "multiple-occupants",
+        "empty-composition",
+        "blank-composition",
+        "cef-endmember",
+    ],
+)
+def test_ionic_xsd_rejects_invalid_shapes(ionic, validators, mutation):
+    constituents = find(ionic, "//t:endmember/t:constituents")
+    if mutation == "missing-site":
+        constituents.remove(constituents[-1])
+    elif mutation == "extra-site":
+        constituents.append(deepcopy(constituents[0]))
+    elif mutation == "multiple-occupants":
+        constituents[0].append(deepcopy(constituents[0][0]))
+    elif mutation in {"empty-composition", "blank-composition"}:
+        find(ionic, "//t:cations/t:specie").set(
+            "composition", "" if mutation == "empty-composition" else " \t "
+        )
+    else:
+        find(ionic, "//t:endmember").set(XSI, "CEFEndmemberType")
+    assert not validators[0].validate(ionic)
+
+
+
+def test_ionic_swapped_sites_fail_semantic_validation(ionic, validators):
+    sites = find(ionic, "//t:endmember/t:constituents")
+    sites[0][0].set("species", "C[4-]")
+    sites[1][0].set("species", "Fe[2+]")
+    assert validators[0].validate(ionic)
+    assert "VAL-ERR-IONIC-CONSTITUENT-SITE-MEMBERSHIP" in error_ids(ionic, validators)
+
+
+
+@pytest.mark.parametrize("group", ["cations", "anions", "neutrals"])
+def test_ionic_duplicate_species_fail_but_distinct_charges_pass(
+    ionic, validators, group
+):
+    container = find(ionic, f"//t:constituents/t:{group}")
+    duplicate = deepcopy(container[0])
+    duplicate.set("name", "other-name")
+    container.append(duplicate)
+    assert validators[0].validate(ionic)
+    assert "VAL-ERR-IONIC-DUPLICATE-SPECIES" in error_ids(ionic, validators)
+    if group != "neutrals":
+        duplicate.set("charge", "+3" if group == "cations" else "-3")
+        assert_valid(ionic, validators)
+
+
+
+def test_ionic_interactions_allow_mixing_but_enforce_site_membership(ionic, validators):
+    interaction = add_ionic_interaction(ionic)
+    interaction.set(XSI, "IonicLiquidInteractionType")
+    assert_valid(ionic, validators)
+    interaction[0][0][0].set("species", "Va")
+    assert validators[0].validate(ionic)
+    assert "VAL-ERR-IONIC-CONSTITUENT-SITE-MEMBERSHIP" in error_ids(ionic, validators)
+
+
+
+@pytest.mark.parametrize("mutation", ["missing-site", "extra-site", "cef-type"])
+def test_ionic_interaction_shape_is_specialized(ionic, validators, mutation):
+    interaction = add_ionic_interaction(ionic)
+    if mutation == "missing-site":
+        interaction[0].remove(interaction[0][-1])
+    elif mutation == "extra-site":
+        interaction[0].append(deepcopy(interaction[0][0]))
+    else:
+        interaction.set(XSI, "CEFInteractionType")
+    assert not validators[0].validate(ionic)
+
+
+
+@pytest.mark.parametrize("state", ["liquid", "gas"])
+def test_ionic_duplicate_endmembers_remain_allowed(ionic, validators, state):
+    find(ionic, "//t:phase").set("state", state)
+    endmembers = find(ionic, "//t:endmembers")
+    duplicate = deepcopy(endmembers[0])
+    duplicate.set("name", "another-state")
+    endmembers.append(duplicate)
+    assert_valid(ionic, validators)
+
+
+
+def test_explicit_cef_endmember_type_is_preserved(cef, validators):
+    find(cef, "//t:endmember").set(XSI, "CEFEndmemberType")
+    assert_valid(cef, validators)

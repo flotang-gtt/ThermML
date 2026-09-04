@@ -47,7 +47,7 @@
                     <xs:sequence minOccurs="0" maxOccurs="unbounded">
                         <xs:element name="phase" type="PhaseType">
                             <xs:key name="phaseSpeciesKey">
-                                <xs:selector xpath="tm:species/tm:specie" />
+                                <xs:selector xpath="tm:species/tm:specie | tm:constituents/tm:cations/tm:specie | tm:constituents/tm:anions/tm:specie | tm:constituents/tm:neutrals/tm:specie" />
                                 <xs:field xpath="@name" />
                             </xs:key>
                             <xs:keyref name="phaseEndmemberConstituentSpeciesMustExist"

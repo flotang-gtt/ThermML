@@ -1,0 +1,211 @@
+<xs:schema
+    targetNamespace="http://calphad.org/thermml/v0"
+    elementFormDefault="qualified"
+    version="0.1.0"
+    xmlns="http://calphad.org/thermml/v0"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:include schemaLocation="core.xsd" />
+    <xs:include schemaLocation="phase-properties.xsd" />
+
+    <!-- ================================================================== -->
+    <!-- Ionic-liquid Species Type                                          -->
+    <!-- ================================================================== -->
+
+    <xs:complexType name="IonicLiquidSpecieType">
+        <xs:annotation>
+            <xs:documentation>A species participating in an ionic-liquid model. Its composition
+                and formal charge are required because they determine the composition-dependent
+                site ratios and derived endmember stoichiometry.</xs:documentation>
+        </xs:annotation>
+        <xs:attribute name="name" type="NoWhitespaceString" use="required" />
+        <xs:attribute name="composition" type="IonicLiquidCompositionType" use="required" />
+        <xs:attribute name="charge" type="SignedIntegerString" use="required" />
+    </xs:complexType>
+
+    <xs:simpleType name="IonicLiquidCompositionType">
+        <xs:annotation>
+            <xs:documentation>A non-empty composition string. Formula parsing and chemical
+                canonicalization are outside structural validation.</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token">
+            <xs:minLength value="1" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="IonicLiquidConstituentReferenceType">
+        <xs:attribute name="species" type="NoWhitespaceString" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="IonicLiquidEndmemberSiteType">
+        <xs:sequence>
+            <xs:element name="const" type="IonicLiquidConstituentReferenceType" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="IonicLiquidInteractionSiteType">
+        <xs:sequence>
+            <xs:element name="const" type="IonicLiquidConstituentReferenceType"
+                maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="IonicLiquidEndmemberConstituentsType">
+        <xs:annotation>
+            <xs:documentation>Exactly two sites, each with one constituent: a cation on
+                site 1, an anion or neutral on site 2. Schematron checks group membership.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="site" type="IonicLiquidEndmemberSiteType"
+                minOccurs="2" maxOccurs="2" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="IonicLiquidInteractionConstituentsType">
+        <xs:annotation>
+            <xs:documentation>Exactly two sites: cations on site 1, anions or neutrals
+                on site 2. Each site may contain multiple participating constituents.</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+            <xs:element name="site" type="IonicLiquidInteractionSiteType"
+                minOccurs="2" maxOccurs="2" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="IonicLiquidEndmemberType">
+        <xs:sequence>
+            <xs:element name="description" type="xs:string" minOccurs="0" />
+            <xs:element name="comment" type="xs:string" minOccurs="0" />
+            <xs:element name="constituents" type="IonicLiquidEndmemberConstituentsType" />
+            <xs:element name="property" type="PhasePropertyType"
+                minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="name" type="NoWhitespaceString" use="required" />
+        <xs:attribute name="charge" type="SignedIntegerString" default="0" />
+    </xs:complexType>
+
+    <xs:complexType name="IonicLiquidInteractionType">
+        <xs:sequence>
+            <xs:element name="constituents" type="IonicLiquidInteractionConstituentsType" />
+            <xs:element name="description" type="xs:string" minOccurs="0" />
+            <xs:element name="ref" type="xs:string" minOccurs="0" />
+            <xs:element name="comment" type="xs:string" minOccurs="0" />
+            <xs:element name="property" type="PhasePropertyType"
+                minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" />
+    </xs:complexType>
+
+    <!-- ================================================================== -->
+    <!-- Ionic-liquid Phase Type                                            -->
+    <!-- ================================================================== -->
+
+    <xs:complexType name="IonicLiquidPhaseType">
+        <xs:annotation>
+            <xs:documentation>An ionic-liquid solution phase whose species are organized by
+                chemical role as cations, anions, and neutral species. Species compositions and
+                charges determine the phase's composition-dependent site ratios and endmember
+                stoichiometries.</xs:documentation>
+        </xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="PhaseType">
+                <xs:sequence>
+                    <xs:element name="description" minOccurs="0" type="xs:string" />
+                    <xs:element name="constituents">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="cations">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="specie" minOccurs="1"
+                                                maxOccurs="unbounded">
+                                                <xs:complexType>
+                                                    <xs:complexContent>
+                                                        <xs:restriction base="IonicLiquidSpecieType">
+                                                            <xs:attribute name="name"
+                                                                type="NoWhitespaceString"
+                                                                use="required" />
+                                                            <xs:attribute name="composition"
+                                                                type="IonicLiquidCompositionType" use="required" />
+                                                            <xs:attribute name="charge"
+                                                                type="PositiveSignedIntegerString"
+                                                                use="required" />
+                                                        </xs:restriction>
+                                                    </xs:complexContent>
+                                                </xs:complexType>
+                                            </xs:element>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                                <xs:element name="anions">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="specie" minOccurs="1"
+                                                maxOccurs="unbounded">
+                                                <xs:complexType>
+                                                    <xs:complexContent>
+                                                        <xs:restriction base="IonicLiquidSpecieType">
+                                                            <xs:attribute name="name"
+                                                                type="NoWhitespaceString"
+                                                                use="required" />
+                                                            <xs:attribute name="composition"
+                                                                type="IonicLiquidCompositionType" use="required" />
+                                                            <xs:attribute name="charge"
+                                                                type="NegativeSignedIntegerString"
+                                                                use="required" />
+                                                        </xs:restriction>
+                                                    </xs:complexContent>
+                                                </xs:complexType>
+                                            </xs:element>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                                <xs:element name="neutrals" minOccurs="0">
+                                    <xs:complexType>
+                                        <xs:sequence>
+                                            <xs:element name="specie" minOccurs="1"
+                                                maxOccurs="unbounded">
+                                                <xs:complexType>
+                                                    <xs:complexContent>
+                                                        <xs:restriction base="IonicLiquidSpecieType">
+                                                            <xs:attribute name="name"
+                                                                type="NoWhitespaceString"
+                                                                use="required" />
+                                                            <xs:attribute name="composition"
+                                                                type="IonicLiquidCompositionType" use="required" />
+                                                            <xs:attribute name="charge"
+                                                                type="SignedIntegerString"
+                                                                use="required" fixed="0" />
+                                                        </xs:restriction>
+                                                    </xs:complexContent>
+                                                </xs:complexType>
+                                            </xs:element>
+                                        </xs:sequence>
+                                    </xs:complexType>
+                                </xs:element>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="assessedSystems" minOccurs="0" type="xs:string" />
+                    <xs:element name="endmembers">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="endmember" type="IonicLiquidEndmemberType"
+                                    minOccurs="1" maxOccurs="unbounded" />
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                    <xs:element name="interactions" minOccurs="0">
+                        <xs:complexType>
+                            <xs:sequence>
+                                <xs:element name="interaction" type="IonicLiquidInteractionType"
+                                    minOccurs="0" maxOccurs="unbounded" />
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+</xs:schema>

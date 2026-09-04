@@ -1,0 +1,24 @@
+{
+  "family_name": "Ionic-liquid constituent identity and site membership",
+  "family_summary": "Ionic-liquid constituent identity and site membership.",
+  "rules": [
+    {
+      "id": "VAL-ERR-IONIC-DUPLICATE-SPECIES",
+      "purpose": "Rejects duplicate normalized composition and charge within an ionic species group.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    },
+    {
+      "id": "VAL-ERR-IONIC-CONSTITUENT-SITE-MEMBERSHIP",
+      "purpose": "Requires cations on ionic site 1 and anions or neutrals on site 2 for endmembers and interactions.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    }
+  ]
+}

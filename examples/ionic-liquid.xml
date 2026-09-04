@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<database xmlns="http://calphad.org/thermml/v0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://calphad.org/thermml/v0 ../schema/thermml-schema.xsd" name="Example Ionic Liquid Database" version="0.1.0">
+  <metadata>
+    <title>Example Ionic Liquid Database</title>
+    <version>1.0</version>
+    <description>Two ionic sublattices with cations on site 1 and anions or neutral vacancies on site 2.</description>
+    <license/>
+    <authors/>
+    <revisions/>
+    <references/>
+  </metadata>
+  <nonChemicalPotentials>
+    <nonChemicalPotential id="potT" symbol="T" units="K"/>
+    <nonChemicalPotential id="potP" symbol="P" units="bar"/>
+  </nonChemicalPotentials>
+  <systemComponents>
+    <systemComponent symbol="Va"/>
+    <systemComponent symbol="C" molarMass="12.011" h298="1054.0" s298="5.7423"/>
+    <systemComponent symbol="Fe" molarMass="55.847" h298="4489.0" s298="27.2797"/>
+  </systemComponents>
+  <phases>
+    <phase xsi:type="IonicLiquidPhaseType" name="IONIC_LIQUID" state="liquid">
+      <description>An ionic liquid with a neutral vacancy species.</description>
+      <constituents>
+        <cations>
+          <specie name="Fe[2+]" composition="Fe" charge="+2"/>
+        </cations>
+        <anions>
+          <specie name="C[4-]" composition="C" charge="-4"/>
+        </anions>
+        <neutrals>
+          <specie name="Va" composition="Va" charge="0"/>
+        </neutrals>
+      </constituents>
+      <endmembers>
+        <endmember name="FeC">
+          <constituents>
+            <site>
+              <const species="Fe[2+]"/>
+            </site>
+            <site>
+              <const species="C[4-]"/>
+            </site>
+          </constituents>
+          <property xsi:type="G">
+            <expr>0</expr>
+          </property>
+        </endmember>
+        <endmember name="FeVa">
+          <constituents>
+            <site>
+              <const species="Fe[2+]"/>
+            </site>
+            <site>
+              <const species="Va"/>
+            </site>
+          </constituents>
+          <property xsi:type="G">
+            <expr>0</expr>
+          </property>
+        </endmember>
+      </endmembers>
+    </phase>
+  </phases>
+</database>

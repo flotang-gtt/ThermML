@@ -8,6 +8,7 @@
     <xs:include schemaLocation="../simple-types/main.xsd" />
     <xs:include schemaLocation="../system-components/main.xsd" />
     <xs:include schemaLocation="../phases/cef-phase.xsd" />
+    <xs:include schemaLocation="../phases/ionic-liquid-phase.xsd" />
     <xs:include schemaLocation="../phases/quasichemical-phase.xsd" />
     <xs:include schemaLocation="../phases/pitzer-aqueous-phase.xsd" />
     <xs:include schemaLocation="../phases/pure-substances.xsd" />

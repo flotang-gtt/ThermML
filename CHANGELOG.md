@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Added
 
+- Ionic-liquid phase, species, endmember and interaction types with a fixed two-site layout
+- Ionic constituent identity and group-membership rules and a complete XML example
+
 - Canonical ChemSage SUBQ interaction support for `MQM-L-RC`, ternary
   `MQM-L-SP` and `MQM-L-Quasichemical`, and the reader alias `MQM-L-Q`
 - Dedicated expression types for I/J/K, Redlich-Kister, reciprocal mean,
@@ -19,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   seven canonical emitted interaction families
 
 ### Changed
+
+- Preserve the existing CEFEndmemberType name; ionic models use independent types
 
 - Schematron type matching resolves QName namespaces independently of prefixes
 

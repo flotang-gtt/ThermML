@@ -84,9 +84,9 @@
     {
       "familyName": "Endmember duplicate constituents",
       "familySlug": "endmember-duplicate-constituents",
-      "familySummary": "Rejects two endmembers in the same phase that occupy the sublattice sites with an identical, order-sensitive constituent array.",
+      "familySummary": "Rejects identical ordered endmember arrays except in ionic-liquid models.",
       "ruleId": "VAL-ERR-ENDMEMBER-DUPLICATE-CONSTITUENTS",
-      "purpose": "Rejects two endmembers in the same phase whose per-site species signatures are identical, comparing the constituent array literally and in site order.",
+      "purpose": "Rejects identical ordered endmember arrays within a phase; ionic-liquid models are exempt.",
       "level": "error",
       "source": {
         "href": "../../schematron/rules/endmember-duplicate-constituents/rule.sch",
@@ -122,6 +122,50 @@
         {
           "name": "warning.xml",
           "href": "../../schematron/rules/global-expression-empty-or-zero-content/warning.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Ionic-liquid constituent identity and site membership",
+      "familySlug": "ionic-liquid-constituents",
+      "familySummary": "Ionic-liquid constituent identity and site membership.",
+      "ruleId": "VAL-ERR-IONIC-DUPLICATE-SPECIES",
+      "purpose": "Rejects duplicate normalized composition and charge within an ionic species group.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/ionic-liquid-constituents/rule.sch",
+        "label": "schematron/rules/ionic-liquid-constituents/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/ionic-liquid-constituents/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/ionic-liquid-constituents/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Ionic-liquid constituent identity and site membership",
+      "familySlug": "ionic-liquid-constituents",
+      "familySummary": "Ionic-liquid constituent identity and site membership.",
+      "ruleId": "VAL-ERR-IONIC-CONSTITUENT-SITE-MEMBERSHIP",
+      "purpose": "Requires cations on ionic site 1 and anions or neutrals on site 2 for endmembers and interactions.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/ionic-liquid-constituents/rule.sch",
+        "label": "schematron/rules/ionic-liquid-constituents/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/ionic-liquid-constituents/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/ionic-liquid-constituents/invalid.xml"
         }
       ]
     },

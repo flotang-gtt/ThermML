@@ -42,6 +42,26 @@
         </xs:restriction>
     </xs:simpleType>
 
+    <xs:simpleType name="PositiveSignedIntegerString">
+        <xs:annotation>
+            <xs:documentation>A strictly positive integer with an explicit leading plus sign,
+                e.g. "+1" or "+3".</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="SignedIntegerString">
+            <xs:pattern value="\+[1-9][0-9]*" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="NegativeSignedIntegerString">
+        <xs:annotation>
+            <xs:documentation>A strictly negative integer with an explicit leading minus sign,
+                e.g. "-1" or "-3".</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="SignedIntegerString">
+            <xs:pattern value="-[1-9][0-9]*" />
+        </xs:restriction>
+    </xs:simpleType>
+
 
     <xs:simpleType name="NoWhitespaceString">
         <xs:annotation>
