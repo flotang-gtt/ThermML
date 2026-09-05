@@ -43,7 +43,7 @@ def validators():
 
 @pytest.fixture
 def ionic():
-    return etree.parse(str(ROOT / "examples/ionic-liquid.xml"))
+    return etree.parse(str(ROOT / "tests/fixtures/ionic-liquid-minimal.xml"))
 
 
 @pytest.fixture
@@ -128,6 +128,66 @@ def test_ionic_example_and_explicit_ionic_types_are_valid(ionic, validators):
     find(ionic, "//t:endmember").set(XSI, "IonicLiquidEndmemberType")
     assert_valid(ionic, validators)
     assert_valid(with_type_prefix(ionic), validators)
+
+
+def test_lindwall_ionic_example_preserves_source_model(validators):
+    doc = etree.parse(str(ROOT / "examples/ionic-liquid.xml"))
+    assert_valid(doc, validators)
+    assert doc.xpath("//t:systemComponent/@symbol", namespaces=NS) == ["Fe", "Al", "O"]
+    phase = find(doc, "//t:phase")
+    assert phase.get("name") == "IONIC_LIQ"
+    assert phase.xpath("./t:constituents/*/t:specie/@name", namespaces=NS) == [
+        "Al[+3]",
+        "Fe[+2]",
+        "O[-2]",
+        "Va",
+        "AlO1.5",
+        "FeO1.5",
+    ]
+    endmembers = phase.xpath("./t:endmembers/t:endmember", namespaces=NS)
+    expected = [
+        ("Al+3Va", "Al[+3]", "Va", 5),
+        ("Fe+2Va", "Fe[+2]", "Va", 2),
+        ("Al+3O-2", "Al[+3]", "O[-2]", 5),
+        ("Al+3AlO1.5", "Al[+3]", "AlO1.5", 5),
+        ("Fe+2AlO1.5", "Fe[+2]", "AlO1.5", 5),
+        ("Fe+2O-2", "Fe[+2]", "O[-2]", 1),
+        ("Al+3FeO1.5", "Al[+3]", "FeO1.5", 1),
+        ("Fe+2FeO1.5", "Fe[+2]", "FeO1.5", 1),
+    ]
+    assert len(endmembers) == len(expected)
+    functions = {
+        e.get("name"): e
+        for e in doc.xpath("//t:globalExpressions/t:expression", namespaces=NS)
+    }
+    assert len(functions) == 8
+    for em, (name, cation, other, count) in zip(endmembers, expected):
+        assert em.get("name") == name
+        assert em.xpath("./t:constituents/t:site/t:const/@species", namespaces=NS) == [
+            cation,
+            other,
+        ]
+        reference = find(em, "./t:property/t:expr").text
+        assert reference == "{" + name + "#IONIC_LIQ}"
+        function = functions[reference[1:-1]]
+        assert function.get(XSI) == "FunctionTypeCSdat"
+        rows = find(function, "./t:chemsage").text.strip().splitlines()
+        assert rows[0].split() == ["4", str(count)]
+        assert len(rows) == 1 + 3 * count
+    # Protect the nonstandard extra power and tiny final interval in the source.
+    aluminium = find(functions["Al+3Va#IONIC_LIQ"], "./t:chemsage").text
+    assert "0.793400000E-19   7.00" in aluminium
+    assert "0.123100000E+29  -9.00" in aluminium
+    assert "6000.00001" in aluminium
+    interactions = phase.xpath("./t:interactions/t:interaction", namespaces=NS)
+    assert len(interactions) == 10
+    assert [
+        len(i.xpath("./t:property/t:expr", namespaces=NS)) for i in interactions
+    ] == [1, 3, 1, 1, 1, 2, 1, 2, 1, 1]
+    assert interactions[0].xpath(
+        "./t:constituents/t:site/t:const/@species", namespaces=NS
+    ) == ["Al[+3]", "Fe[+2]", "O[-2]", "Va"]
+    assert find(interactions[0], "./t:property/t:expr").text == "-740767.460"
 
 
 @pytest.mark.parametrize(

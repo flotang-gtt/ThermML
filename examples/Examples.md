@@ -23,8 +23,9 @@ Modified Quasichemical interaction serialization. It covers all seven emitted
 interaction property types, reciprocal variants, selected ternary terms,
 quadruplets, and ternary interpolation models.
 
-`ionic-liquid.xml` demonstrates the dedicated ionic types: cations on site 1,
-anions or neutral vacancies on site 2, and one occupant per endmember site.
-Ionic interactions use the same two-site ordering and allow multiple occupants
-per site. XSD validates the shape and charge signs; Schematron validates group
-membership and duplicate species. Energy definitions can remain placeholders.
+`ionic-liquid.xml` is transcribed directly from the first `IONIC_LIQ` / `SUBI`
+block in the user-supplied FactSage export `AlFeO_Lindwall.dat`. It includes
+all eight endmembers, ten interactions and eight original ChemSage-format
+Gibbs functions. See [the source notes](ionic-liquid-source.md) for constituent
+indices, source line numbers, normalization and the vacancy-role limitation
+exposed by this real dataset.

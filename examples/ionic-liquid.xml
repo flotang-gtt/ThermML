@@ -1,65 +1,458 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<database xmlns="http://calphad.org/thermml/v0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://calphad.org/thermml/v0 ../schema/thermml-schema.xsd" name="Example Ionic Liquid Database" version="0.1.0">
+<database xmlns="http://calphad.org/thermml/v0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Lindwall Fe-Al-O ionic liquid" version="0.1.0" xsi:schemaLocation="http://calphad.org/thermml/v0 ../schema/thermml-schema.xsd">
   <metadata>
-    <title>Example Ionic Liquid Database</title>
-    <version>1.0</version>
-    <description>Two ionic sublattices with cations on site 1 and anions or neutral vacancies on site 2.</description>
-    <license/>
-    <authors/>
-    <revisions/>
-    <references/>
+    <title>Lindwall Fe-Al-O: IONIC_LIQ from FactSage ChemSage export</title>
+    <version></version>
+    <description>Independent transcription of the first IONIC_LIQ / SUBI block (lines 229-387) in AlFeO_Lindwall.dat. The second ionic block, lines 388-546, is identical and is omitted. Includes all eight endmembers and ten interaction records. See ionic-liquid-source.md for source mapping and representational limits.</description>
+    <license></license>
+    <references>
+      <reference key="Lindwall-DAT">User-supplied FactSage export C:\FactSage84\ChemSage\AlFeO_Lindwall.dat; SHA-256 796fecca05798a3c1999924e9e91e069ba978a3a7896c7d530a30e848f577887</reference>
+    </references>
   </metadata>
-  <nonChemicalPotentials>
-    <nonChemicalPotential id="potT" symbol="T" units="K"/>
-    <nonChemicalPotential id="potP" symbol="P" units="bar"/>
-  </nonChemicalPotentials>
   <systemComponents>
-    <systemComponent symbol="Va"/>
-    <systemComponent symbol="C" molarMass="12.011" h298="1054.0" s298="5.7423"/>
-    <systemComponent symbol="Fe" molarMass="55.847" h298="4489.0" s298="27.2797"/>
+    <systemComponent symbol="Fe" molarMass="55.84500000"/>
+    <systemComponent symbol="Al" molarMass="26.98153860"/>
+    <systemComponent symbol="O" molarMass="15.99940000"/>
   </systemComponents>
   <phases>
-    <phase xsi:type="IonicLiquidPhaseType" name="IONIC_LIQUID" state="liquid">
-      <description>An ionic liquid with a neutral vacancy species.</description>
+    <phase name="IONIC_LIQ" state="liquid" xsi:type="IonicLiquidPhaseType">
+      <description>DAT SUBI model: (Al[+3],Fe[+2]) : (O[-2],Va,AlO1.5,FeO1.5). Va is a vacancy site constituent, not a chemical system component. Its charge=0 below marks the empty composition in the current schema; SUBI gives the vacancy a special effective charge. The raw second-site role values 2,1,0,0 are documented in ionic-liquid-source.md; Va must not be treated as an ordinary neutral oxide.</description>
       <constituents>
         <cations>
-          <specie name="Fe[2+]" composition="Fe" charge="+2"/>
+          <specie name="Al[+3]" composition="Al" charge="+3"/>
+          <specie name="Fe[+2]" composition="Fe" charge="+2"/>
         </cations>
         <anions>
-          <specie name="C[4-]" composition="C" charge="-4"/>
+          <specie name="O[-2]" composition="O" charge="-2"/>
         </anions>
         <neutrals>
           <specie name="Va" composition="Va" charge="0"/>
+          <specie name="AlO1.5" composition="AlO1.5" charge="0"/>
+          <specie name="FeO1.5" composition="FeO1.5" charge="0"/>
         </neutrals>
       </constituents>
       <endmembers>
-        <endmember name="FeC">
+        <endmember name="Al+3Va">
+          <comment>DAT lines 231-248; endmember 1; sublattice indices 1:2; source stoichiometry (Fe=0.00000, Al=1.00000, O=0.00000). Preserve the source function normalization; do not infer composition by simply adding the two site species.</comment>
           <constituents>
             <site>
-              <const species="Fe[2+]"/>
-            </site>
-            <site>
-              <const species="C[4-]"/>
-            </site>
-          </constituents>
-          <property xsi:type="G">
-            <expr>0</expr>
-          </property>
-        </endmember>
-        <endmember name="FeVa">
-          <constituents>
-            <site>
-              <const species="Fe[2+]"/>
+              <const species="Al[+3]"/>
             </site>
             <site>
               <const species="Va"/>
             </site>
           </constituents>
           <property xsi:type="G">
-            <expr>0</expr>
+            <ref>Lindwall-DAT</ref>
+            <expr>{Al+3Va#IONIC_LIQ}</expr>
+          </property>
+        </endmember>
+        <endmember name="Fe+2Va">
+          <comment>DAT lines 249-257; endmember 2; sublattice indices 2:2; source stoichiometry (Fe=1.00000, Al=0.00000, O=0.00000). Preserve the source function normalization; do not infer composition by simply adding the two site species.</comment>
+          <constituents>
+            <site>
+              <const species="Fe[+2]"/>
+            </site>
+            <site>
+              <const species="Va"/>
+            </site>
+          </constituents>
+          <property xsi:type="G">
+            <ref>Lindwall-DAT</ref>
+            <expr>{Fe+2Va#IONIC_LIQ}</expr>
+          </property>
+        </endmember>
+        <endmember name="Al+3O-2">
+          <comment>DAT lines 258-275; endmember 3; sublattice indices 1:1; source stoichiometry (Fe=0.00000, Al=2.00000, O=3.00000). Preserve the source function normalization; do not infer composition by simply adding the two site species.</comment>
+          <constituents>
+            <site>
+              <const species="Al[+3]"/>
+            </site>
+            <site>
+              <const species="O[-2]"/>
+            </site>
+          </constituents>
+          <property xsi:type="G">
+            <ref>Lindwall-DAT</ref>
+            <expr>{Al+3O-2#IONIC_LIQ}</expr>
+          </property>
+        </endmember>
+        <endmember name="Al+3AlO1.5">
+          <comment>DAT lines 276-293; endmember 4; sublattice indices 1:3; source stoichiometry (Fe=0.00000, Al=3.00000, O=4.50000000). Preserve the source function normalization; do not infer composition by simply adding the two site species.</comment>
+          <constituents>
+            <site>
+              <const species="Al[+3]"/>
+            </site>
+            <site>
+              <const species="AlO1.5"/>
+            </site>
+          </constituents>
+          <property xsi:type="G">
+            <ref>Lindwall-DAT</ref>
+            <expr>{Al+3AlO1.5#IONIC_LIQ}</expr>
+          </property>
+        </endmember>
+        <endmember name="Fe+2AlO1.5">
+          <comment>DAT lines 294-311; endmember 5; sublattice indices 2:3; source stoichiometry (Fe=0.00000, Al=2.00000, O=3.00000). Preserve the source function normalization; do not infer composition by simply adding the two site species.</comment>
+          <constituents>
+            <site>
+              <const species="Fe[+2]"/>
+            </site>
+            <site>
+              <const species="AlO1.5"/>
+            </site>
+          </constituents>
+          <property xsi:type="G">
+            <ref>Lindwall-DAT</ref>
+            <expr>{Fe+2AlO1.5#IONIC_LIQ}</expr>
+          </property>
+        </endmember>
+        <endmember name="Fe+2O-2">
+          <comment>DAT lines 312-317; endmember 6; sublattice indices 2:1; source stoichiometry (Fe=2.00000, Al=0.00000, O=2.00000). Preserve the source function normalization; do not infer composition by simply adding the two site species.</comment>
+          <constituents>
+            <site>
+              <const species="Fe[+2]"/>
+            </site>
+            <site>
+              <const species="O[-2]"/>
+            </site>
+          </constituents>
+          <property xsi:type="G">
+            <ref>Lindwall-DAT</ref>
+            <expr>{Fe+2O-2#IONIC_LIQ}</expr>
+          </property>
+        </endmember>
+        <endmember name="Al+3FeO1.5">
+          <comment>DAT lines 318-323; endmember 7; sublattice indices 1:4; source stoichiometry (Fe=3.00000, Al=0.00000, O=4.50000000). Preserve the source function normalization; do not infer composition by simply adding the two site species.</comment>
+          <constituents>
+            <site>
+              <const species="Al[+3]"/>
+            </site>
+            <site>
+              <const species="FeO1.5"/>
+            </site>
+          </constituents>
+          <property xsi:type="G">
+            <ref>Lindwall-DAT</ref>
+            <expr>{Al+3FeO1.5#IONIC_LIQ}</expr>
+          </property>
+        </endmember>
+        <endmember name="Fe+2FeO1.5">
+          <comment>DAT lines 324-329; endmember 8; sublattice indices 2:4; source stoichiometry (Fe=2.00000, Al=0.00000, O=3.00000). Preserve the source function normalization; do not infer composition by simply adding the two site species.</comment>
+          <constituents>
+            <site>
+              <const species="Fe[+2]"/>
+            </site>
+            <site>
+              <const species="FeO1.5"/>
+            </site>
+          </constituents>
+          <property xsi:type="G">
+            <ref>Lindwall-DAT</ref>
+            <expr>{Fe+2FeO1.5#IONIC_LIQ}</expr>
           </property>
         </endmember>
       </endmembers>
+      <interactions>
+        <interaction name="Al[+3],Fe[+2]:O[-2],Va">
+          <constituents>
+            <site>
+              <const species="Al[+3]"/>
+              <const species="Fe[+2]"/>
+            </site>
+            <site>
+              <const species="O[-2]"/>
+              <const species="Va"/>
+            </site>
+          </constituents>
+          <ref>Lindwall-DAT</ref>
+          <comment>DAT lines 339-342; flattened constituent indices 1,2,3,4. Coefficient sets retained in source order as ranks starting at zero; the last four temperature coefficients are zero in this export.</comment>
+          <property xsi:type="L">
+            <expr rank="0">-740767.460</expr>
+          </property>
+        </interaction>
+        <interaction name="Al[+3],Fe[+2]:Va">
+          <constituents>
+            <site>
+              <const species="Al[+3]"/>
+              <const species="Fe[+2]"/>
+            </site>
+            <site>
+              <const species="Va"/>
+            </site>
+          </constituents>
+          <ref>Lindwall-DAT</ref>
+          <comment>DAT lines 343-350; flattened constituent indices 1,2,4. Coefficient sets retained in source order as ranks starting at zero; the last four temperature coefficients are zero in this export.</comment>
+          <property xsi:type="L">
+            <expr rank="0">-91976.5000 + 22.1314000*T</expr>
+            <expr rank="1">-5672.58000 + 4.87280000*T</expr>
+            <expr rank="2">121.900000</expr>
+          </property>
+        </interaction>
+        <interaction name="Al[+3]:O[-2],Va">
+          <constituents>
+            <site>
+              <const species="Al[+3]"/>
+            </site>
+            <site>
+              <const species="O[-2]"/>
+              <const species="Va"/>
+            </site>
+          </constituents>
+          <ref>Lindwall-DAT</ref>
+          <comment>DAT lines 351-354; flattened constituent indices 1,3,4. Coefficient sets retained in source order as ranks starting at zero; the last four temperature coefficients are zero in this export.</comment>
+          <property xsi:type="L">
+            <expr rank="0">-829000.000 + 106.000000*T</expr>
+          </property>
+        </interaction>
+        <interaction name="Al[+3]:Va,AlO1.5">
+          <constituents>
+            <site>
+              <const species="Al[+3]"/>
+            </site>
+            <site>
+              <const species="Va"/>
+              <const species="AlO1.5"/>
+            </site>
+          </constituents>
+          <ref>Lindwall-DAT</ref>
+          <comment>DAT lines 355-358; flattened constituent indices 1,4,5. Coefficient sets retained in source order as ranks starting at zero; the last four temperature coefficients are zero in this export.</comment>
+          <property xsi:type="L">
+            <expr rank="0">110000.000 + 46.0000000*T</expr>
+          </property>
+        </interaction>
+        <interaction name="Al[+3]:Va,FeO1.5">
+          <constituents>
+            <site>
+              <const species="Al[+3]"/>
+            </site>
+            <site>
+              <const species="Va"/>
+              <const species="FeO1.5"/>
+            </site>
+          </constituents>
+          <ref>Lindwall-DAT</ref>
+          <comment>DAT lines 359-362; flattened constituent indices 1,4,6. Coefficient sets retained in source order as ranks starting at zero; the last four temperature coefficients are zero in this export.</comment>
+          <property xsi:type="L">
+            <expr rank="0">110000.000</expr>
+          </property>
+        </interaction>
+        <interaction name="Fe[+2]:O[-2],Va">
+          <constituents>
+            <site>
+              <const species="Fe[+2]"/>
+            </site>
+            <site>
+              <const species="O[-2]"/>
+              <const species="Va"/>
+            </site>
+          </constituents>
+          <ref>Lindwall-DAT</ref>
+          <comment>DAT lines 363-368; flattened constituent indices 2,3,4. Coefficient sets retained in source order as ranks starting at zero; the last four temperature coefficients are zero in this export.</comment>
+          <property xsi:type="L">
+            <expr rank="0">176681.000 + -16.3680000*T</expr>
+            <expr rank="1">-65655.0000 + 30.8690000*T</expr>
+          </property>
+        </interaction>
+        <interaction name="Fe[+2]:O[-2],AlO1.5">
+          <constituents>
+            <site>
+              <const species="Fe[+2]"/>
+            </site>
+            <site>
+              <const species="O[-2]"/>
+              <const species="AlO1.5"/>
+            </site>
+          </constituents>
+          <ref>Lindwall-DAT</ref>
+          <comment>DAT lines 369-372; flattened constituent indices 2,3,5. Coefficient sets retained in source order as ranks starting at zero; the last four temperature coefficients are zero in this export.</comment>
+          <property xsi:type="L">
+            <expr rank="0">-40000.0000 + 25.0000000*T</expr>
+          </property>
+        </interaction>
+        <interaction name="Fe[+2]:O[-2],FeO1.5">
+          <constituents>
+            <site>
+              <const species="Fe[+2]"/>
+            </site>
+            <site>
+              <const species="O[-2]"/>
+              <const species="FeO1.5"/>
+            </site>
+          </constituents>
+          <ref>Lindwall-DAT</ref>
+          <comment>DAT lines 373-378; flattened constituent indices 2,3,6. Coefficient sets retained in source order as ranks starting at zero; the last four temperature coefficients are zero in this export.</comment>
+          <property xsi:type="L">
+            <expr rank="0">-26362.0000</expr>
+            <expr rank="1">13353.0000</expr>
+          </property>
+        </interaction>
+        <interaction name="Fe[+2]:Va,AlO1.5">
+          <constituents>
+            <site>
+              <const species="Fe[+2]"/>
+            </site>
+            <site>
+              <const species="Va"/>
+              <const species="AlO1.5"/>
+            </site>
+          </constituents>
+          <ref>Lindwall-DAT</ref>
+          <comment>DAT lines 379-382; flattened constituent indices 2,4,5. Coefficient sets retained in source order as ranks starting at zero; the last four temperature coefficients are zero in this export.</comment>
+          <property xsi:type="L">
+            <expr rank="0">178992.380</expr>
+          </property>
+        </interaction>
+        <interaction name="Fe[+2]:Va,FeO1.5">
+          <constituents>
+            <site>
+              <const species="Fe[+2]"/>
+            </site>
+            <site>
+              <const species="Va"/>
+              <const species="FeO1.5"/>
+            </site>
+          </constituents>
+          <ref>Lindwall-DAT</ref>
+          <comment>DAT lines 383-386; flattened constituent indices 2,4,6. Coefficient sets retained in source order as ranks starting at zero; the last four temperature coefficients are zero in this export.</comment>
+          <property xsi:type="L">
+            <expr rank="0">110000.000</expr>
+          </property>
+        </interaction>
+      </interactions>
     </phase>
   </phases>
+  <globalExpressions>
+    <expression name="Al+3Va#IONIC_LIQ" xsi:type="FunctionTypeCSdat">
+      <ref>Lindwall-DAT</ref>
+      <comment>DAT lines 232-248. Original type-4 function with 5 ranges. The 11-entry source stoichiometry vector is removed from the function header and recorded on the endmember; every thermodynamic coefficient, upper temperature limit and extra coefficient/power pair is retained verbatim.</comment>
+      <chemsage><![CDATA[
+4 5
+  700.000000      3028.87900      125.251171     -24.3671976     -.188466200E-02
+ -.877664000E-06  74092.0000
+ 1 0.793400000E-19   7.00
+  933.470000     -271.210058      211.206578     -38.5844296     0.185319820E-01
+ -.576422700E-05  74092.0000
+ 1 0.793400000E-19   7.00
+  2900.00000     -796.094927      177.430275     -31.7481920         0.000000000
+     0.000000000     0.000000000
+ 1 0.476000000E+25  -9.00
+  6000.00000      91273.6534     -107.429296         0.000000000     0.000000000
+     0.000000000     0.000000000
+ 1 0.123100000E+29  -9.00
+  6000.00001      91273.6535     -107.429296     0.183226404E-07     0.000000000
+     0.000000000     0.000000000
+ 1     0.000000000   0.00
+]]></chemsage>
+    </expression>
+    <expression name="Fe+2Va#IONIC_LIQ" xsi:type="FunctionTypeCSdat">
+      <ref>Lindwall-DAT</ref>
+      <comment>DAT lines 250-257. Original type-4 function with 2 ranges. The 11-entry source stoichiometry vector is removed from the function header and recorded on the endmember; every thermodynamic coefficient, upper temperature limit and extra coefficient/power pair is retained verbatim.</comment>
+      <chemsage><![CDATA[
+4 2
+  1811.00000      13265.8700      117.575570     -23.5143000     -.439752000E-02
+ -.589270000E-07  77359.0000
+ 1 -.367516000E-20   7.00
+  6000.00000     -10838.8353      291.301995     -46.0000000         0.000000000
+     0.000000000     0.000000000
+ 1     0.000000000   0.00
+]]></chemsage>
+    </expression>
+    <expression name="Al+3O-2#IONIC_LIQ" xsi:type="FunctionTypeCSdat">
+      <ref>Lindwall-DAT</ref>
+      <comment>DAT lines 259-275. Original type-4 function with 5 ranges. The 11-entry source stoichiometry vector is removed from the function header and recorded on the endmember; every thermodynamic coefficient, upper temperature limit and extra coefficient/power pair is retained verbatim.</comment>
+      <chemsage><![CDATA[
+4 5
+  600.000000     -607850.800      405.559491     -67.4804000     -.674700000E-01
+ 0.142054330E-04  938780.000
+ 1     0.000000000   0.00
+  1500.00000     -625385.567      712.394971     -116.258000     -.722570000E-02
+ 0.278532000E-06  2120700.00
+ 1     0.000000000   0.00
+  1912.00000     -672662.700      1010.99320     -156.058000     0.709105000E-02
+ -.629402000E-06  12366650.0
+ 1     0.000000000   0.00
+  2327.00000      30178041.7     -168360.926      21987.1791     -6.99552951
+ 0.410226192E-03 -.798843618E+10
+ 1     0.000000000   0.00
+  6000.00000     -757702.060      1344.84833     -192.464000         0.000000000
+     0.000000000     0.000000000
+ 1     0.000000000   0.00
+]]></chemsage>
+    </expression>
+    <expression name="Al+3AlO1.5#IONIC_LIQ" xsi:type="FunctionTypeCSdat">
+      <ref>Lindwall-DAT</ref>
+      <comment>DAT lines 277-293. Original type-4 function with 5 ranges. The 11-entry source stoichiometry vector is removed from the function header and recorded on the endmember; every thermodynamic coefficient, upper temperature limit and extra coefficient/power pair is retained verbatim.</comment>
+      <chemsage><![CDATA[
+4 5
+  600.000000     -2411776.20      608.339237     -101.220600     -.101205000
+ 0.213081495E-04  1408170.00
+ 1     0.000000000   0.00
+  1500.00000     -2438078.35      1068.59246     -174.387000     -.108385500E-01
+ 0.417798000E-06  3181050.00
+ 1     0.000000000   0.00
+  1912.00000     -2508994.05      1516.48980     -234.087000     0.106365750E-01
+ -.944103000E-06  18549975.0
+ 1     0.000000000   0.00
+  2327.00000      43767062.5     -252541.389      32980.7686     -10.4932943
+ 0.615339288E-03 -.119826543E+11
+ 1     0.000000000   0.00
+  6000.00000     -2636553.09      2017.27250     -288.696000         0.000000000
+     0.000000000     0.000000000
+ 1     0.000000000   0.00
+]]></chemsage>
+    </expression>
+    <expression name="Fe+2AlO1.5#IONIC_LIQ" xsi:type="FunctionTypeCSdat">
+      <ref>Lindwall-DAT</ref>
+      <comment>DAT lines 295-311. Original type-4 function with 5 ranges. The 11-entry source stoichiometry vector is removed from the function header and recorded on the endmember; every thermodynamic coefficient, upper temperature limit and extra coefficient/power pair is retained verbatim.</comment>
+      <chemsage><![CDATA[
+4 5
+  600.000000     -1607850.80      405.559491     -67.4804000     -.674700000E-01
+ 0.142054330E-04  938780.000
+ 1     0.000000000   0.00
+  1500.00000     -1625385.57      712.394971     -116.258000     -.722570000E-02
+ 0.278532000E-06  2120700.00
+ 1     0.000000000   0.00
+  1912.00000     -1672662.70      1010.99320     -156.058000     0.709105000E-02
+ -.629402000E-06  12366650.0
+ 1     0.000000000   0.00
+  2327.00000      29178041.7     -168360.926      21987.1791     -6.99552951
+ 0.410226192E-03 -.798843618E+10
+ 1     0.000000000   0.00
+  6000.00000     -1757702.06      1344.84833     -192.464000         0.000000000
+     0.000000000     0.000000000
+ 1     0.000000000   0.00
+]]></chemsage>
+    </expression>
+    <expression name="Fe+2O-2#IONIC_LIQ" xsi:type="FunctionTypeCSdat">
+      <ref>Lindwall-DAT</ref>
+      <comment>DAT lines 313-317. Original type-4 function with 1 ranges. The 11-entry source stoichiometry vector is removed from the function header and recorded on the endmember; every thermodynamic coefficient, upper temperature limit and extra coefficient/power pair is retained verbatim.</comment>
+      <chemsage><![CDATA[
+4 1
+  3000.00000     -549008.000      898.564000     -148.726000         0.000000000
+     0.000000000     0.000000000
+ 1     0.000000000   0.00
+]]></chemsage>
+    </expression>
+    <expression name="Al+3FeO1.5#IONIC_LIQ" xsi:type="FunctionTypeCSdat">
+      <ref>Lindwall-DAT</ref>
+      <comment>DAT lines 319-323. Original type-4 function with 1 ranges. The 11-entry source stoichiometry vector is removed from the function header and recorded on the endmember; every thermodynamic coefficient, upper temperature limit and extra coefficient/power pair is retained verbatim.</comment>
+      <chemsage><![CDATA[
+4 1
+  6000.00000     -1298847.00      1804.69350     -278.861250         0.000000000
+     0.000000000     0.000000000
+ 1     0.000000000   0.00
+]]></chemsage>
+    </expression>
+    <expression name="Fe+2FeO1.5#IONIC_LIQ" xsi:type="FunctionTypeCSdat">
+      <ref>Lindwall-DAT</ref>
+      <comment>DAT lines 325-329. Original type-4 function with 1 ranges. The 11-entry source stoichiometry vector is removed from the function header and recorded on the endmember; every thermodynamic coefficient, upper temperature limit and extra coefficient/power pair is retained verbatim.</comment>
+      <chemsage><![CDATA[
+4 1
+  6000.00000     -865898.000      1203.12900     -185.907500         0.000000000
+     0.000000000     0.000000000
+ 1     0.000000000   0.00
+]]></chemsage>
+    </expression>
+  </globalExpressions>
 </database>
