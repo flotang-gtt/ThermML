@@ -29,6 +29,12 @@
                     <xs:documentation>Brief description of the database contents and purpose.</xs:documentation>
                 </xs:annotation>
             </xs:element>
+            <xs:element name="assessedSystems" type="xs:string" minOccurs="0">
+                <xs:annotation>
+                    <xs:documentation>Assessed systems for the database, corresponding to the
+                        TDB ASSESSED_SYSTEMS command. This is not phase-specific.</xs:documentation>
+                </xs:annotation>
+            </xs:element>
             <!-- TODO we surely can get a validation from some other schema for licenses -->
             <xs:element name="license" type="xs:string">
                 <xs:annotation>

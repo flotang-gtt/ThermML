@@ -186,7 +186,6 @@
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
-                    <xs:element name="assessedSystems" minOccurs="0" type="xs:string" />
                     <xs:element name="endmembers">
                         <xs:complexType>
                             <xs:sequence>

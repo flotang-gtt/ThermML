@@ -347,11 +347,6 @@
                                 information.</xs:documentation>
                         </xs:annotation>
                     </xs:element>
-                    <xs:element name="assessedSystems" minOccurs="0" type="xs:string">
-                        <xs:annotation>
-                            <xs:documentation>Assessed systems for this phase.</xs:documentation>
-                        </xs:annotation>
-                    </xs:element>
                     <xs:element name="ordering" minOccurs="0" type="xs:string">
                         <xs:annotation>
                             <xs:documentation>Ordering information for this phase.</xs:documentation>

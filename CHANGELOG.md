@@ -27,6 +27,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ### Changed
 
+- Move `assessedSystems` from CEF/ionic phases to database `metadata`, before
+  `license`. Existing phase-level declarations must migrate to that location.
+
 - Sublattice multiplicities must be a non-empty list of positive decimals
 
 - CEF gas phases permit multiple thermodynamic states for one constituent
