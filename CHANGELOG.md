@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 - Gas constituent coverage and Gibbs-expression consistency checks
 
-- Ionic-liquid phase, species, endmember and interaction types with a fixed two-site layout
+- Ionic-liquid phase, species, endmember and interaction types with model-specific constituent arrays
 - Ionic constituent identity and group-membership rules and a complete XML example
 
 - Canonical ChemSage SUBQ interaction support for `MQM-L-RC`, ternary
@@ -26,6 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   seven canonical emitted interaction families
 
 ### Changed
+
+- Ionic liquids accept single-site neutral-only terms and empty anion lists
+  when neutrals supply the second group; vacancy terms still require a cation.
+- The Lindwall example uses six canonical endmembers and explicit piecewise
+  Gibbs expressions, including two neutral-only terms before DAT expansion.
 
 - Move `assessedSystems` from CEF/ionic phases to database `metadata`, before
   `license`. Existing phase-level declarations must migrate to that location.

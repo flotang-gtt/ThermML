@@ -52,23 +52,26 @@
 
     <xs:complexType name="IonicLiquidEndmemberConstituentsType">
         <xs:annotation>
-            <xs:documentation>Exactly two sites, each with one constituent: a cation on
-                site 1, an anion or neutral on site 2. Schematron checks group membership.</xs:documentation>
+            <xs:documentation>Two sites for cation-anion or cation-vacancy terms; one site for a neutral-only
+                term, as in TDB. Each site contains one constituent. The Gibbs expression includes
+                all source prefactors. Do not multiply a neutral-only term by a cation charge.
+                Legacy paired neutral terms remain readable. Schematron checks group membership.</xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="site" type="IonicLiquidEndmemberSiteType"
-                minOccurs="2" maxOccurs="2" />
+                minOccurs="1" maxOccurs="2" />
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="IonicLiquidInteractionConstituentsType">
         <xs:annotation>
-            <xs:documentation>Exactly two sites: cations on site 1, anions or neutrals
-                on site 2. Each site may contain multiple participating constituents.</xs:documentation>
+            <xs:documentation>Two sites: cations on site 1, anions or neutrals on site 2; or one site
+                for neutral-only interactions, without an artificial cation. Each site may contain
+                multiple participating constituents.</xs:documentation>
         </xs:annotation>
         <xs:sequence>
             <xs:element name="site" type="IonicLiquidInteractionSiteType"
-                minOccurs="2" maxOccurs="2" />
+                minOccurs="1" maxOccurs="2" />
         </xs:sequence>
     </xs:complexType>
 
@@ -105,7 +108,10 @@
             <xs:documentation>An ionic-liquid solution phase whose species are organized by
                 chemical role as cations, anions, and neutral species. Species compositions and
                 charges determine the phase's composition-dependent site ratios and endmember
-                stoichiometries.</xs:documentation>
+                stoichiometries. The second group must contain anions or neutrals; required endmember
+                references and membership validation enforce this. Va denotes a vacancy species,
+                not a system component: use composition="Va" and charge="0". Vacancy terms
+                retain their cation site and are not neutral-only terms.</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="PhaseType">
@@ -140,7 +146,7 @@
                                 <xs:element name="anions">
                                     <xs:complexType>
                                         <xs:sequence>
-                                            <xs:element name="specie" minOccurs="1"
+                                            <xs:element name="specie" minOccurs="0"
                                                 maxOccurs="unbounded">
                                                 <xs:complexType>
                                                     <xs:complexContent>

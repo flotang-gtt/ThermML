@@ -145,40 +145,35 @@ def test_lindwall_ionic_example_preserves_source_model(validators):
         "FeO1.5",
     ]
     endmembers = phase.xpath("./t:endmembers/t:endmember", namespaces=NS)
-    expected = [
-        ("Al+3Va", "Al[+3]", "Va", 5),
-        ("Fe+2Va", "Fe[+2]", "Va", 2),
-        ("Al+3O-2", "Al[+3]", "O[-2]", 5),
-        ("Al+3AlO1.5", "Al[+3]", "AlO1.5", 5),
-        ("Fe+2AlO1.5", "Fe[+2]", "AlO1.5", 5),
-        ("Fe+2O-2", "Fe[+2]", "O[-2]", 1),
-        ("Al+3FeO1.5", "Al[+3]", "FeO1.5", 1),
-        ("Fe+2FeO1.5", "Fe[+2]", "FeO1.5", 1),
-    ]
-    assert len(endmembers) == len(expected)
-    functions = {
-        e.get("name"): e
-        for e in doc.xpath("//t:globalExpressions/t:expression", namespaces=NS)
+    assert len(endmembers) == 6
+    neutrals = [e for e in endmembers if len(find(e, "./t:constituents")) == 1]
+    assert {e.get("name") for e in neutrals} == {"AlO1.5", "FeO1.5"}
+    functions = doc.xpath("//t:globalExpressions/t:expression", namespaces=NS)
+    assert len(functions) == 6
+    assert all(e.get(XSI) == "FunctionTypeExpr" for e in functions)
+    expected_sites = {
+        "Al+3Va": ["Al[+3]", "Va"],
+        "Fe+2Va": ["Fe[+2]", "Va"],
+        "Al+3O-2": ["Al[+3]", "O[-2]"],
+        "Fe+2O-2": ["Fe[+2]", "O[-2]"],
+        "AlO1.5": ["AlO1.5"],
+        "FeO1.5": ["FeO1.5"],
     }
-    assert len(functions) == 8
-    for em, (name, cation, other, count) in zip(endmembers, expected):
-        assert em.get("name") == name
-        assert em.xpath("./t:constituents/t:site/t:const/@species", namespaces=NS) == [
-            cation,
-            other,
-        ]
-        reference = find(em, "./t:property/t:expr").text
-        assert reference == "{" + name + "#IONIC_LIQ}"
-        function = functions[reference[1:-1]]
-        assert function.get(XSI) == "FunctionTypeCSdat"
-        rows = find(function, "./t:chemsage").text.strip().splitlines()
-        assert rows[0].split() == ["4", str(count)]
-        assert len(rows) == 1 + 3 * count
-    # Protect the nonstandard extra power and tiny final interval in the source.
-    aluminium = find(functions["Al+3Va#IONIC_LIQ"], "./t:chemsage").text
-    assert "0.793400000E-19   7.00" in aluminium
-    assert "0.123100000E+29  -9.00" in aluminium
-    assert "6000.00001" in aluminium
+    assert {e.get("name") for e in endmembers} == set(expected_sites)
+    assert {f.get("name") for f in functions} == {
+        name + "#IONIC_LIQ" for name in expected_sites
+    }
+    for endmember in endmembers:
+        name = endmember.get("name")
+        assert endmember.xpath(
+            "./t:constituents/t:site/t:const/@species", namespaces=NS
+        ) == expected_sites[name]
+        assert find(endmember, "./t:property/t:expr").text == (
+            "+1*{" + name + "#IONIC_LIQ}"
+        )
+    assert all("DAT lines" in find(e, "./t:comment").text for e in endmembers)
+    text = etree.tostring(doc).decode()
+    assert "T**7" in text and "T**(-9)" in text
     interactions = phase.xpath("./t:interactions/t:interaction", namespaces=NS)
     assert len(interactions) == 10
     assert [
@@ -204,7 +199,7 @@ def test_lindwall_ionic_example_preserves_source_model(validators):
 def test_ionic_xsd_rejects_invalid_shapes(ionic, validators, mutation):
     constituents = find(ionic, "//t:endmember/t:constituents")
     if mutation == "missing-site":
-        constituents.remove(constituents[-1])
+        constituents.clear()
     elif mutation == "extra-site":
         constituents.append(deepcopy(constituents[0]))
     elif mutation == "multiple-occupants":
@@ -264,7 +259,7 @@ def test_ionic_interactions_allow_mixing_but_enforce_site_membership(ionic, vali
 def test_ionic_interaction_shape_is_specialized(ionic, validators, mutation):
     interaction = add_ionic_interaction(ionic)
     if mutation == "missing-site":
-        interaction[0].remove(interaction[0][-1])
+        interaction[0].clear()
     elif mutation == "extra-site":
         interaction[0].append(deepcopy(interaction[0][0]))
     else:
@@ -412,3 +407,39 @@ def test_gas_placeholders_remain_valid_without_duplicate_gibbs_warnings(validato
         prop.getparent().remove(prop)
     valid, errors, warnings = validate_document(doc, validators[1])
     assert valid and not errors and not warnings
+
+
+@pytest.mark.parametrize("target", ["endmember", "interaction"])
+@pytest.mark.parametrize("invalid_species", [None, "Va", "Fe[2+]", "vacancy-alias"])
+def test_neutral_only_ionic_terms(ionic, validators, invalid_species, target):
+    find(ionic, "//t:anions").clear()
+    neutrals = find(ionic, "//t:neutrals")
+    etree.SubElement(
+        neutrals, f"{{{URI}}}specie", name="C", composition="C", charge="0"
+    )
+    endmembers = find(ionic, "//t:endmembers")
+    endmember = deepcopy(endmembers[0])
+    endmembers.clear()
+    endmembers.append(endmember)
+    array = find(endmember, "./t:constituents")
+    array.remove(array[0])
+    array[0][0].set("species", "C")
+    phase = find(ionic, "//t:phase")
+    interactions = etree.SubElement(phase, f"{{{URI}}}interactions")
+    interaction = etree.SubElement(interactions, f"{{{URI}}}interaction")
+    interaction.append(deepcopy(array))
+    assert_valid(ionic, validators)
+    if invalid_species:
+        if invalid_species == "vacancy-alias":
+            find(neutrals, "./t:specie[@name='Va']").set("name", "vacancy-alias")
+        tested_array = (
+            array if target == "endmember" else find(interaction, "./t:constituents")
+        )
+        tested_array[0][0].set("species", invalid_species)
+        assert validators[0].validate(ionic), str(validators[0].error_log)
+        assert "VAL-ERR-IONIC-CONSTITUENT-SITE-MEMBERSHIP" in error_ids(
+            ionic, validators
+        )
+    else:
+        neutrals.getparent().remove(neutrals)
+        assert not validators[0].validate(ionic) or error_ids(ionic, validators)

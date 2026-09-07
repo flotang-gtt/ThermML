@@ -23,9 +23,9 @@ Modified Quasichemical interaction serialization. It covers all seven emitted
 interaction property types, reciprocal variants, selected ternary terms,
 quadruplets, and ternary interpolation models.
 
-`ionic-liquid.xml` is transcribed directly from the first `IONIC_LIQ` / `SUBI`
-block in the user-supplied FactSage export `AlFeO_Lindwall.dat`. It includes
-all eight endmembers, ten interactions and eight original ChemSage-format
-Gibbs functions. See [the source notes](ionic-liquid-source.md) for constituent
-indices, source line numbers, normalization and the vacancy-role limitation
-exposed by this real dataset.
+`ionic-liquid.xml` contains the canonical ionic representation of the Lindwall
+Fe-Al-O model: four cation-pair endmembers and two neutral-only endmembers,
+six explicit piecewise Gibbs functions, and ten interactions. Neutral-only
+terms retain their complete source-prefactored energy without introducing an
+artificial cation site. Source attribution and DAT line references are kept in
+the XML itself.

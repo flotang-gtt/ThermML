@@ -394,7 +394,7 @@
       "familySlug": "ionic-liquid-constituents",
       "familySummary": "Ionic-liquid constituent identity and site membership.",
       "ruleId": "VAL-ERR-IONIC-CONSTITUENT-SITE-MEMBERSHIP",
-      "purpose": "Requires cations on ionic site 1 and anions or neutrals on site 2 for endmembers and interactions.",
+      "purpose": "Requires non-vacancy neutrals for single-site terms, or cations on site 1 and anions or neutrals on site 2 for two-site terms.",
       "level": "error",
       "source": {
         "href": "../../schematron/rules/ionic-liquid-constituents/rule.sch",
