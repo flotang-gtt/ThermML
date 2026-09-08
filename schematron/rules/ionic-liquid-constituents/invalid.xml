@@ -9,6 +9,7 @@
         </cations>
         <anions>
           <specie name="O2" composition="O" charge="-2"/>
+          <specie name="hole" composition="Va" charge="-1"/>
         </anions>
       </constituents>
       <endmembers>

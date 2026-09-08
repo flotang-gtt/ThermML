@@ -14,9 +14,14 @@ Schematron adds the relational checks that XSD 1.0 cannot express:
   have the same normalized composition and charge. Distinct oxidation states
   remain allowed. Formula strings are compared literally, not chemically canonicalized.
 - `VAL-ERR-IONIC-CONSTITUENT-SITE-MEMBERSHIP`: endmember and interaction references
-  use one site for neutral-only terms (excluding a vacancy identified by name
-  or composition `Va`, case-insensitively), or two sites with cations
+  use one site for neutral-only terms (excluding a vacancy identified by
+  composition `Va`, case-insensitively), or two sites with cations
   on site 1 and anions or neutrals, including Va, on site 2.
+
+- `VAL-ERR-IONIC-VACANCY-CHARGE`: composition `Va` requires zero formal charge.
+  Species names are aliases: `hole` with composition `Va` is a vacancy, while
+  `Va` or `Vacancy` with a chemical composition is an ordinary species. Names
+  neither determine vacancy identity nor cause validation errors.
 
 Anions may be empty if neutrals supply the second group. Required endmembers
 and valid species references prevent an empty second group. Neutral-only Gibbs

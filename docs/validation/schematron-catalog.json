@@ -412,6 +412,28 @@
       ]
     },
     {
+      "familyName": "Ionic-liquid constituent identity and site membership",
+      "familySlug": "ionic-liquid-constituents",
+      "familySummary": "Ionic-liquid constituent identity and site membership.",
+      "ruleId": "VAL-ERR-IONIC-VACANCY-CHARGE",
+      "purpose": "Requires zero formal charge for vacancy composition Va, independently of the species name.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/ionic-liquid-constituents/rule.sch",
+        "label": "schematron/rules/ionic-liquid-constituents/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/ionic-liquid-constituents/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/ionic-liquid-constituents/invalid.xml"
+        }
+      ]
+    },
+    {
       "familyName": "Redlich-Kister rank",
       "familySlug": "redlich-kister-rank",
       "familySummary": "Checks Redlich-Kister rank values and flags suspicious high-rank or gap-filled series for review.",

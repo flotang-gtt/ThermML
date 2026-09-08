@@ -19,6 +19,15 @@
         "valid.xml",
         "invalid.xml"
       ]
+    },
+    {
+      "id": "VAL-ERR-IONIC-VACANCY-CHARGE",
+      "purpose": "Requires zero formal charge for vacancy composition Va, independently of the species name.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
     }
   ]
 }

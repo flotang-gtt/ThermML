@@ -111,7 +111,8 @@
                 stoichiometries. The second group must contain anions or neutrals; required endmember
                 references and membership validation enforce this. Va denotes a vacancy species,
                 not a system component: use composition="Va" and charge="0". Vacancy terms
-                retain their cation site and are not neutral-only terms.</xs:documentation>
+                retain their cation site and are not neutral-only terms. Vacancy identity is determined
+                by composition "Va", independently of the species name.</xs:documentation>
         </xs:annotation>
         <xs:complexContent>
             <xs:extension base="PhaseType">

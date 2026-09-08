@@ -38,7 +38,7 @@ def test_generator_loads_all_rule_families() -> None:
         "subq-interaction-semantics",
         "ternary-interpolation-locator-aliases",
     ]
-    assert sum(len(family.rules) for family in families) == 31
+    assert sum(len(family.rules) for family in families) == 32
 
 
 def test_rendered_catalog_payload_contains_filterable_rule_data() -> None:

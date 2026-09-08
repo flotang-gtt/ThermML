@@ -7,6 +7,10 @@
   <sch:rule context="t:database//t:phase/t:constituents/*/t:specie">
     <sch:let name="composition" value="normalize-space(@composition)"/>
     <sch:let name="charge" value="normalize-space(@charge)"/>
+    <sch:assert id="VAL-ERR-IONIC-VACANCY-CHARGE" role="error"
+        test="translate($composition, 'va', 'VA') != 'VA' or number(@charge) = 0">
+      Ionic vacancy <sch:value-of select="@name"/> (composition Va) must have zero formal charge.
+    </sch:assert>
     <sch:assert id="VAL-ERR-IONIC-DUPLICATE-SPECIES" role="error"
         test="not(preceding-sibling::t:specie[normalize-space(@composition) = $composition and normalize-space(@charge) = $charge])">
       Ionic species <sch:value-of select="@name"/> duplicates a species with the same composition and charge in its group.
@@ -17,7 +21,7 @@
     <sch:let name="phase" value="ancestor::t:phase[1]"/>
     <sch:let name="site-index" value="count(../preceding-sibling::t:site) + 1"/>
     <sch:assert id="VAL-ERR-IONIC-CONSTITUENT-SITE-MEMBERSHIP" role="error"
-        test="(count(../../t:site) = 1 and @species = $phase/t:constituents/t:neutrals/t:specie[translate(@name, 'va', 'VA') != 'VA' and translate(normalize-space(@composition), 'va', 'VA') != 'VA']/@name) or (count(../../t:site) = 2 and (($site-index = 1 and @species = $phase/t:constituents/t:cations/t:specie/@name) or ($site-index = 2 and (@species = $phase/t:constituents/t:anions/t:specie/@name or @species = $phase/t:constituents/t:neutrals/t:specie/@name))))">
+        test="(count(../../t:site) = 1 and @species = $phase/t:constituents/t:neutrals/t:specie[translate(normalize-space(@composition), 'va', 'VA') != 'VA']/@name) or (count(../../t:site) = 2 and (($site-index = 1 and @species = $phase/t:constituents/t:cations/t:specie/@name) or ($site-index = 2 and (@species = $phase/t:constituents/t:anions/t:specie/@name or @species = $phase/t:constituents/t:neutrals/t:specie/@name))))">
       Ionic constituent <sch:value-of select="@species"/> is not allowed on site <sch:value-of select="$site-index"/>: a single site requires non-vacancy neutrals; with two sites, site 1 requires cations and site 2 requires anions or neutrals.
     </sch:assert>
   </sch:rule>

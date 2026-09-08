@@ -443,3 +443,30 @@ def test_neutral_only_ionic_terms(ionic, validators, invalid_species, target):
     else:
         neutrals.getparent().remove(neutrals)
         assert not validators[0].validate(ionic) or error_ids(ionic, validators)
+
+
+@pytest.mark.parametrize("name", ["hole", "Va", "Vacancy"])
+@pytest.mark.parametrize("composition", ["Va", "va", "C"])
+def test_ionic_vacancy_identity_uses_composition(ionic, validators, name, composition):
+    specie = find(ionic, "//t:neutrals/t:specie")
+    specie.set("name", name)
+    specie.set("composition", composition)
+    array = find(ionic, "//t:endmember[@name='FeVa']/t:constituents")
+    array[1][0].set("species", name)
+    assert_valid(ionic, validators)
+    array.remove(array[0])
+    assert validators[0].validate(ionic)
+    if composition.lower() == "va":
+        assert "VAL-ERR-IONIC-CONSTITUENT-SITE-MEMBERSHIP" in error_ids(ionic, validators)
+    else:
+        assert_valid(ionic, validators)
+
+
+@pytest.mark.parametrize("group, charge", [("cations", "+1"), ("anions", "-1")])
+def test_ionic_vacancy_composition_requires_zero_charge(ionic, validators, group, charge):
+    etree.SubElement(
+        find(ionic, f"//t:{group}"), f"{{{URI}}}specie",
+        name="charged-hole", composition="Va", charge=charge,
+    )
+    assert validators[0].validate(ionic)
+    assert "VAL-ERR-IONIC-VACANCY-CHARGE" in error_ids(ionic, validators)
