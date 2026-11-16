@@ -25,6 +25,11 @@ schema.
 
 The `schema` directory contains the schema definition files.
 
+Single-sublattice polynomial phases (ChemSage QKTO/QKTOM) are described in the
+[integration review](docs/single-sublattice-polynomial.md), including validation
+rules, canonical interpolation syntax and 0.2.0 migration notes. A complete
+[synthetic example](examples/single-sublattice-polynomial.xml) accompanies it.
+
 ## Versioning
 
 ThermML follows [Semantic Versioning](https://semver.org/). The version is

@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<sch:pattern xmlns:sch="http://purl.oclc.org/dsdl/schematron" id="thermml-ternary-interpolation">
+  <sch:title>Ternary interpolation semantics</sch:title>
+  <sch:rule context="t:database//t:ternaryInterpolations/t:interpolation//t:const">
+    <sch:let name="species" value="string(@species)" />
+    <sch:assert id="VAL-ERR-TERNARY-INTERPOLATION-LOCATOR-ATTRIBUTE" role="error" test="not(@siteIndex)">site is the only ternary locator attribute. siteIndex is not permitted, including when both attributes agree.</sch:assert>
+    <sch:assert id="VAL-ERR-TERNARY-INTERPOLATION-DISTINCT-SPECIES" role="error" test="not(ancestor::t:phase[1][((normalize-space(@xsi:type) = 'ModifiedQuasichemicalPhaseType' or substring-after(normalize-space(@xsi:type), ':') = 'ModifiedQuasichemicalPhaseType') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') or ((normalize-space(@xsi:type) = 'SingleSublatticePolynomialPhaseType' or substring-after(normalize-space(@xsi:type), ':') = 'SingleSublatticePolynomialPhaseType') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0')]) or not(preceding-sibling::t:const[@species = $species])">Ternary interpolation species must be distinct within each site.</sch:assert>
+  </sch:rule>
+  <sch:rule context="t:database//t:phase[((normalize-space(@xsi:type) = 'ModifiedQuasichemicalPhaseType' or substring-after(normalize-space(@xsi:type), ':') = 'ModifiedQuasichemicalPhaseType') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0') or ((normalize-space(@xsi:type) = 'SingleSublatticePolynomialPhaseType' or substring-after(normalize-space(@xsi:type), ':') = 'SingleSublatticePolynomialPhaseType') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0')]/t:ternaryInterpolations/t:interpolation/*[((normalize-space(@xsi:type) = 'Toop' or substring-after(normalize-space(@xsi:type), ':') = 'Toop') and namespace::*[name() = substring-before(normalize-space(../@xsi:type), ':')] = 'http://calphad.org/thermml/v0')]">
+    <sch:assert id="VAL-ERR-TERNARY-INTERPOLATION-TOOP-LOCATOR" role="error" test="t:constant = ../t:constituents/t:site/t:const/@site">Toop constant must identify a labeled species in this ternary. The third species outside the named binary pair is permitted.</sch:assert>
+  </sch:rule>
+</sch:pattern>

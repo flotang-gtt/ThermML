@@ -1,0 +1,33 @@
+{
+  "family_name": "Ternary interpolation semantics",
+  "family_summary": "Checks the canonical site locator, distinct species and Toop selection for SUBQ and polynomial phases.",
+  "rules": [
+    {
+      "id": "VAL-ERR-TERNARY-INTERPOLATION-LOCATOR-ATTRIBUTE",
+      "purpose": "Requires site as the sole locator attribute; siteIndex is forbidden even when it agrees with site.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    },
+    {
+      "id": "VAL-ERR-TERNARY-INTERPOLATION-DISTINCT-SPECIES",
+      "purpose": "Ternary interpolation species must be distinct within each site.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    },
+    {
+      "id": "VAL-ERR-TERNARY-INTERPOLATION-TOOP-LOCATOR",
+      "purpose": "Toop constant must identify a labeled species in this ternary. The third species outside the named binary pair is permitted.",
+      "level": "error",
+      "examples": [
+        "valid.xml",
+        "invalid.xml"
+      ]
+    }
+  ]
+}

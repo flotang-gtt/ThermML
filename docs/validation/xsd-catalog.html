@@ -137,6 +137,30 @@
         <td><code>MQMSpeciesGroupType</code> in <code><a href="../../schema/phases/quasichemical-phase.xsd">schema/phases/quasichemical-phase.xsd</a></code></td>
       </tr>
       <tr>
+        <td><code>VAL-DOM-POLYNOMIAL-COORDINATION-NUMBER</code></td>
+        <td>Polynomial <code>endmember/@coordinationNumber</code></td>
+        <td>Required finite positive double; fractional values are permitted.</td>
+        <td><code>PolynomialCoordinationNumberType</code> in <a href="../../schema/phases/single-sublattice-polynomial-phase.xsd">single-sublattice-polynomial-phase.xsd</a></td>
+      </tr>
+      <tr>
+        <td><code>VAL-DOM-POLYNOMIAL-GROUP</code></td>
+        <td>Polynomial <code>specie/@group</code></td>
+        <td>Required strictly positive integer. Zero and negative values are forbidden, as for SUBQ groups.</td>
+        <td><code>PolynomialSpecieType</code> in <a href="../../schema/phases/single-sublattice-polynomial-phase.xsd">single-sublattice-polynomial-phase.xsd</a></td>
+      </tr>
+      <tr>
+        <td><code>VAL-DOM-POLYNOMIAL-EXPONENTS</code></td>
+        <td><code>PolynomialL/expr/@i</code>, <code>@j</code>, <code>@k</code>, <code>@l</code></td>
+        <td>Unsigned 32-bit powers. i and j are required; Schematron checks k/l against constituent arity. Zero powers are valid; rank/range attributes are forbidden.</td>
+        <td><code>PolynomialL</code> in <a href="../../schema/phases/single-sublattice-polynomial-phase.xsd">single-sublattice-polynomial-phase.xsd</a></td>
+      </tr>
+      <tr>
+        <td><code>VAL-DOM-POLYNOMIAL-STRUCTURE</code></td>
+        <td>Polynomial <code>structure/sublattices</code></td>
+        <td>Exactly one site and an explicit multiplicity equal to 1.</td>
+        <td><code>PolynomialStructureType</code> in <a href="../../schema/phases/single-sublattice-polynomial-phase.xsd">single-sublattice-polynomial-phase.xsd</a></td>
+      </tr>
+      <tr>
         <td><code>VAL-ERR-RK-RANK-INVALID</code></td>
         <td><code>L/expr/@rank</code></td>
         <td>Rank must be an integer greater than or equal to <code>0</code>.</td>

@@ -33,7 +33,7 @@
             <site><const species="X"/></site>
           </constituents>
           <ij xsi:type="Kohler"/>
-          <jk xsi:type="Muggiano"/>
+          <jk xsi:type="Muggianu"/>
           <ik xsi:type="Toop"><constant>k</constant></ik>
         </interpolation>
       </ternaryInterpolations>

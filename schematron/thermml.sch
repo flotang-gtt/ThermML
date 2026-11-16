@@ -10,7 +10,7 @@
   <sch:ns prefix="t" uri="http://calphad.org/thermml/v0"/>
   <sch:ns prefix="xsi" uri="http://www.w3.org/2001/XMLSchema-instance"/>
 
-  <sch:include href="rules/ternary-interpolation-locator-aliases/module.sch"/>
+  <sch:include href="rules/ternary-interpolation-semantics/module.sch"/>
   <sch:include href="rules/redlich-kister-rank/module.sch"/>
   <sch:include href="rules/cef-endmember-cartesian-count/module.sch"/>
   <sch:include href="rules/gas-endmember-consistency/module.sch"/>
@@ -20,6 +20,7 @@
   <sch:include href="rules/endmember-constituent-site-count/module.sch"/>
   <sch:include href="rules/cef-magnetic-consistency/module.sch"/>
   <sch:include href="rules/subq-interaction-semantics/module.sch"/>
+  <sch:include href="rules/polynomial-phase-semantics/module.sch"/>
   <sch:include href="rules/ionic-liquid-constituents/module.sch"/>
   <sch:include href="rules/cef-constituent-occupancy/module.sch"/>
   <sch:include href="rules/sublattice-multiplicities/module.sch"/>

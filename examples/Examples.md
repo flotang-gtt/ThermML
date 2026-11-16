@@ -18,6 +18,12 @@ Get-ChildItem .\examples\*.xml | ForEach-Object { uv run .\validate_one.py $_.Fu
 Both commands run the XSD schema in `schema/thermml-schema.xsd` and the bundled
 Schematron rules in `schematron/thermml.sch`.
 
+`single-sublattice-polynomial.xml` illustrates the QKTO/QKTOM representation with
+explicit powers, fractional coordination numbers, positive chemical groups, IHJ
+magnetism and ternary interpolation exceptions. It is synthetic validation data.
+See [the integration review](../docs/single-sublattice-polynomial.md) for the
+distinction between schema validation and consumer evaluation support.
+
 `subq-interaction-models.xml` is the canonical compact example for ChemSage
 Modified Quasichemical interaction serialization. It covers all seven emitted
 interaction property types, reciprocal variants, selected ternary terms,

@@ -7,7 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
 
 ## [Unreleased]
 
+Target: **0.2.0**. Still under development; not signed off for release.
+
 ### Added
+
+- Single-sublattice polynomial phases with explicit composition powers, chemical
+  groups, coordination numbers and optional IHJ magnetism
+- Polynomial semantic rules for model ownership, species/endmember coverage,
+  interaction arity, unique ordered terms and magnetic consistency
+- Synthetic polynomial example, regression tests and integration review in
+  `docs/single-sublattice-polynomial.md`
 
 - CEF occupancy, sublattice multiplicity count, and expression range consistency rules
 
@@ -26,6 +35,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/).
   seven canonical emitted interaction families
 
 ### Changed
+
+- Share ternary interpolation methods and locator types between SUBQ and
+  polynomial phases while preserving their different site counts
+- Require strictly positive polynomial chemical group IDs, independently of
+  producer storage types
+- Unify SUBQ and polynomial locators on `site`; reject the former `siteIndex`
+  alias, including when both attributes agree
+- Require distinct interpolation species and validate Toop selection within
+  the ternary
+- Correct the Toop documentation to allow the third ternary species outside
+  the named binary pair
+- Correct the interpolation type to `Muggianu`, deliberately removing support
+  for the old misspelling during 0.2.0 development
 
 - Ionic liquids accept single-site neutral-only terms and empty anion lists
   when neutrals supply the second group; vacancy terms still require a cation.

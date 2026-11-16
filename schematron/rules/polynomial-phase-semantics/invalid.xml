@@ -1,0 +1,128 @@
+<?xml version='1.0' encoding='utf-8'?>
+<database xmlns="http://calphad.org/thermml/v0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <phases>
+    <phase xsi:type="SingleSublatticePolynomialPhaseType" name="POLYNOMIAL" state="solid">
+      <description>Explicit powers, fractional Z, positive groups, IHJ and ternary exceptions.</description>
+      <species>
+        <specie name="Fe" composition="" charge="0" group="1" />
+        <specie name="Ni" composition="Ni" charge="0" group="3" />
+        <specie name="Co" composition="Co" charge="0" group="2" />
+        <specie name="Mn" composition="Mn" charge="0" group="2" />
+      </species>
+      <structure>
+        <sublattices multiplicities="1">
+          <site constituents="Fe Fe Co" />
+        </sublattices>
+      </structure>
+      <endmembers>
+        <endmember name="wrong-name" coordinationNumber="2.5">
+          <constituents>
+            <site>
+              <const species="Fe" />
+            </site>
+          </constituents>
+          <property xsi:type="L">
+            <expr>0</expr>
+          </property>
+          <property xsi:type="M">
+            <temperature type="Curie">0</temperature>
+            <moment>0</moment>
+          </property>
+          <property xsi:type="PolynomialL">
+            <expr i="0" j="2">120-2*T+3*T*LN(T)+4*T**2+5*T**3+6*T**(-1)</expr>
+            <expr i="2" j="0">0</expr>
+          </property>
+        </endmember>
+        <endmember name="Ni" coordinationNumber="0.5">
+          <constituents>
+            <site>
+              <const species="Ni" />
+            </site>
+          </constituents>
+          <property xsi:type="G">
+            <expr>0</expr>
+          </property>
+        </endmember>
+        <endmember name="Co" coordinationNumber="1">
+          <constituents>
+            <site>
+              <const species="Co" />
+            </site>
+          </constituents>
+          <property xsi:type="G">
+            <expr>0</expr>
+          </property>
+        </endmember>
+      </endmembers>
+      <interactions>
+        <interaction name="binary">
+          <constituents>
+            <site>
+              <const species="Fe" />
+              <const species="Fe" />
+            </site>
+          </constituents>
+          <property xsi:type="PolynomialL">
+            <expr i="0" j="2">120-2*T+3*T*LN(T)+4*T**2+5*T**3+6*T**(-1)</expr>
+            <expr i="2" j="0" l="0"> </expr>
+            <expr i="0" j="2">120-2*T+3*T*LN(T)+4*T**2+5*T**3+6*T**(-1)</expr>
+          </property>
+          <property xsi:type="TCL">
+            <expr rank="0">0</expr>
+          </property>
+          <property xsi:type="BML">
+            <expr rank="0">0</expr>
+          </property>
+        </interaction>
+        <interaction name="ternary">
+          <constituents>
+            <site>
+              <const species="Fe" />
+              <const species="Ni" />
+              <const species="Co" />
+            </site>
+          </constituents>
+          <property xsi:type="PolynomialL">
+            <expr i="1" j="2" k="0">25</expr>
+          </property>
+        </interaction>
+        <interaction name="quaternary">
+          <constituents>
+            <site>
+              <const species="Fe" />
+              <const species="Ni" />
+              <const species="Co" />
+              <const species="Mn" />
+            </site>
+          </constituents>
+          <property xsi:type="PolynomialL">
+            <expr i="1" j="1" k="1" l="0">50</expr>
+          </property>
+        </interaction>
+        <interaction name="binary">
+          <constituents>
+            <site>
+              <const species="Fe" />
+            </site>
+          </constituents>
+        </interaction>
+      </interactions>
+      <ternaryInterpolations>
+        <interpolation>
+          <constituents>
+            <site>
+              <const species="Fe" site="i" />
+              <const species="Ni" site="i" />
+              <const species="Co" site="k" />
+            </site>
+          </constituents>
+          <ij xsi:type="Toop">
+            <constant>k</constant>
+          </ij>
+          <jk xsi:type="Kohler" />
+          <ik xsi:type="Muggianu" />
+        </interpolation>
+      </ternaryInterpolations>
+    </phase>
+  </phases>
+</database>
