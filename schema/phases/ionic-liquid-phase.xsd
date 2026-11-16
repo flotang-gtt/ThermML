@@ -14,9 +14,11 @@
 
     <xs:complexType name="IonicLiquidSpecieType">
         <xs:annotation>
-            <xs:documentation>A species participating in an ionic-liquid model. Its composition
-                and formal charge are required because they determine the composition-dependent
-                site ratios and derived endmember stoichiometry.</xs:documentation>
+            <xs:documentation>A species participating in an ionic-liquid model, identified by
+                its phase-local name. Composition and formal charge are required because they
+                determine the composition-dependent site ratios and derived endmember stoichiometry.
+                Matching composition and charge do not by themselves establish that two named
+                model species are thermodynamically equivalent.</xs:documentation>
         </xs:annotation>
         <xs:attribute name="name" type="NoWhitespaceString" use="required" />
         <xs:attribute name="composition" type="IonicLiquidCompositionType" use="required" />

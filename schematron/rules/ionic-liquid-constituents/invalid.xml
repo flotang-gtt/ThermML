@@ -5,7 +5,6 @@
       <constituents>
         <cations>
           <specie name="Fe2" composition="Fe" charge="+2"/>
-          <specie name="Fe_copy" composition="Fe" charge="+2"/>
         </cations>
         <anions>
           <specie name="O2" composition="O" charge="-2"/>

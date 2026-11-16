@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<database xmlns="http://calphad.org/thermml/v0">
+  <phases>
+    <phase>
+      <constituents>
+        <cations>
+          <specie name="Fe2" composition="Fe" charge="+2"/>
+          <specie name="Fe_state" composition="Fe" charge="+2"/>
+        </cations>
+        <anions>
+          <specie name="O2" composition="O" charge="-2"/>
+          <specie name="O_state" composition="O" charge="-2"/>
+        </anions>
+        <neutrals>
+          <specie name="FeO" composition="FeO" charge="0"/>
+          <specie name="FeO_state" composition="FeO" charge="0"/>
+        </neutrals>
+      </constituents>
+      <endmembers>
+        <endmember>
+          <constituents>
+            <site><const species="Fe2"/></site>
+            <site><const species="O2"/></site>
+          </constituents>
+        </endmember>
+      </endmembers>
+    </phase>
+  </phases>
+</database>

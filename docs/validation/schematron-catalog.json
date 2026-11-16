@@ -371,9 +371,9 @@
       "familyName": "Ionic-liquid constituent identity and site membership",
       "familySlug": "ionic-liquid-constituents",
       "familySummary": "Ionic-liquid constituent identity and site membership.",
-      "ruleId": "VAL-ERR-IONIC-DUPLICATE-SPECIES",
-      "purpose": "Rejects duplicate normalized composition and charge within an ionic species group.",
-      "level": "error",
+      "ruleId": "VAL-WARN-IONIC-DUPLICATE-SPECIES",
+      "purpose": "Advises reviewing matching normalized composition and charge within an ionic species group; distinct names retain independent model identities.",
+      "level": "warning",
       "source": {
         "href": "../../schematron/rules/ionic-liquid-constituents/rule.sch",
         "label": "schematron/rules/ionic-liquid-constituents/rule.sch"
@@ -384,8 +384,8 @@
           "href": "../../schematron/rules/ionic-liquid-constituents/valid.xml"
         },
         {
-          "name": "invalid.xml",
-          "href": "../../schematron/rules/ionic-liquid-constituents/invalid.xml"
+          "name": "warning.xml",
+          "href": "../../schematron/rules/ionic-liquid-constituents/warning.xml"
         }
       ]
     },
@@ -494,10 +494,10 @@
     {
       "familyName": "Species duplicate stoichiometry",
       "familySlug": "species-duplicate-stoichiometry",
-      "familySummary": "Rejects two species in the same phase that share an identical stoichiometric formula, compared as the literal (composition, charge) string pair.",
-      "ruleId": "VAL-ERR-SPECIES-DUPLICATE-STOICHIOMETRY",
-      "purpose": "Rejects two species in the same phase whose normalized composition and charge strings are identical, while allowing same-composition species that differ in charge.",
-      "level": "error",
+      "familySummary": "Advises reviewing species with the same literal composition and charge strings; these attributes do not determine native model identity.",
+      "ruleId": "VAL-WARN-SPECIES-DUPLICATE-STOICHIOMETRY",
+      "purpose": "Reports matching normalized composition and charge strings within a phase as an advisory warning, preserving distinct named model species.",
+      "level": "warning",
       "source": {
         "href": "../../schematron/rules/species-duplicate-stoichiometry/rule.sch",
         "label": "schematron/rules/species-duplicate-stoichiometry/rule.sch"
@@ -508,8 +508,8 @@
           "href": "../../schematron/rules/species-duplicate-stoichiometry/valid.xml"
         },
         {
-          "name": "invalid.xml",
-          "href": "../../schematron/rules/species-duplicate-stoichiometry/invalid.xml"
+          "name": "warning.xml",
+          "href": "../../schematron/rules/species-duplicate-stoichiometry/warning.xml"
         }
       ]
     },

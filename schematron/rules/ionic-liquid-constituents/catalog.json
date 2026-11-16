@@ -3,12 +3,12 @@
   "family_summary": "Ionic-liquid constituent identity and site membership.",
   "rules": [
     {
-      "id": "VAL-ERR-IONIC-DUPLICATE-SPECIES",
-      "purpose": "Rejects duplicate normalized composition and charge within an ionic species group.",
-      "level": "error",
+      "id": "VAL-WARN-IONIC-DUPLICATE-SPECIES",
+      "purpose": "Advises reviewing matching normalized composition and charge within an ionic species group; distinct names retain independent model identities.",
+      "level": "warning",
       "examples": [
         "valid.xml",
-        "invalid.xml"
+        "warning.xml"
       ]
     },
     {

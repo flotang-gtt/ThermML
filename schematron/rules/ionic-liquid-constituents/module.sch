@@ -11,10 +11,10 @@
         test="translate($composition, 'va', 'VA') != 'VA' or number(@charge) = 0">
       Ionic vacancy <sch:value-of select="@name"/> (composition Va) must have zero formal charge.
     </sch:assert>
-    <sch:assert id="VAL-ERR-IONIC-DUPLICATE-SPECIES" role="error"
-        test="not(preceding-sibling::t:specie[normalize-space(@composition) = $composition and normalize-space(@charge) = $charge])">
-      Ionic species <sch:value-of select="@name"/> duplicates a species with the same composition and charge in its group.
-    </sch:assert>
+    <sch:report id="VAL-WARN-IONIC-DUPLICATE-SPECIES" role="warning"
+        test="preceding-sibling::t:specie[normalize-space(@composition) = $composition and normalize-space(@charge) = $charge]">
+      Ionic species <sch:value-of select="@name"/> shares composition and charge with another species in its group. Distinct named model species may be intentional; review the source assessment without automatically merging them.
+    </sch:report>
   </sch:rule>
 
   <sch:rule context="t:database//t:phase[t:constituents/t:cations]/t:endmembers/t:endmember/t:constituents/t:site/t:const | t:database//t:phase[t:constituents/t:cations]/t:interactions/t:interaction/t:constituents/t:site/t:const">

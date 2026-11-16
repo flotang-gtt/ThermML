@@ -74,6 +74,7 @@ def test_standalone_fixtures_cover_every_new_assertion(family):
     expected = {
         rule["id"]
         for rule in json.loads((folder / "catalog.json").read_text())["rules"]
+        if rule["level"] == "error"
     }
     assert not valid
     assert {finding.rule_id for finding in errors} == expected
@@ -222,7 +223,7 @@ def test_ionic_swapped_sites_fail_semantic_validation(ionic, validators):
 
 
 @pytest.mark.parametrize("group", ["cations", "anions", "neutrals"])
-def test_ionic_duplicate_species_fail_but_distinct_charges_pass(
+def test_ionic_formula_collisions_warn_but_distinct_charges_pass(
     ionic, validators, group
 ):
     container = find(ionic, f"//t:constituents/t:{group}")
@@ -230,10 +231,15 @@ def test_ionic_duplicate_species_fail_but_distinct_charges_pass(
     duplicate.set("name", "other-name")
     container.append(duplicate)
     assert validators[0].validate(ionic)
-    assert "VAL-ERR-IONIC-DUPLICATE-SPECIES" in error_ids(ionic, validators)
+    valid, errors, warnings = validate_document(ionic, validators[1])
+    assert valid and not errors
+    assert {finding.rule_id for finding in warnings} == {
+        "VAL-WARN-IONIC-DUPLICATE-SPECIES"
+    }
     if group != "neutrals":
         duplicate.set("charge", "+3" if group == "cations" else "-3")
         assert_valid(ionic, validators)
+        assert not validate_document(ionic, validators[1])[2]
 
 
 def add_ionic_interaction(ionic):

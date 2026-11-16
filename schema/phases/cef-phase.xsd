@@ -212,8 +212,9 @@
     <xs:complexType name="CEFSpecieType">
         <xs:annotation>
             <xs:documentation>Defines a single species (site occupier) for a CEF phase. The name
-                is required; composition and charge are optional but recommended for
-                clarity.</xs:documentation>
+                defines its phase-local identity. Composition and charge are optional but
+                recommended for clarity; matching composition and charge do not establish
+                that two named model species are thermodynamically equivalent.</xs:documentation>
         </xs:annotation>
         <xs:attribute name="name" type="NoWhitespaceString" use="required">
             <xs:annotation>

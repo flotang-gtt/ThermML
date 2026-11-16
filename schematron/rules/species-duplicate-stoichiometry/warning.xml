@@ -4,10 +4,10 @@
   <phases>
     <phase xsi:type="CEFPhaseType" name="FCC_A1" state="solid">
       <species>
-        <!-- Two different names, same stoichiometric formula (Fe1, no charge): rejected. -->
+        <!-- Different native names sharing composition remain valid, with a warning. -->
         <specie name="Fe" composition="Fe1"/>
         <specie name="Iron" composition="Fe1"/>
-        <!-- Same composition and same charge as below: also rejected. -->
+        <!-- Same composition and charge invite review without implying identical species. -->
         <specie name="O[2-]" composition="O1" charge="-2"/>
         <specie name="Oxide" composition="O1" charge="-2"/>
         <specie name="C" composition="C1"/>

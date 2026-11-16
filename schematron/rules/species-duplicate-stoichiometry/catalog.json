@@ -1,14 +1,14 @@
 {
   "family_name": "Species duplicate stoichiometry",
-  "family_summary": "Rejects two species in the same phase that share an identical stoichiometric formula, compared as the literal (composition, charge) string pair.",
+  "family_summary": "Advises reviewing species with the same literal composition and charge strings; these attributes do not determine native model identity.",
   "rules": [
     {
-      "id": "VAL-ERR-SPECIES-DUPLICATE-STOICHIOMETRY",
-      "purpose": "Rejects two species in the same phase whose normalized composition and charge strings are identical, while allowing same-composition species that differ in charge.",
-      "level": "error",
+      "id": "VAL-WARN-SPECIES-DUPLICATE-STOICHIOMETRY",
+      "purpose": "Reports matching normalized composition and charge strings within a phase as an advisory warning, preserving distinct named model species.",
+      "level": "warning",
       "examples": [
         "valid.xml",
-        "invalid.xml"
+        "warning.xml"
       ]
     }
   ]

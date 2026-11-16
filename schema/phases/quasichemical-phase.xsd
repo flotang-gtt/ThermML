@@ -445,7 +445,9 @@
 
     <xs:simpleType name="chargeValues">
         <xs:annotation>
-            <xs:documentation>Formal charge values for ionic species in the quasichemical model.
+            <xs:documentation>Formal model charge (valence) values for species in the quasichemical
+                model. Preserve the source assessment values; they need not equal physical
+                oxidation-state charges and must not be inferred from species names.
                 Supports integer charges from -8 to +8, with or without explicit sign.
                 Examples: "+2", "-3", "1", "0".</xs:documentation>
         </xs:annotation>
@@ -650,22 +652,29 @@
                                     <xs:complexType>
                                         <xs:attribute name="name" type="NoWhitespaceString" use="required">
                                             <xs:annotation>
-                                                <xs:documentation>Unique name of the species, e.g.
-                                                    "Na[+]", "Cl[-]".</xs:documentation>
+                                                <xs:documentation>Phase-local identifier of the
+                                                    species, e.g. "Na[+]", "Cl[-]". Preserve distinct
+                                                    native identities even when their composition
+                                                    and formal model charge are identical. A name
+                                                    suffix does not determine the model charge.</xs:documentation>
                                             </xs:annotation>
                                         </xs:attribute>
                                         <xs:attribute name="composition" type="xs:string"
                                             use="required">
                                             <xs:annotation>
                                                 <xs:documentation>Chemical composition of the
-                                                    species, e.g. "Na", "Cl".</xs:documentation>
+                                                    species, e.g. "Na", "Cl". Composition is not a
+                                                    unique identifier of a model species.</xs:documentation>
                                             </xs:annotation>
                                         </xs:attribute>
                                         <xs:attribute name="charge" type="chargeValues"
                                             use="required">
                                             <xs:annotation>
-                                                <xs:documentation>Formal ionic charge of the
-                                                    species.</xs:documentation>
+                                                <xs:documentation>Formal model charge (valence)
+                                                    parameter from the source assessment. This need
+                                                    not equal a physical oxidation-state charge or
+                                                    a charge suggested by the native species name.
+                                                    Preserve it independently of species identity.</xs:documentation>
                                             </xs:annotation>
                                         </xs:attribute>
                                         <xs:attribute name="group" type="MQMSpeciesGroupType" use="required">
