@@ -6,6 +6,7 @@
     xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <xs:include schemaLocation="../simple-types/main.xsd" />
+    <xs:include schemaLocation="ternary-interpolation.xsd" />
     <xs:include schemaLocation="../system-components/main.xsd" />
     <xs:include schemaLocation="../phases/cef-phase.xsd" />
     <xs:include schemaLocation="../phases/ionic-liquid-phase.xsd" />
@@ -102,101 +103,4 @@
         </xs:list>
     </xs:simpleType>
 
-    
-<xs:complexType name="InterpolationMethodType" abstract="true" />
-
-    <xs:complexType name="Kohler">
-        <xs:annotation>
-            <xs:documentation> Kohler type ternary interpolation. No parameters. </xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="InterpolationMethodType" />
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="Muggiano">
-        <xs:annotation>
-            <xs:documentation> Muggiano type ternary interpolation. No parameters. </xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="InterpolationMethodType" />
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="Toop">
-        <xs:annotation>
-            <xs:documentation> Toop type ternary interpolation. Requires a constant parameter. </xs:documentation>
-        </xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="InterpolationMethodType">
-                <xs:sequence>
-                    <xs:element name="constant" type="TernarySiteLocatorType" />
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-
-    <xs:complexType name="InterpolationType">
-        <xs:annotation>
-            <xs:documentation>As the three interacting species are separated by "," in the constituents attribute, the
-                respective interpolation method is declared in the ij, jk or ik child elements. Please note that the
-                order of i, j, k is fixed. For Toop-type, the designated constituent needs to be set to either of the
-                two i, j, or k that are the subset of the Toop-type parameter.</xs:documentation>
-        </xs:annotation>
-        <xs:sequence>
-            <xs:element name="constituents" minOccurs="1" maxOccurs="1">
-                <xs:complexType>
-                    <xs:annotation>
-                        <xs:documentation> Defines the constituents for each lattice site in a CEF phase endmember or
-                            interaction. Each &lt;site&gt; element represents a sublattice, and contains one or more
-                            &lt;const&gt; elements, each referencing a species name defined in the &lt;species&gt; block
-                            of the same phase. </xs:documentation>
-                    </xs:annotation>
-                    <xs:sequence>
-                        <xs:element name="site" minOccurs="2" maxOccurs="2">
-                            <xs:complexType>
-                                <xs:sequence>
-                                    <xs:element name="const" minOccurs="1" maxOccurs="unbounded">
-                                        <xs:annotation>
-                                            <xs:documentation>References a species by name via the
-                                                species attribute. Must match a species name defined
-                                                in the &lt;species&gt; block of the same
-                                                phase.</xs:documentation>
-                                        </xs:annotation>
-                                        <xs:complexType>
-                                            <xs:attribute name="species" type="NoWhitespaceString"
-                                                use="required">
-                                                <xs:annotation>
-                                                    <xs:documentation>Name of the species occupying
-                                                        this site.</xs:documentation>
-                                                </xs:annotation>
-                                            </xs:attribute>
-                                            <xs:attribute name="site" type="TernarySiteLocatorType"
-                                                use="optional">
-                                                <xs:annotation>
-                                                    <xs:documentation>Ternary interpolation site
-                                                        locator, one of "i", "j" or
-                                                        "k".</xs:documentation>
-                                                </xs:annotation>
-                                            </xs:attribute>
-                                            <xs:attribute name="siteIndex" type="TernarySiteLocatorType"
-                                                use="optional">
-                                                <xs:annotation>
-                                                    <xs:documentation>Alias for the site attribute.
-                                                        Ternary interpolation site locator, one of
-                                                        "i", "j" or "k".</xs:documentation>
-                                                </xs:annotation>
-                                            </xs:attribute>
-                                        </xs:complexType>
-                                    </xs:element>
-                                </xs:sequence>
-                            </xs:complexType>
-                        </xs:element>
-                    </xs:sequence>
-                </xs:complexType>
-            </xs:element>
-            <xs:element name="ij" minOccurs="1" maxOccurs="1" type="InterpolationMethodType" />
-            <xs:element name="jk" minOccurs="1" maxOccurs="1" type="InterpolationMethodType" />
-            <xs:element name="ik" minOccurs="1" maxOccurs="1" type="InterpolationMethodType" />
-        </xs:sequence>
-    </xs:complexType>
 </xs:schema>

@@ -434,6 +434,336 @@
       ]
     },
     {
+      "familyName": "Single-sublattice polynomial semantics",
+      "familySlug": "polynomial-phase-semantics",
+      "familySummary": "Checks one-lattice species/endmember coverage, ordered polynomial identities, property ownership and magnetic variant consistency.",
+      "ruleId": "VAL-ERR-POLYNOMIAL-STRUCTURE-SPECIES-COUNT",
+      "purpose": "The single sublattice must list exactly as many tokens as there are declared species.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/polynomial-phase-semantics/rule.sch",
+        "label": "schematron/rules/polynomial-phase-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Single-sublattice polynomial semantics",
+      "familySlug": "polynomial-phase-semantics",
+      "familySummary": "Checks one-lattice species/endmember coverage, ordered polynomial identities, property ownership and magnetic variant consistency.",
+      "ruleId": "VAL-ERR-POLYNOMIAL-MAGNETIC-STRUCTURE",
+      "purpose": "Magnetic M, TCL and BML properties require an IHJ magnetic structure. An all-zero magnetic structure is valid.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/polynomial-phase-semantics/rule.sch",
+        "label": "schematron/rules/polynomial-phase-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Single-sublattice polynomial semantics",
+      "familySlug": "polynomial-phase-semantics",
+      "familySummary": "Checks one-lattice species/endmember coverage, ordered polynomial identities, property ownership and magnetic variant consistency.",
+      "ruleId": "VAL-ERR-POLYNOMIAL-STRUCTURE-SPECIES-MEMBERSHIP",
+      "purpose": "Each declared species must occur exactly once in the single sublattice token list.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/polynomial-phase-semantics/rule.sch",
+        "label": "schematron/rules/polynomial-phase-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Single-sublattice polynomial semantics",
+      "familySlug": "polynomial-phase-semantics",
+      "familySummary": "Checks one-lattice species/endmember coverage, ordered polynomial identities, property ownership and magnetic variant consistency.",
+      "ruleId": "VAL-ERR-POLYNOMIAL-ENDMEMBER-COVERAGE",
+      "purpose": "Each polynomial species must have exactly one endmember.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/polynomial-phase-semantics/rule.sch",
+        "label": "schematron/rules/polynomial-phase-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Single-sublattice polynomial semantics",
+      "familySlug": "polynomial-phase-semantics",
+      "familySummary": "Checks one-lattice species/endmember coverage, ordered polynomial identities, property ownership and magnetic variant consistency.",
+      "ruleId": "VAL-ERR-POLYNOMIAL-SPECIES-COMPOSITION",
+      "purpose": "Polynomial species require a nonempty composition, including any preprocessed stoichiometric scaling.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/polynomial-phase-semantics/rule.sch",
+        "label": "schematron/rules/polynomial-phase-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Single-sublattice polynomial semantics",
+      "familySlug": "polynomial-phase-semantics",
+      "familySummary": "Checks one-lattice species/endmember coverage, ordered polynomial identities, property ownership and magnetic variant consistency.",
+      "ruleId": "VAL-ERR-POLYNOMIAL-ENDMEMBER-NAME",
+      "purpose": "A polynomial endmember name must match its constituent species name literally.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/polynomial-phase-semantics/rule.sch",
+        "label": "schematron/rules/polynomial-phase-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Single-sublattice polynomial semantics",
+      "familySlug": "polynomial-phase-semantics",
+      "familySummary": "Checks one-lattice species/endmember coverage, ordered polynomial identities, property ownership and magnetic variant consistency.",
+      "ruleId": "VAL-ERR-POLYNOMIAL-ENDMEMBER-PROPERTY",
+      "purpose": "Polynomial endmembers accept G, M and the existing physical-property types, not interaction or MQM properties.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/polynomial-phase-semantics/rule.sch",
+        "label": "schematron/rules/polynomial-phase-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Single-sublattice polynomial semantics",
+      "familySlug": "polynomial-phase-semantics",
+      "familySummary": "Checks one-lattice species/endmember coverage, ordered polynomial identities, property ownership and magnetic variant consistency.",
+      "ruleId": "VAL-ERR-POLYNOMIAL-INTERACTION-ARITY",
+      "purpose": "A polynomial-phase interaction must contain one site with two to four constituents.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/polynomial-phase-semantics/rule.sch",
+        "label": "schematron/rules/polynomial-phase-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Single-sublattice polynomial semantics",
+      "familySlug": "polynomial-phase-semantics",
+      "familySummary": "Checks one-lattice species/endmember coverage, ordered polynomial identities, property ownership and magnetic variant consistency.",
+      "ruleId": "VAL-ERR-POLYNOMIAL-INTERACTION-PROPERTY",
+      "purpose": "Each polynomial-phase interaction requires at least one property, and accepts only PolynomialL, TCL or BML.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/polynomial-phase-semantics/rule.sch",
+        "label": "schematron/rules/polynomial-phase-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Single-sublattice polynomial semantics",
+      "familySlug": "polynomial-phase-semantics",
+      "familySummary": "Checks one-lattice species/endmember coverage, ordered polynomial identities, property ownership and magnetic variant consistency.",
+      "ruleId": "VAL-ERR-POLYNOMIAL-INTERACTION-DISTINCT-SPECIES",
+      "purpose": "Interaction constituents must be distinct; their listed order defines the exponent positions.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/polynomial-phase-semantics/rule.sch",
+        "label": "schematron/rules/polynomial-phase-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Single-sublattice polynomial semantics",
+      "familySlug": "polynomial-phase-semantics",
+      "familySummary": "Checks one-lattice species/endmember coverage, ordered polynomial identities, property ownership and magnetic variant consistency.",
+      "ruleId": "VAL-ERR-POLYNOMIAL-PROPERTY-SCOPE",
+      "purpose": "PolynomialL is valid only on an interaction of a SingleSublatticePolynomialPhaseType phase.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/polynomial-phase-semantics/rule.sch",
+        "label": "schematron/rules/polynomial-phase-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Single-sublattice polynomial semantics",
+      "familySlug": "polynomial-phase-semantics",
+      "familySummary": "Checks one-lattice species/endmember coverage, ordered polynomial identities, property ownership and magnetic variant consistency.",
+      "ruleId": "VAL-ERR-POLYNOMIAL-EXPONENT-ARITY",
+      "purpose": "Polynomial exponents must match constituent arity: i,j; i,j,k; or i,j,k,l. Explicit zero powers are valid.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/polynomial-phase-semantics/rule.sch",
+        "label": "schematron/rules/polynomial-phase-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Single-sublattice polynomial semantics",
+      "familySlug": "polynomial-phase-semantics",
+      "familySummary": "Checks one-lattice species/endmember coverage, ordered polynomial identities, property ownership and magnetic variant consistency.",
+      "ruleId": "VAL-ERR-POLYNOMIAL-EXPRESSION-NONEMPTY",
+      "purpose": "A polynomial coefficient expression must contain text; an explicit zero is valid.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/polynomial-phase-semantics/rule.sch",
+        "label": "schematron/rules/polynomial-phase-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Single-sublattice polynomial semantics",
+      "familySlug": "polynomial-phase-semantics",
+      "familySummary": "Checks one-lattice species/endmember coverage, ordered polynomial identities, property ownership and magnetic variant consistency.",
+      "ruleId": "VAL-ERR-POLYNOMIAL-DUPLICATE-TERM",
+      "purpose": "Ordered constituent/exponent identities must be unique across all PolynomialL properties and interactions in a phase, regardless of interaction names or coefficient text.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/polynomial-phase-semantics/rule.sch",
+        "label": "schematron/rules/polynomial-phase-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Single-sublattice polynomial semantics",
+      "familySlug": "polynomial-phase-semantics",
+      "familySummary": "Checks one-lattice species/endmember coverage, ordered polynomial identities, property ownership and magnetic variant consistency.",
+      "ruleId": "VAL-ERR-POLYNOMIAL-INTERPOLATION-LABELS",
+      "purpose": "Polynomial interpolation requires one site containing exactly one i, j and k locator, using the site attribute.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/polynomial-phase-semantics/rule.sch",
+        "label": "schematron/rules/polynomial-phase-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/polynomial-phase-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
       "familyName": "Redlich-Kister rank",
       "familySlug": "redlich-kister-rank",
       "familySummary": "Checks Redlich-Kister rank values and flags suspicious high-rank or gap-filled series for review.",
@@ -668,24 +998,68 @@
       ]
     },
     {
-      "familyName": "Ternary interpolation locator aliases",
-      "familySlug": "ternary-interpolation-locator-aliases",
-      "familySummary": "Checks that duplicated ternary locator aliases stay internally consistent when both serialized forms are present.",
-      "ruleId": "VAL-ERR-TERNARY-INTERPOLATION-LOCATOR-ALIASES-MISMATCH",
-      "purpose": "Checks that the two serialized locator aliases on a ternary interpolation constituent do not disagree.",
+      "familyName": "Ternary interpolation semantics",
+      "familySlug": "ternary-interpolation-semantics",
+      "familySummary": "Checks the canonical site locator, distinct species and Toop selection for SUBQ and polynomial phases.",
+      "ruleId": "VAL-ERR-TERNARY-INTERPOLATION-LOCATOR-ATTRIBUTE",
+      "purpose": "Requires site as the sole locator attribute; siteIndex is forbidden even when it agrees with site.",
       "level": "error",
       "source": {
-        "href": "../../schematron/rules/ternary-interpolation-locator-aliases/rule.sch",
-        "label": "schematron/rules/ternary-interpolation-locator-aliases/rule.sch"
+        "href": "../../schematron/rules/ternary-interpolation-semantics/rule.sch",
+        "label": "schematron/rules/ternary-interpolation-semantics/rule.sch"
       },
       "examples": [
         {
           "name": "valid.xml",
-          "href": "../../schematron/rules/ternary-interpolation-locator-aliases/valid.xml"
+          "href": "../../schematron/rules/ternary-interpolation-semantics/valid.xml"
         },
         {
           "name": "invalid.xml",
-          "href": "../../schematron/rules/ternary-interpolation-locator-aliases/invalid.xml"
+          "href": "../../schematron/rules/ternary-interpolation-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Ternary interpolation semantics",
+      "familySlug": "ternary-interpolation-semantics",
+      "familySummary": "Checks the canonical site locator, distinct species and Toop selection for SUBQ and polynomial phases.",
+      "ruleId": "VAL-ERR-TERNARY-INTERPOLATION-DISTINCT-SPECIES",
+      "purpose": "Ternary interpolation species must be distinct within each site.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/ternary-interpolation-semantics/rule.sch",
+        "label": "schematron/rules/ternary-interpolation-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/ternary-interpolation-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/ternary-interpolation-semantics/invalid.xml"
+        }
+      ]
+    },
+    {
+      "familyName": "Ternary interpolation semantics",
+      "familySlug": "ternary-interpolation-semantics",
+      "familySummary": "Checks the canonical site locator, distinct species and Toop selection for SUBQ and polynomial phases.",
+      "ruleId": "VAL-ERR-TERNARY-INTERPOLATION-TOOP-LOCATOR",
+      "purpose": "Toop constant must identify a labeled species in this ternary. The third species outside the named binary pair is permitted.",
+      "level": "error",
+      "source": {
+        "href": "../../schematron/rules/ternary-interpolation-semantics/rule.sch",
+        "label": "schematron/rules/ternary-interpolation-semantics/rule.sch"
+      },
+      "examples": [
+        {
+          "name": "valid.xml",
+          "href": "../../schematron/rules/ternary-interpolation-semantics/valid.xml"
+        },
+        {
+          "name": "invalid.xml",
+          "href": "../../schematron/rules/ternary-interpolation-semantics/invalid.xml"
         }
       ]
     }

@@ -3,7 +3,7 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://calphad.org/thermml/v0 ../schema/thermml-schema.xsd"
           name="Canonical SUBQ interaction models"
-          version="0.1.0">
+          version="0.2.0">
   <metadata>
     <title>Canonical SUBQ interaction models</title>
     <version>1.0</version>
@@ -112,7 +112,7 @@
             <site><const species="Cl[-]"/></site>
           </constituents>
           <ij xsi:type="Kohler"/>
-          <jk xsi:type="Muggiano"/>
+          <jk xsi:type="Muggianu"/>
           <ik xsi:type="Toop"><constant>k</constant></ik>
         </interpolation>
       </ternaryInterpolations>

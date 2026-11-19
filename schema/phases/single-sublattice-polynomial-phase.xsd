@@ -1,0 +1,137 @@
+<xs:schema targetNamespace="http://calphad.org/thermml/v0"
+    elementFormDefault="qualified" version="0.2.0"
+    xmlns="http://calphad.org/thermml/v0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:include schemaLocation="core.xsd" />
+    <xs:include schemaLocation="cef-phase.xsd" />
+    <xs:include schemaLocation="ternary-interpolation.xsd" />
+
+    <xs:simpleType name="PolynomialCoordinationNumberType">
+        <xs:annotation><xs:documentation>Finite positive model coordination number Z.
+            Fractional values are valid. This is independent of preprocessing
+            stoichiometric scaling and is not a sublattice multiplicity.</xs:documentation></xs:annotation>
+        <xs:restriction base="xs:double">
+            <xs:minExclusive value="0" />
+            <xs:maxExclusive value="INF" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="PolynomialL">
+        <xs:annotation><xs:documentation>Polynomial excess terms for one ordered set of
+            two to four constituents on one sublattice. Each expr is a temperature
+            coefficient expression with explicit composition powers, not an RK rank
+            or a temperature-range index. i and j address the first two constituents;
+            k is required exactly for three or four constituents, and l exactly for
+            four. Zero powers are meaningful and must be retained. Schematron checks
+            arity, nonempty expressions, phase ownership and uniqueness of ordered
+            constituent/exponent identities across the phase. This property does not
+            imply reconstruction of a Redlich-Kister authoring parameterization.</xs:documentation></xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="PhasePropertyType">
+                <xs:sequence>
+                    <xs:element name="expr" maxOccurs="unbounded">
+                        <xs:complexType><xs:simpleContent><xs:extension base="xs:string">
+                            <xs:attribute name="i" type="xs:unsignedInt" use="required" />
+                            <xs:attribute name="j" type="xs:unsignedInt" use="required" />
+                            <xs:attribute name="k" type="xs:unsignedInt" />
+                            <xs:attribute name="l" type="xs:unsignedInt" />
+                        </xs:extension></xs:simpleContent></xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="PolynomialSpecieType">
+        <xs:complexContent>
+            <xs:extension base="CEFSpecieType">
+                <xs:attribute name="group" type="xs:positiveInteger" use="required">
+                    <xs:annotation><xs:documentation>Chemical group identifier used by the
+                        model's interpolation convention. Must be a strictly positive
+                        integer, as for SUBQ groups. Zero and negative values are invalid;
+                        a producer's signed storage type does not widen this domain.</xs:documentation></xs:annotation>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="PolynomialEndmemberType">
+        <xs:complexContent>
+            <xs:extension base="CEFEndmemberType">
+                <xs:attribute name="coordinationNumber" type="PolynomialCoordinationNumberType" use="required" />
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="PolynomialStructureType">
+        <xs:sequence>
+            <xs:element name="sublattices">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="site">
+                            <xs:complexType>
+                                <xs:attribute name="constituents" type="xs:string" use="required" />
+                            </xs:complexType>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="multiplicities" type="xs:decimal" use="required" fixed="1" />
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="magnetic" type="IHJMagneticType" minOccurs="0" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PolynomialInterpolationType">
+        <xs:annotation><xs:documentation>One-site specialization of the shared ternary
+            interpolation vocabulary. Exactly three distinct species must be labeled
+            once each as i, j and k, using the site attribute.</xs:documentation></xs:annotation>
+        <xs:sequence>
+            <xs:element name="constituents">
+                <xs:complexType><xs:sequence>
+                    <xs:element name="site">
+                        <xs:complexType><xs:sequence>
+                            <xs:element name="const" type="TernaryInterpolationConstituentType"
+                                minOccurs="3" maxOccurs="3" />
+                        </xs:sequence></xs:complexType>
+                    </xs:element>
+                </xs:sequence></xs:complexType>
+            </xs:element>
+            <xs:group ref="TernaryInterpolationMethodsGroup" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="SingleSublatticePolynomialPhaseType">
+        <xs:annotation><xs:documentation>Single-sublattice polynomial solution model
+            used for ChemSage QKTO and QKTOM. Species have chemical groups, endmembers
+            have coordination numbers, and excess terms have explicit composition
+            powers. There is one endmember per species with the same literal name.
+            The optional IHJ magnetic structure selects the magnetic variant even
+            when all magnetic parameters are zero or omitted. M, TCL and BML require
+            that structure. Magnetic interaction parameters retain their RK ranks.
+            Preprocessed scaling is retained in species compositions and endmember
+            functions; no separate preprocessing stoichiometric-factor field is used.
+            See docs/single-sublattice-polynomial.md for the evaluation and consumer
+            compatibility boundaries.</xs:documentation></xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="PhaseType">
+                <xs:sequence>
+                    <xs:element name="description" type="xs:string" minOccurs="0" />
+                    <xs:element name="species">
+                        <xs:complexType><xs:sequence>
+                            <xs:element name="specie" type="PolynomialSpecieType" maxOccurs="unbounded" />
+                        </xs:sequence></xs:complexType>
+                    </xs:element>
+                    <xs:element name="structure" type="PolynomialStructureType" />
+                    <xs:element name="endmembers">
+                        <xs:complexType><xs:sequence>
+                            <xs:element name="endmember" type="PolynomialEndmemberType" maxOccurs="unbounded" />
+                        </xs:sequence></xs:complexType>
+                    </xs:element>
+                    <xs:element name="interactions" minOccurs="0">
+                        <xs:complexType><xs:sequence>
+                            <xs:element name="interaction" type="CEFInteractionType" minOccurs="0" maxOccurs="unbounded" />
+                        </xs:sequence></xs:complexType>
+                    </xs:element>
+                    <xs:element name="ternaryInterpolations" minOccurs="0">
+                        <xs:complexType><xs:sequence>
+                            <xs:element name="interpolation" type="PolynomialInterpolationType" maxOccurs="unbounded" />
+                        </xs:sequence></xs:complexType>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+</xs:schema>

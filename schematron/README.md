@@ -18,6 +18,8 @@ The two-file split is a consequence of how the current `lxml.isoschematron` base
 
 The current rule families are:
 
+- `rules/polynomial-phase-semantics/`
+
 - `rules/ionic-liquid-constituents/`
 - `rules/cef-constituent-occupancy/`
 - `rules/sublattice-multiplicities/`
@@ -32,7 +34,7 @@ The current rule families are:
 - `rules/redlich-kister-rank/`
 - `rules/species-duplicate-stoichiometry/`
 - `rules/subq-interaction-semantics/`
-- `rules/ternary-interpolation-locator-aliases/`
+- `rules/ternary-interpolation-semantics/`
 
 Each rule-family directory contains:
 

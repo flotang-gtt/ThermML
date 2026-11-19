@@ -1,0 +1,62 @@
+<xs:schema targetNamespace="http://calphad.org/thermml/v0"
+    elementFormDefault="qualified" version="0.2.0"
+    xmlns="http://calphad.org/thermml/v0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:include schemaLocation="../simple-types/main.xsd" />
+    <xs:include schemaLocation="../expressions/core.xsd" />
+
+    <xs:complexType name="InterpolationMethodType" abstract="true" />
+    <xs:complexType name="Kohler">
+        <xs:annotation><xs:documentation>Kohler symmetric interpolation.</xs:documentation></xs:annotation>
+        <xs:complexContent><xs:extension base="InterpolationMethodType" /></xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Muggianu">
+        <xs:annotation><xs:documentation>Muggianu symmetric interpolation.</xs:documentation></xs:annotation>
+        <xs:complexContent><xs:extension base="InterpolationMethodType" /></xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Toop">
+        <xs:annotation><xs:documentation>Asymmetric interpolation. constant identifies the
+            asymmetric species by its i, j or k locator in the ternary; it is not a
+            numerical coefficient and need not belong to the named binary pair.</xs:documentation></xs:annotation>
+        <xs:complexContent>
+            <xs:extension base="InterpolationMethodType">
+                <xs:sequence><xs:element name="constant" type="TernarySiteLocatorType" /></xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="TernaryInterpolationConstituentType">
+        <xs:annotation><xs:documentation>A phase species and its ternary locator, site.
+            This attribute labels a mixing species as i, j or k, not a numerical
+            sublattice position. A fixed SUBQ constituent has no locator.
+            Schematron checks model-specific labeling.</xs:documentation></xs:annotation>
+        <xs:attribute name="species" type="NoWhitespaceString" use="required" />
+        <xs:attribute name="site" type="TernarySiteLocatorType" />
+    </xs:complexType>
+    <xs:group name="TernaryInterpolationMethodsGroup">
+        <xs:sequence>
+            <xs:element name="ij" type="InterpolationMethodType" />
+            <xs:element name="jk" type="InterpolationMethodType" />
+            <xs:element name="ik" type="InterpolationMethodType" />
+        </xs:sequence>
+    </xs:group>
+
+    <xs:complexType name="InterpolationType">
+        <xs:annotation><xs:documentation>SUBQ ternary interpolation: exactly two sites,
+            with one mixing ternary and one fixed constituent. The i, j, k locators
+            identify the mixing species independently of XML order. Methods are
+            serialized in ij, jk, ik order.</xs:documentation></xs:annotation>
+        <xs:sequence>
+            <xs:element name="constituents">
+                <xs:complexType><xs:sequence>
+                    <xs:element name="site" minOccurs="2" maxOccurs="2">
+                        <xs:complexType><xs:sequence>
+                            <xs:element name="const" type="TernaryInterpolationConstituentType"
+                                maxOccurs="unbounded" />
+                        </xs:sequence></xs:complexType>
+                    </xs:element>
+                </xs:sequence></xs:complexType>
+            </xs:element>
+            <xs:group ref="TernaryInterpolationMethodsGroup" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>

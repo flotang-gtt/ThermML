@@ -1,5 +1,10 @@
 # SUBQ Interaction Semantics
 
+Interpolation labels use only `site`; `siteIndex` is forbidden. The mixing site
+requires exactly one i, j and k; the fixed site must have neither locator.
+Shared locator, distinct-species and Toop selection checks live in
+`ternary-interpolation-semantics` and run through the aggregate entrypoint.
+
 This rule family checks cross-tree constraints for
 `ModifiedQuasichemicalPhaseType` that cannot be expressed reliably in XSD 1.0:
 

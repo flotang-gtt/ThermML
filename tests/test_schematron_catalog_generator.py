@@ -32,13 +32,14 @@ def test_generator_loads_all_rule_families() -> None:
         "gas-endmember-consistency",
         "global-expression-empty-or-zero-content",
         "ionic-liquid-constituents",
+        "polynomial-phase-semantics",
         "redlich-kister-rank",
         "species-duplicate-stoichiometry",
         "sublattice-multiplicities",
         "subq-interaction-semantics",
-        "ternary-interpolation-locator-aliases",
+        "ternary-interpolation-semantics",
     ]
-    assert sum(len(family.rules) for family in families) == 32
+    assert sum(len(family.rules) for family in families) == 49
 
 
 def test_rendered_catalog_payload_contains_filterable_rule_data() -> None:
